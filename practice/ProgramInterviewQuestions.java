@@ -6,33 +6,60 @@ import java.lang.StringBuffer;
 
 class ProgramInterviewQuestions {
   public static void main(String[] args){
-    //System.out.println("programming interview questions practice!\n");
-    //System.out.println(allUniqueChars("whatis up?"));
-    //System.out.println(allUniqueChars2("whatis up?"));
-    //System.out.println(anagram("banana", "anaban"));
-    //System.out.println(replaceSpaceWith20("hello how are you doing?"));
-    //System.out.println(82/10);
-    //fill(2, 2);
-    //System.out.println(reverseString2("hello how are you doing?"));
-    //System.out.println(findBitPosition(33));
-    //int[] input = {-1, 5, -2, 3, 9, -10, -5, 3};
-    int[] input = {-1, 5, -2, 3, 9, -10, -5, 3, -10, 9, 8, 7, -30, -100};
-    String s = "Mhmdsddm Gtmcqdc Tkkqhbg Zud Ztrshm SW";
-    //System.out.println(unscramble(s));
-    //switchem(input);
-    //fixarray(input);
-    int[] i = { Integer.MAX_VALUE };
-    System.out.println(i[0]);
-    i[0]++;
-    System.out.println(i[0]);
+    System.out.println("programming interview questions practice!\n");
 
     groupStrings();
     isSubString();
     maxSubArray();
+    allUniqueCharacters();
+    anagram();
+    switchem();
+    findBitPosition();
+    reverseString();
+    //misc();
+  }
+  
+  public static void reverseString() {
+    String s = "hello how are you doing?";
+    System.out.println("reverse \"" + s + "\": \"" + reverseWords(s) + "\"");
+    System.out.println("reverse \"" + s + "\": \"" + reverseWordsByLetter(s) + "\"");
+  }
+  
+  public static void findBitPosition() {
+    int num = 33;
+    System.out.println("first bit position of " + num + " is " + findBitPosition(num));
+  }
+  
+  public static void misc() {
+    int[] i = { Integer.MAX_VALUE };
+    System.out.println(i[0]);
+    i[0]++;
+    System.out.println(i[0]);
+  }
+  
+  public static void switchem() {
+    int[] input = {-1, 5, -2, 3, 9, -10, -5, 3, -10, 9, 8, 7, -30, -100};
+    int[] output = switchem(input);
+    
+    for (int i : output) {
+      System.out.print(i+" ");
+    }
+    System.out.println();
+  }
+  
+  public static void anagram() {
+    String one = "banana";
+    String two = "anaban";
+    System.out.println(one + " and " + two + " are anagram of eachother: " + anagram(one, two));
+  }
+  
+  public static void allUniqueCharacters() {
+    String source = "what is up my friend";
+    System.out.println(source + " - contain all unique characters: " + allUniqueChars(source));
   }
   
   public static void maxSubArray() {
-    int[] array = {10, 1, -100,20,3,-300, 1000};
+    int[] array = {10, 1, -100,20,3,-300, -50, 100, 4, -20, 30};
     System.out.println("max array length is " + maxSubArray(array));
   }
   
@@ -58,6 +85,7 @@ class ProgramInterviewQuestions {
       }
     }
     
+    System.out.print("max subarray: ");
     for (int i = maxBeginning; i <= maxEnd; i++) {
       System.out.print(array[i] + " ");
     }
@@ -70,7 +98,7 @@ class ProgramInterviewQuestions {
     String source = "why hello there";
     String target = "hello2";
     
-    System.out.println(isSubString(source, target));
+    System.out.println(target + " is substring of " + source + ": " + isSubString(source, target));
   }
   
   private static boolean isSubString(String source, String target) {
@@ -134,25 +162,6 @@ class ProgramInterviewQuestions {
     return result.toString();
   }
 
-  public static void fixarray(int[] arr)
-  {
-    int firstPositiveIdx = 0;
-    for (int i = 0; i < arr.length; i++)
-      {
-        if (arr[i] < 0)
-          {
-            int temp = arr[i];
-            arr[i] = arr[firstPositiveIdx];
-            arr[firstPositiveIdx] = temp;
-                
-            firstPositiveIdx++;
-          }
-      }
-    for (int i = 0; i < arr.length; i++){
-      System.out.print(arr[i] + " ");
-    }
-  }
-
   public static int[] switchem(int[] input){
     
     int front = 0;
@@ -193,7 +202,27 @@ class ProgramInterviewQuestions {
     return result;
   }
 
-  public static String reverseString(String s){
+  public static String reverseWordsByLetter(String s) {    
+    String reversedString = reverseString(s);
+    int startOfWord = 0;
+    StringBuffer resultSb = new StringBuffer();
+    for (int i = 0; i < reversedString.length(); i++) {
+      if (i + 1 >= reversedString.length() || reversedString.charAt(i + 1) == ' ') {
+        resultSb.append(reverseString(reversedString.substring(startOfWord, i + 1)) + " ");
+        startOfWord = i + 2;
+      }
+    }
+    return resultSb.toString().substring(0, resultSb.length() - 1);
+  }
+  
+  private static String reverseString(String s) {
+    StringBuffer sb = new StringBuffer();
+    for (int i = s.length() - 1; i >= 0; i--)
+      sb.append(s.charAt(i));
+    return sb.toString();
+  }
+  
+  public static String reverseWords(String s){
     String[] tokens = s.split(" ");
     StringBuffer buffer = new StringBuffer();
     for (int i = tokens.length - 1; i > 0; i--){
