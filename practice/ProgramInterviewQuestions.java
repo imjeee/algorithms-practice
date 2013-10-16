@@ -1,7 +1,10 @@
 import java.io.*;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.lang.StringBuffer;
 
 class ProgramInterviewQuestions {
@@ -17,6 +20,81 @@ class ProgramInterviewQuestions {
     findBitPosition();
     reverseString();
     //misc();
+    playWithLinkedList();
+    playWithBinarySearchTree();
+    playWithQueue();
+  }
+  
+  public static void playWithQueue() {
+    MyQueue<Integer> myQueue = new MyQueue<Integer>();
+    for (int i = 0; i < 10; i++) {
+      myQueue.enqueue(i);
+    }
+
+    System.out.print("myQueue: ");
+    while (myQueue.peek() != null) {
+      System.out.print(myQueue.dequeue() + ", ");
+    }
+    System.out.println(myQueue.dequeue());
+  }
+  
+  public static void playWithBinarySearchTree() {
+    BinaryTreeNode node = new BinarySearchTreeNode(20);
+    System.out.println("insert binary tree node successfull: " + node.insert(20));
+    System.out.println("insert binary tree node successfull: " + node.insert(25));
+    System.out.println("insert binary tree node successfull: " + node.insert(30));
+    
+    printBinaryTree(node);
+  }
+
+  private static void printBinaryTree(BinaryTreeNode node) {
+    MyQueue<BinaryTreeNode> q = new MyQueue<BinaryTreeNode>();
+    q.enqueue(node);
+    q.enqueue(new BinarySearchTreeNode(0));
+    while(!q.isEmpty()) {
+      if (q.peek().value() == 0) {
+        System.out.println();
+        q.
+      } else {
+        
+      }
+    }
+  }
+  
+  public static void playWithLinkedList() {
+    LinkedListNode node = new LinkedListNode(10);
+    LinkedListNode node2 = new LinkedListNode(20);
+    node.next(node2);    
+    printLinkedList(node);
+
+    LinkedListNode node3 = new LinkedListNode(25);    
+    LinkedListNode head = insertToEnd(node, node3);
+    printLinkedList(head);
+    
+    LinkedListNode node4 = new LinkedListNode(1);
+    head = insertToBeginning(node, node4);
+    printLinkedList(head);
+  }
+  
+  public static LinkedListNode insertToBeginning(LinkedListNode head, LinkedListNode newNode) {
+    newNode.next(head);
+    return newNode;
+  }
+  
+  public static LinkedListNode insertToEnd(LinkedListNode head, LinkedListNode newNode) {
+    LinkedListNode tmp = head;
+    while(tmp.next() != null)
+      tmp = tmp.next();
+    tmp.next(newNode);
+    return head;
+  }
+  
+  private static void printLinkedList(LinkedListNode node) {
+    while(node != null) {
+      System.out.print("node: " + node.value() + ", ");
+      node = node.next();
+    }
+    System.out.println();
   }
   
   public static void reverseString() {
