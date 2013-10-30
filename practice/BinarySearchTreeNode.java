@@ -6,12 +6,22 @@ public class BinarySearchTreeNode extends BinaryTreeNode {
   public BinarySearchTreeNode(int value) {
     this.value = value;
   }
+
+  @Override
+  public int value() {
+    return this.value;
+  }
+
+  @Override
+  public void value(int value) {
+    this.value = value;
+  }
   
   public boolean insert(int value) {
     return insert(this, value);
   }
   
-  public boolean insert(BinarySearchTreeNode node, int value) {
+  public boolean insert(BinaryTreeNode node, int value) {
     if (node.value() == value)
       return false;
     else if (value > node.value()) {
@@ -30,5 +40,6 @@ public class BinarySearchTreeNode extends BinaryTreeNode {
       }
     }
   }
+
   
 }

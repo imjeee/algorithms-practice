@@ -1,30 +1,25 @@
 
 public abstract class BinaryTreeNode {
-  private int value;
-  private BinarySearchTreeNode left;
-  private BinarySearchTreeNode right;
+  private BinaryTreeNode left;
+  private BinaryTreeNode right;
   
-  public BinarySearchTreeNode left() {
+  public abstract int value();
+  
+  public abstract void value(int value);
+  
+  public BinaryTreeNode left() {
     return this.left;
   }
   
-  public int value() {
-    return this.value;
-  }
-  
-  public void value(int value) {
-    this.value = value;
-  }
-  
-  public void left(BinarySearchTreeNode left) {
+  public void left(BinaryTreeNode left) {
     this.left = left;
   }
   
-  public BinarySearchTreeNode right() {
-    return this.left;
+  public BinaryTreeNode right() {
+    return this.right;
   }
   
-  public void right(BinarySearchTreeNode right) {
+  public void right(BinaryTreeNode right) {
     this.right = right;
   }
 

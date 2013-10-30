@@ -2,7 +2,8 @@
 public class MyQueue<E> {
   private LinkedListNode<E> front;
   private LinkedListNode<E> end;
-
+  private int size;
+  
   public MyQueue() {
     front = null;
   }
@@ -15,7 +16,16 @@ public class MyQueue<E> {
     }
   }
   
+  public boolean isEmpty() {
+    return front == null;
+  }
+  
+  public int size() {
+    return this.size;
+  }
+  
   public void enqueue(E e) {
+    this.size++;
     if (this.front == null) {
       this.front = new LinkedListNode<E>(e);
       this.end = this.front;
@@ -26,6 +36,7 @@ public class MyQueue<E> {
   }
   
   public E dequeue() {
+    this.size--;
     if (this.front == null) {
       return null;
     } else {

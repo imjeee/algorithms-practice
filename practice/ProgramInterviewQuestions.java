@@ -19,10 +19,46 @@ class ProgramInterviewQuestions {
     switchem();
     findBitPosition();
     reverseString();
+    mergeSortedIntArrays();
     //misc();
     playWithLinkedList();
     playWithBinarySearchTree();
     playWithQueue();
+  }
+  
+  private static void mergeSortedIntArrays() {
+    int[] a = {1,4,6,8,9};
+    int[] b = {4,7,8, 10,12};
+    int[] result = mergeSortedIntArrays(a, b);
+    System.out.print("Merged int array: ");
+    for (int i = 0; i < result.length; i++)
+      System.out.print(result[i] + ", ");
+    System.out.println();
+  }
+  
+  public static int[] mergeSortedIntArrays(int[] a, int[] b) {
+    int[] result = new int[a.length + b.length];
+    int aPointer = 0;
+    int bPointer = 0;
+    int resultPointer = 0;
+    
+    for (int i = 0; i < result.length; i++) {
+      if (aPointer >= a.length) {
+        result[resultPointer++] = b[bPointer++];
+      } else if (bPointer >= b.length) {
+        result[resultPointer++] = a[aPointer];
+      } else if (a[aPointer] <= b[bPointer]) {
+        if (resultPointer == 0 || result[resultPointer-1] != a[aPointer])
+          result[resultPointer++] = a[aPointer];
+        aPointer++;
+      } else {
+        if (resultPointer == 0 || result[resultPointer-1] != b[bPointer])
+          result[resultPointer++] = b[bPointer];
+        bPointer++;
+      }
+    }
+    
+    return result;
   }
   
   public static void playWithQueue() {
@@ -39,10 +75,11 @@ class ProgramInterviewQuestions {
   }
   
   public static void playWithBinarySearchTree() {
-    BinaryTreeNode node = new BinarySearchTreeNode(20);
-    System.out.println("insert binary tree node successfull: " + node.insert(20));
-    System.out.println("insert binary tree node successfull: " + node.insert(25));
-    System.out.println("insert binary tree node successfull: " + node.insert(30));
+    BinaryTreeNode node = new BinarySearchTreeNode(25);
+    System.out.println("insert binary tree node 20 successfull: " + node.insert(20));
+    System.out.println("insert binary tree node 25 successfull: " + node.insert(26));
+    System.out.println("insert binary tree node 30 successfull: " + node.insert(30));
+    System.out.println("insert binary tree node -30 successfull: " + node.insert(-30));
     
     printBinaryTree(node);
   }
@@ -50,46 +87,53 @@ class ProgramInterviewQuestions {
   private static void printBinaryTree(BinaryTreeNode node) {
     MyQueue<BinaryTreeNode> q = new MyQueue<BinaryTreeNode>();
     q.enqueue(node);
-    q.enqueue(new BinarySearchTreeNode(0));
-    while(!q.isEmpty()) {
-      if (q.peek().value() == 0) {
-        System.out.println();
-        q.
+    q.enqueue(null);
+    while(!q.isEmpty() && q.size() != 1) {
+      if (q.peek() != null) {
+        BinaryTreeNode tmpNode = q.dequeue();
+        System.out.print(tmpNode.value() + ", ");
+        if (tmpNode.left() != null)
+          q.enqueue(tmpNode.left());
+        if (tmpNode.right() != null)
+          q.enqueue(tmpNode.right());
       } else {
-        
+        q.enqueue(null);
+        System.out.println();
+        q.dequeue();
       }
     }
+    System.out.println();
   }
   
   public static void playWithLinkedList() {
-    LinkedListNode node = new LinkedListNode(10);
-    LinkedListNode node2 = new LinkedListNode(20);
+    LinkedListNode<Integer> node = new LinkedListNode<Integer>(10);
+    LinkedListNode<Integer> node2 = new LinkedListNode<Integer>(20);
     node.next(node2);    
     printLinkedList(node);
 
-    LinkedListNode node3 = new LinkedListNode(25);    
-    LinkedListNode head = insertToEnd(node, node3);
+    LinkedListNode<Integer> node3 = new LinkedListNode<Integer>(25);    
+    LinkedListNode<Integer> head = insertToEnd(node, node3);
     printLinkedList(head);
     
-    LinkedListNode node4 = new LinkedListNode(1);
+    LinkedListNode<Integer> node4 = new LinkedListNode<Integer>(1);
     head = insertToBeginning(node, node4);
     printLinkedList(head);
   }
   
-  public static LinkedListNode insertToBeginning(LinkedListNode head, LinkedListNode newNode) {
+  public static LinkedListNode<Integer> insertToBeginning(LinkedListNode<Integer> head, LinkedListNode<Integer> newNode) {
     newNode.next(head);
     return newNode;
   }
   
-  public static LinkedListNode insertToEnd(LinkedListNode head, LinkedListNode newNode) {
-    LinkedListNode tmp = head;
+  public static LinkedListNode<Integer> insertToEnd(LinkedListNode<Integer> head, LinkedListNode<Integer> newNode) {
+    LinkedListNode<Integer> tmp = head;
     while(tmp.next() != null)
       tmp = tmp.next();
     tmp.next(newNode);
     return head;
   }
   
-  private static void printLinkedList(LinkedListNode node) {
+  private static void printLinkedList(LinkedListNode<Integer> node) {
     while(node != null) {
       System.out.print("node: " + node.value() + ", ");
       node = node.next();
