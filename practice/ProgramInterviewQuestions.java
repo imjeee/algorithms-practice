@@ -24,6 +24,75 @@ class ProgramInterviewQuestions {
     playWithLinkedList();
     playWithBinarySearchTree();
     playWithQueue();
+    findHowMuchWaterCanAccumulate();
+  }
+  
+  private static void findHowMuchWaterCanAccumulate() {
+    int[] pond = {4,3,5,2,1,4,5,7,3,5,8};
+    System.out.println("water accumulated total is: " + findHowMuchWaterCanAccumulate(pond));
+  }
+  
+  /**
+   * 
+   * given an int array representing a pond, find the water that can be accumulated
+   *         _
+   *      4 | |  _
+   *      3 | |_| |  _     _
+   *      2 |     |_| |  _| |
+   *      1 |_________|_|___|
+   * height: 4 2 3 1 2 0 1 2
+   * pos:    0 1 2 3 4 5 6 7
+   * 
+   * in this case, the water accumulates at pos 1, 3, 5, 6
+   * water accumualted at each pos are 1,1,2,1
+   * result should be 1+1+2+1 = 5 
+   * 
+   * @param pond
+   * @return
+   */
+  public static int findHowMuchWaterCanAccumulate(int[] pond) {
+    if (pond.length < 3)
+      return 0;
+    int leftWallHeight = pond[0];
+    int leftWallPos = 0;
+    int rightWallHeight = 0;
+    int rightWallPos = 0;
+    int waterAccumulated = 0;
+    for (int i = 1; i < pond.length; i++) {
+      if (pond[i] >= leftWallHeight) {
+        rightWallHeight = pond[i];
+        rightWallPos = i;
+        waterAccumulated += getWaterAccumulatedGivenRange(pond, Math.min(leftWallHeight, rightWallHeight), rightWallPos, leftWallPos);
+        leftWallHeight = rightWallHeight;
+        leftWallPos = i;
+        rightWallHeight = 0;
+        rightWallPos = 0;
+      }
+    }
+    return waterAccumulated;
+  }
+  
+  /**
+   * 
+   * given the wall height and the left and right wall position, 
+   * find how much water can accumulate in the pond inbetween those walls
+   * 
+   * @param pond
+   * @param wallHeight
+   * @param rightWallPos
+   * @param leftWallPos
+   * @return
+   */
+  public static int getWaterAccumulatedGivenRange(int[] pond, int wallHeight, int rightWallPos, int leftWallPos) {
+    if (rightWallPos == leftWallPos || rightWallPos == leftWallPos + 1) {
+      return 0;
+    } else {
+      int result = 0;
+      for (int i = leftWallPos; i < rightWallPos; i++) {
+        result += wallHeight - pond[i];
+      }
+      return result;
+    }
   }
   
   private static void mergeSortedIntArrays() {
@@ -36,6 +105,13 @@ class ProgramInterviewQuestions {
     System.out.println();
   }
   
+  /**
+   * take 2 sorted integer arrays, return a third one that combines the 2, remove duplicates
+   * 
+   * @param int[] a
+   * @param int[] b
+   * @return
+   */
   public static int[] mergeSortedIntArrays(int[] a, int[] b) {
     int[] result = new int[a.length + b.length];
     int aPointer = 0;
@@ -61,7 +137,7 @@ class ProgramInterviewQuestions {
     return result;
   }
   
-  public static void playWithQueue() {
+  private static void playWithQueue() {
     MyQueue<Integer> myQueue = new MyQueue<Integer>();
     for (int i = 0; i < 10; i++) {
       myQueue.enqueue(i);
@@ -74,7 +150,7 @@ class ProgramInterviewQuestions {
     System.out.println(myQueue.dequeue());
   }
   
-  public static void playWithBinarySearchTree() {
+  private static void playWithBinarySearchTree() {
     BinaryTreeNode node = new BinarySearchTreeNode(25);
     System.out.println("insert binary tree node 20 successfull: " + node.insert(20));
     System.out.println("insert binary tree node 25 successfull: " + node.insert(26));
@@ -84,7 +160,12 @@ class ProgramInterviewQuestions {
     printBinaryTree(node);
   }
 
-  private static void printBinaryTree(BinaryTreeNode node) {
+  /**
+   * print binary tree (kinda) like a tree
+   * 
+   * @param node
+   */
+  public static void printBinaryTree(BinaryTreeNode node) {
     MyQueue<BinaryTreeNode> q = new MyQueue<BinaryTreeNode>();
     q.enqueue(node);
     q.enqueue(null);
@@ -105,7 +186,7 @@ class ProgramInterviewQuestions {
     System.out.println();
   }
   
-  public static void playWithLinkedList() {
+  private static void playWithLinkedList() {
     LinkedListNode<Integer> node = new LinkedListNode<Integer>(10);
     LinkedListNode<Integer> node2 = new LinkedListNode<Integer>(20);
     node.next(node2);    
@@ -133,7 +214,12 @@ class ProgramInterviewQuestions {
     return head;
   }
   
-  private static void printLinkedList(LinkedListNode<Integer> node) {
+  /**
+   * print linked list
+   * 
+   * @param node
+   */
+  public static void printLinkedList(LinkedListNode<Integer> node) {
     while(node != null) {
       System.out.print("node: " + node.value() + ", ");
       node = node.next();
@@ -141,25 +227,25 @@ class ProgramInterviewQuestions {
     System.out.println();
   }
   
-  public static void reverseString() {
+  private static void reverseString() {
     String s = "hello how are you doing?";
     System.out.println("reverse \"" + s + "\": \"" + reverseWords(s) + "\"");
     System.out.println("reverse \"" + s + "\": \"" + reverseWordsByLetter(s) + "\"");
   }
   
-  public static void findBitPosition() {
+  private static void findBitPosition() {
     int num = 33;
     System.out.println("first bit position of " + num + " is " + findBitPosition(num));
   }
   
-  public static void misc() {
+  private static void misc() {
     int[] i = { Integer.MAX_VALUE };
     System.out.println(i[0]);
     i[0]++;
     System.out.println(i[0]);
   }
   
-  public static void switchem() {
+  private static void switchem() {
     int[] input = {-1, 5, -2, 3, 9, -10, -5, 3, -10, 9, 8, 7, -30, -100};
     int[] output = switchem(input);
     
@@ -169,22 +255,28 @@ class ProgramInterviewQuestions {
     System.out.println();
   }
   
-  public static void anagram() {
+  private static void anagram() {
     String one = "banana";
     String two = "anaban";
     System.out.println(one + " and " + two + " are anagram of eachother: " + anagram(one, two));
   }
   
-  public static void allUniqueCharacters() {
+  private static void allUniqueCharacters() {
     String source = "what is up my friend";
     System.out.println(source + " - contain all unique characters: " + allUniqueChars(source));
   }
   
-  public static void maxSubArray() {
+  private static void maxSubArray() {
     int[] array = {10, 1, -100,20,3,-300, -50, 100, 4, -20, 30};
     System.out.println("max array length is " + maxSubArray(array));
   }
   
+  /**
+   * find max sub array in a int array
+   * 
+   * @param array
+   * @return
+   */
   public static int maxSubArray(int[] array) {
     int currentMax = 0;
     int maxSumSoFar = 0;
@@ -216,14 +308,21 @@ class ProgramInterviewQuestions {
   }
     
 
-  public static void isSubString() {
+  private static void isSubString() {
     String source = "why hello there";
     String target = "hello2";
     
     System.out.println(target + " is substring of " + source + ": " + isSubString(source, target));
   }
   
-  private static boolean isSubString(String source, String target) {
+  /**
+   * find if target is a substring of source
+   * 
+   * @param source
+   * @param target
+   * @return
+   */
+  public static boolean isSubString(String source, String target) {
     if (target.length() > source.length()) {
       return false;
     }
@@ -377,6 +476,12 @@ class ProgramInterviewQuestions {
     }    
   }
 
+  /**
+   * find if string contains all unique characters by putting in hashmap, O(n)
+   * 
+   * @param s
+   * @return
+   */
   public static boolean allUniqueChars(String s){
     HashMap<String, Integer> map = new HashMap<String, Integer>();
     for (int i = 0; i < s.length(); i++){
@@ -388,6 +493,12 @@ class ProgramInterviewQuestions {
     return true;
   }
 
+  /**
+   * find if string contains all unique characters, double for loop, O(n^2) complexity
+   * 
+   * @param s
+   * @return
+   */
   public static boolean allUniqueChars2(String s){
     for (int i = 0; i < s.length(); i++){
       char tchar = s.charAt(i);
@@ -399,6 +510,13 @@ class ProgramInterviewQuestions {
     return true;
   }
 
+  /**
+   * find if 2 strings are anagrams of each other, 2 NON nested for loops, O(n)
+   * 
+   * @param one
+   * @param two
+   * @return
+   */
   public static boolean anagram(String one, String two){
     if (one.length() != two.length())
       return false;
@@ -418,6 +536,12 @@ class ProgramInterviewQuestions {
     return true;
   }
 
+  /**
+   * replace all spaces in string s with %20, return new string
+   * 
+   * @param s
+   * @return
+   */
   public static String replaceSpaceWith20(String s){
     StringBuffer sb = new StringBuffer();
     for (int i = 0; i < s.length(); i++){
@@ -428,6 +552,4 @@ class ProgramInterviewQuestions {
     }
     return sb.toString();
   }
-
-
 }
