@@ -23,4 +23,30 @@ public class LinkedListNode<E> {
     this.next = node;
   }
   
+  public LinkedListNode<E> insert(LinkedListNode<E> head, E data) {
+    LinkedListNode<E> node = head;
+    while (node.next != null) {
+      node = node.next;
+    }
+    LinkedListNode<E> endNode = new LinkedListNode<E>(data);
+    node.next = endNode;
+    return head;
+  }
+  
+  public LinkedListNode<E> delete(LinkedListNode<E> head, E data) {
+    LinkedListNode<E> node = head;
+    if (head.value.equals(data)) {
+      return head.next;
+    }
+    while (node.next != null && !node.next.value.equals(data)) {
+      node = node.next;
+    }
+    
+    if (node.next != null) {
+      node.next = node.next.next;
+    }
+    
+    return head;
+  }
+  
 }

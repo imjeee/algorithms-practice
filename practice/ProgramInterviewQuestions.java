@@ -199,6 +199,34 @@ class ProgramInterviewQuestions {
     LinkedListNode<Integer> node4 = new LinkedListNode<Integer>(1);
     head = insertToBeginning(node, node4);
     printLinkedList(head);
+    
+    LinkedListNode<Integer> one = new LinkedListNode<Integer>(1);
+    LinkedListNode<Integer> two = new LinkedListNode<Integer>(10);
+    one.insert(one, 2);
+    one.insert(one, 3);
+    one.insert(one, 4);
+    one.insert(one, 5);
+    one.insert(one, 6);
+    one.delete(one, 2);
+    one.insert(one, 2);
+    printLinkedList(one);
+    insertToEnd(one, two);
+    insertToEnd(two, one);
+    /* this linked list now has a cycle, so don't print it like a singly linked list with no cycle */
+    System.out.println("does this linked list have cycle: " + ifLinkedListHasCycle(one));
+  }
+  
+  public static boolean ifLinkedListHasCycle(LinkedListNode<Integer> head) {
+    LinkedListNode<Integer> trailer = head;
+    LinkedListNode<Integer> runner = head;
+    while (trailer != null && runner.next() != null && runner.next().next() != null) {
+      trailer = trailer.next();
+      runner = runner.next().next();
+      if (trailer == runner) {
+        return true;
+      }
+    }
+    return false;
   }
   
   public static LinkedListNode<Integer> insertToBeginning(LinkedListNode<Integer> head, LinkedListNode<Integer> newNode) {
@@ -220,6 +248,7 @@ class ProgramInterviewQuestions {
    * @param node
    */
   public static void printLinkedList(LinkedListNode<Integer> node) {
+    System.out.print("print linkedList: ");
     while(node != null) {
       System.out.print("node: " + node.value() + ", ");
       node = node.next();
