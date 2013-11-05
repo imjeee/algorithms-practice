@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Stack;
 
 
 public class Algorithms {
@@ -109,6 +110,33 @@ public class Algorithms {
         q.enqueue(null);
         System.out.println();
         q.dequeue();
+      }
+    }
+    System.out.println();
+  }
+  
+  /**
+   * print tree in-order using stack, O(n)
+   * 
+   * @param node
+   */
+  public static void printTreeInOrderUsingStack(BinaryTreeNode node) {
+    System.out.print("print tree in order: ");
+    if (node != null) {
+      Stack<BinaryTreeNode> stack = new Stack<BinaryTreeNode>();
+      stack.add(node);
+      node = node.left();
+      
+      while (node != null || !stack.isEmpty()) {
+        while(node != null) {
+          stack.add(node);
+          node = node.left();
+        }
+        if (node == null && !stack.isEmpty()) {
+          node = stack.pop();
+          System.out.print(node.value() + ", ");
+          node = node.right();
+        }
       }
     }
     System.out.println();

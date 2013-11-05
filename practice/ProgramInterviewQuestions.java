@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 import java.lang.StringBuffer;
 
 class ProgramInterviewQuestions {
@@ -26,6 +27,8 @@ class ProgramInterviewQuestions {
     playWithQueue();
     findHowMuchWaterCanAccumulate();
   }
+  
+
   
   private static void groupStrings() {
     String[] source = {"a", "ab", "fadeer", "asdwer", "awerd", "acfgdsfgser"};
@@ -156,8 +159,11 @@ class ProgramInterviewQuestions {
     System.out.println("insert binary tree node 25 successfull: " + node.insert(26));
     System.out.println("insert binary tree node 30 successfull: " + node.insert(30));
     System.out.println("insert binary tree node -30 successfull: " + node.insert(-30));
-    
+    System.out.println("insert binary tree node 21 successfull: " + node.insert(21));
+    System.out.println("insert binary tree node 2 successfull: " + node.insert(2));
+
     Algorithms.printBinaryTreeByLayer(node);
+    Algorithms.printTreeInOrderUsingStack(node);
   }
 
 }
