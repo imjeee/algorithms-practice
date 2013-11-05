@@ -29,12 +29,16 @@ class ProgramInterviewQuestions {
   
   private static void findHowMuchWaterCanAccumulate() {
     int[] pond = {4,3,5,2,1,4,5,7,3,5,8};
-    System.out.println("water accumulated total is: " + findHowMuchWaterCanAccumulate(pond));
+    int[] pond2 = {4,2,3,1,2,0,1,2};
+    System.out.println("water accumulated total is: " + findHowMuchWaterCanAccumulate(pond2));
   }
   
   /**
    * 
-   * given an int array representing a pond, find the water that can be accumulated
+   * given an int array representing a pond, find the water that can be accumulated, O(n)
+   * it pre process the array twice first, for each position, find out the highest wall to its left and right.
+   * then we simply calculate it by looking at the lower of the either side wall and take the different between
+   * the walls and that spot
    *         _
    *      4 | |  _
    *      3 | |_| |  _     _
@@ -51,48 +55,33 @@ class ProgramInterviewQuestions {
    * @return
    */
   public static int findHowMuchWaterCanAccumulate(int[] pond) {
-    if (pond.length < 3)
-      return 0;
-    int leftWallHeight = pond[0];
-    int leftWallPos = 0;
-    int rightWallHeight = 0;
-    int rightWallPos = 0;
+    int[] highestWallFromLeft = new int[pond.length];
+    int[] highestWallFromRight = new int[pond.length];
+
+    int highestWallSoFar = 0;
+    for (int i = 0; i < pond.length; i++) {
+      int highestWallFromLeftSoFar = Math.max(highestWallSoFar, pond[i]);
+      if (highestWallFromLeftSoFar > highestWallSoFar)
+        highestWallSoFar = highestWallFromLeftSoFar;
+      highestWallFromLeft[i] = highestWallFromLeftSoFar;
+    }
+    
+    highestWallSoFar = 0;
+    for (int i = pond.length-1; i >= 0; i--) {
+      int highestWallFromRightSoFar = Math.max(highestWallSoFar, pond[i]);
+      if (highestWallFromRightSoFar > highestWallSoFar)
+        highestWallSoFar = highestWallFromRightSoFar;
+      highestWallFromRight[i] = highestWallFromRightSoFar;
+    }
+    
     int waterAccumulated = 0;
-    for (int i = 1; i < pond.length; i++) {
-      if (pond[i] >= leftWallHeight) {
-        rightWallHeight = pond[i];
-        rightWallPos = i;
-        waterAccumulated += getWaterAccumulatedGivenRange(pond, Math.min(leftWallHeight, rightWallHeight), rightWallPos, leftWallPos);
-        leftWallHeight = rightWallHeight;
-        leftWallPos = i;
-        rightWallHeight = 0;
-        rightWallPos = 0;
+    for (int i = 0; i < pond.length; i++) {
+      int lowerOfBothSidesWall = Math.min(highestWallFromLeft[i], highestWallFromRight[i]);
+      if (pond[i] < lowerOfBothSidesWall) {
+        waterAccumulated += lowerOfBothSidesWall - pond[i];
       }
     }
     return waterAccumulated;
-  }
-  
-  /**
-   * 
-   * given the wall height and the left and right wall position, 
-   * find how much water can accumulate in the pond inbetween those walls
-   * 
-   * @param pond
-   * @param wallHeight
-   * @param rightWallPos
-   * @param leftWallPos
-   * @return
-   */
-  public static int getWaterAccumulatedGivenRange(int[] pond, int wallHeight, int rightWallPos, int leftWallPos) {
-    if (rightWallPos == leftWallPos || rightWallPos == leftWallPos + 1) {
-      return 0;
-    } else {
-      int result = 0;
-      for (int i = leftWallPos; i < rightWallPos; i++) {
-        result += wallHeight - pond[i];
-      }
-      return result;
-    }
   }
   
   private static void mergeSortedIntArrays() {
@@ -209,13 +198,41 @@ class ProgramInterviewQuestions {
     one.insert(one, 6);
     one.delete(one, 2);
     one.insert(one, 2);
+    one.insert(one, 13);
     printLinkedList(one);
+    System.out.println("middle node is: " + returnMiddleNode(one).value());
+    
+    
     insertToEnd(one, two);
     insertToEnd(two, one);
     /* this linked list now has a cycle, so don't print it like a singly linked list with no cycle */
     System.out.println("does this linked list have cycle: " + ifLinkedListHasCycle(one));
   }
   
+  /**
+   * find and return middle of the linked list, O(n)
+   * 
+   * @param head
+   * @return
+   */
+  public static LinkedListNode<Integer> returnMiddleNode(LinkedListNode<Integer> head) {
+    LinkedListNode<Integer> runner = head;
+    LinkedListNode<Integer> middleNode = head;
+    
+    while(runner.next() != null && runner.next().next() != null) {
+      middleNode = middleNode.next();
+      runner = runner.next().next();
+    }
+    
+    return middleNode;
+  }
+  
+  /**
+   * find if a linked list has cycle, O(n)
+   * 
+   * @param head
+   * @return
+   */
   public static boolean ifLinkedListHasCycle(LinkedListNode<Integer> head) {
     LinkedListNode<Integer> trailer = head;
     LinkedListNode<Integer> runner = head;
@@ -229,11 +246,25 @@ class ProgramInterviewQuestions {
     return false;
   }
   
+  /**
+   * insert to beginning of a linked list, O(1)
+   * 
+   * @param head
+   * @param newNode
+   * @return
+   */
   public static LinkedListNode<Integer> insertToBeginning(LinkedListNode<Integer> head, LinkedListNode<Integer> newNode) {
     newNode.next(head);
     return newNode;
   }
   
+  /**
+   * insert to end of a linked list, O(n)
+   * 
+   * @param head
+   * @param newNode
+   * @return
+   */
   public static LinkedListNode<Integer> insertToEnd(LinkedListNode<Integer> head, LinkedListNode<Integer> newNode) {
     LinkedListNode<Integer> tmp = head;
     while(tmp.next() != null)
@@ -243,7 +274,7 @@ class ProgramInterviewQuestions {
   }
   
   /**
-   * print linked list
+   * print linked list, O(n)
    * 
    * @param node
    */
