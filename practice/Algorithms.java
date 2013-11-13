@@ -7,8 +7,45 @@ import java.util.Stack;
 public class Algorithms {
 
   /**
+   * given a int representing levels user wants, this method returns the levels of pascal triangle
+   * int string form, comma separated, where \n is appended when occurs. it runs O(n) time and space
+   * for example, when the input is 3, you'll get
    * 
-   * given an int array representing a pond, find the water that can be accumulated, O(n)
+   *   1
+   *  1,1
+   * 1,2,1
+   * 
+   * @param level
+   * @return
+   */
+  public static String getPascalPyramid(int level) {
+    StringBuffer pyramid = new StringBuffer();
+    int[] nextLevel = {1};
+    for (int i = 0; i < level; i++) {
+      for (int j = 0; j < nextLevel.length; j++) {
+        pyramid.append(nextLevel[j]);
+        if (j != nextLevel.length - 1)
+          pyramid.append(",");
+      }
+      pyramid.append("\n");
+      nextLevel = getPascalPyramidBySingleLevelGivenPreLevel(nextLevel);      
+    }
+    return pyramid.toString();
+  }
+  
+  private static int[] getPascalPyramidBySingleLevelGivenPreLevel(int[] prevLevel) {
+    int[] thisLevel = new int[prevLevel.length + 1];
+    thisLevel[0] = 1;
+    thisLevel[prevLevel.length] = 1;
+    for (int i = 1; i < prevLevel.length; i++) {
+      thisLevel[i] = prevLevel[i-1] + prevLevel[i];
+    }
+    return thisLevel;
+  }
+  
+  /**
+   * 
+   * given an int array representing a pond, find the water that can be accumulated, O(n) in time and space
    * it pre process the array twice first, for each position, find out the highest wall to its left and right.
    * then we simply calculate it by looking at the lower of the either side wall and take the different between
    * the walls and that spot

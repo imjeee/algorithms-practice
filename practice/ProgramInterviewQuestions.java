@@ -26,8 +26,12 @@ class ProgramInterviewQuestions {
     playWithBinarySearchTree();
     playWithQueue();
     findHowMuchWaterCanAccumulate();
+    printPascalPyramid();
   }
   
+  private static void printPascalPyramid() {
+    System.out.println(Algorithms.getPascalPyramid(10));
+  }
 
   
   private static void groupStrings() {
