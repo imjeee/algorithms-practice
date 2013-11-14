@@ -27,12 +27,32 @@ class ProgramInterviewQuestions {
     playWithQueue();
     findHowMuchWaterCanAccumulate();
     printPascalPyramid();
+    printWhatYouSeeInNumbers();
+    findLongestAnagramInString();
+  }
+  
+  private static void findLongestAnagramInString() {
+    String s = "banana";
+    System.out.println("find longest anagram in string: " + s);
+    System.out.println(findLongestAnagramInString(s));
+  }
+  
+  public static String findLongestAnagramInString(String s) {
+    String preprocessedString = Algorithms.insertStarsInString(s);
+    String longestAnagramWithStars = Algorithms.findLongestAnagramInStringBruteForceWay(preprocessedString);
+    String longestAnagram = Algorithms.stripStarsFromString(longestAnagramWithStars);
+    return longestAnagram;
+  }
+  
+  private static void printWhatYouSeeInNumbers() {
+    System.out.println("print what you see:");
+    System.out.println(Algorithms.printWhatYouSeeGivenNumOfLevels(10));
   }
   
   private static void printPascalPyramid() {
+    System.out.println("print pascal pyramid:");
     System.out.println(Algorithms.getPascalPyramid(10));
   }
-
   
   private static void groupStrings() {
     String[] source = {"a", "ab", "fadeer", "asdwer", "awerd", "acfgdsfgser"};

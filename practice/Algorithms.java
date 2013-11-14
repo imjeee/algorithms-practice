@@ -7,6 +7,137 @@ import java.util.Stack;
 public class Algorithms {
 
   /**
+   * 
+   * find longest anagram in string using almost brute force way. given banana,
+   * return anana, since anana is the longest anagram in the string banana
+   * O(n^2) time and O(n) space
+   * 
+   * @param s
+   * @return
+   */
+  public static String findLongestAnagramInStringBruteForceWay(String s) {
+    String longestAnagramSoFar = "";
+    for (int i = 0; i < s.length(); i++) {
+      String anagramCenteredAtI = findAnagramCenteredAtI(s, i);
+      if (anagramCenteredAtI.length() > longestAnagramSoFar.length())
+        longestAnagramSoFar = anagramCenteredAtI;
+    }
+    return longestAnagramSoFar;
+  }
+  
+  private static String findAnagramCenteredAtI(String s, int center) {
+    if (center < 0 || center >= s.length())
+      return null;
+    String anagram = s.charAt(center) + "";
+    int leftPointer = center - 1;
+    int rightPointer = center + 1;
+    while (leftPointer > 0 && rightPointer < s.length()) {
+      if (s.charAt(leftPointer) == s.charAt(rightPointer)) {
+        anagram = s.charAt(leftPointer) + anagram + s.charAt(rightPointer);
+        leftPointer--;
+        rightPointer++;
+      } else {
+        return anagram;
+      }
+    }
+    return anagram;
+  }
+  
+  /**
+   * given agha, return *a*g*h*a*, O(n) time and space
+   * 
+   * @param s
+   * @return
+   */
+  public static String insertStarsInString(String s) {
+    StringBuffer output = new StringBuffer();
+    output.append("*");
+    for (int i = 0; i < s.length(); i++)
+      output.append(s.charAt(i) + "*");
+    return output.toString();
+  }
+  
+  /**
+   * given *a*bb*ee*cda*, return abbeecda, O(n) time and space
+   * 
+   * @param s
+   * @return
+   */
+  public static String stripStarsFromString(String s) {
+    StringBuffer output = new StringBuffer();
+    for (int i = 0; i < s.length(); i++) {
+      String nextChar = s.charAt(i) == '*' ? "" : s.charAt(i) + "";
+      output.append(nextChar);
+    }
+    return output.toString();
+  }
+  
+  /**
+   * 
+   * given number of levels you want to see, print what you see starting at 1, so in this case, if input is 5, you see
+   * 
+   * 1
+   * 11
+   * 21
+   * 1211
+   * 111221
+   * 
+   * @param numOfLevels
+   * @return
+   */
+  public static String printWhatYouSeeGivenNumOfLevels(int numOfLevels) {
+    int[] level = {1};
+    return printWhatYouSeeGivenCurrentLevelAndNumOfLevels(level, numOfLevels);
+  }
+  private static String printWhatYouSeeGivenCurrentLevelAndNumOfLevels(int[] level, int numOfLevels) {
+    StringBuffer output = new StringBuffer();
+    for (int i = 0; i < numOfLevels; i++) {
+      output.append(convertIntArrayToString(level));
+      level = getNextLevelOfWhatYouSee(level);
+    }
+    return output.toString();
+  }
+  
+  private static String convertIntArrayToString(int[] level) {
+    StringBuffer output = new StringBuffer();
+    for (int i : level)
+      output.append(i);
+    output.append("\n");
+    return output.toString();
+  }
+  
+  private static int[] getNextLevelOfWhatYouSee(int[] level) {
+    if (level == null || level.length == 0)
+      return null;
+    
+    ArrayList<Integer> newLevel = new ArrayList<Integer>();
+    int currentNum = level[0];
+    int currentNumCount = 1;
+    for (int i = 1; i <= level.length; i++) {
+      if (i == level.length) {
+        newLevel.add(currentNumCount);
+        newLevel.add(currentNum);
+      } else if (currentNum == level[i]) {
+        currentNumCount++;
+      } else {
+        newLevel.add(currentNumCount);
+        newLevel.add(currentNum);
+        currentNum = level[i];
+        currentNumCount = 1;
+      }
+    }
+    return convertArrayListToIntArray(newLevel);
+  }
+  
+  private static int[] convertArrayListToIntArray(ArrayList<Integer> arraylist) {
+    int[] result = new int[arraylist.size()];
+    for (int i = 0; i < result.length; i++) {
+      result[i] = arraylist.get(i);
+    }
+    return result;
+  }
+  
+  /**
    * given a int representing levels user wants, this method returns the levels of pascal triangle
    * int string form, comma separated, where \n is appended when occurs. it runs O(n) time and space
    * for example, when the input is 3, you'll get
