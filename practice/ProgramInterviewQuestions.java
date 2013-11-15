@@ -29,6 +29,14 @@ class ProgramInterviewQuestions {
     printPascalPyramid();
     printWhatYouSeeInNumbers();
     findLongestAnagramInString();
+    searchNumberInSortedButRotatedArray();
+  }
+  
+  private static void searchNumberInSortedButRotatedArray() {
+    int[] rotatedArray = {8,9,1,2,3,4,5,6,7};
+    int target = 10;
+    System.out.println("find " + target + " in rotated array: " + Algorithms.convertArrayToString(rotatedArray));
+    System.out.println("target position: " + Algorithms.searchNumberPosInSortedButRotatedArray(rotatedArray, target));
   }
   
   private static void findLongestAnagramInString() {
@@ -37,7 +45,7 @@ class ProgramInterviewQuestions {
     System.out.println(findLongestAnagramInString(s));
   }
   
-  public static String findLongestAnagramInString(String s) {
+  private static String findLongestAnagramInString(String s) {
     String preprocessedString = Algorithms.insertStarsInString(s);
     String longestAnagramWithStars = Algorithms.findLongestAnagramInStringBruteForceWay(preprocessedString);
     String longestAnagram = Algorithms.stripStarsFromString(longestAnagramWithStars);

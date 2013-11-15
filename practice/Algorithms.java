@@ -7,6 +7,51 @@ import java.util.Stack;
 public class Algorithms {
 
   /**
+   * given an rotated int array, find the position which the target occurs, O(log(n)) time, O(1) space
+   * 
+   * @param rotatedArray
+   * @param target
+   * @return
+   */
+  public static int searchNumberPosInSortedButRotatedArray(int[] rotatedArray, int target) {
+    int startPosOfOriginalArray = findStartingPosInRotatedArray(rotatedArray);
+    if (target >= rotatedArray[startPosOfOriginalArray] && target <= rotatedArray[rotatedArray.length - 1])
+      return seachTargetBetweenRangeInArray(target, startPosOfOriginalArray, rotatedArray.length - 1, rotatedArray);
+    else 
+      return seachTargetBetweenRangeInArray(target, 0, startPosOfOriginalArray, rotatedArray);
+  }
+  
+  private static int seachTargetBetweenRangeInArray(int target, int start, int end, int[] array) {
+    int mid = (end - start) / 2 + start;
+    while (array[mid] != target && target >= array[start] && target <= array[end]) {
+      if (target <= array[mid]) {
+        end = mid;
+        mid = (end - start) / 2 + start;
+      } else {
+        start = mid;
+        mid = (end - start) / 2 + mid;
+      }        
+    }
+    return array[mid] == target ? mid : -1;
+  }
+  
+  private static int findStartingPosInRotatedArray(int[] rotatedArray) {
+    int start = 0;
+    int end = rotatedArray.length - 1;
+    int pointer = end / 2;
+    while(pointer != 0 && rotatedArray[pointer] > rotatedArray[pointer - 1]) {
+      if (rotatedArray[pointer] > rotatedArray[end]) {
+        start = pointer;
+        pointer = (end - start) / 2 + pointer;
+      } else {
+        end = pointer;
+        pointer = (end - start) / 2;
+      }
+    }
+    return pointer;
+  }
+  
+  /**
    * 
    * find longest anagram in string using almost brute force way. given banana,
    * return anana, since anana is the longest anagram in the string banana
@@ -659,5 +704,12 @@ public class Algorithms {
       }
     }
     return result;
+  }
+
+  public static String convertArrayToString(int[] rotatedArray) {
+    StringBuffer output = new StringBuffer();
+    for (int i : rotatedArray)
+      output.append(i + ", ");
+    return output.toString();
   }
 }
