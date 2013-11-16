@@ -33,13 +33,21 @@ class ProgramInterviewQuestions {
     searchNumberInSortedButRotatedArray();
     encodeStringByCharAndNumber();
     findMinimumWindowInStringOneWhichContainsAllCharsInStringTwo();
+    givenNReturnAllNumbersInRange();
+  }
+  
+  private static void givenNReturnAllNumbersInRange() {
+    int n = 33;
+    int[] arr = {3,6,8};
+    String output = Algorithms.givenNReturnAllNumbersInRange(n, arr);
+    System.out.println("print all numbers in range: " + n + ", " + Algorithms.printIntArray(arr) + ": " + output);
   }
   
   private static void findMinimumWindowInStringOneWhichContainsAllCharsInStringTwo() {
     String one = "ADOBECODEBANC";
     String two = "ABC";
     System.out.print("given string: " + one + ", and target string: " + two + ", the minimum window: ");
-    System.out.print(Algorithms.findMinimumWindowInStringOneWhichContainsAllCharsInStringTwo(one, two));
+    System.out.println(Algorithms.findMinimumWindowInStringOneWhichContainsAllCharsInStringTwo(one, two));
   }
 
   private static void encodeStringByCharAndNumber() {
@@ -56,7 +64,7 @@ class ProgramInterviewQuestions {
   
   private static void findLongestAnagramInString() {
     String s = "banana";
-    System.out.println("find longest anagram in string: " + s);
+    System.out.print("find longest anagram in string: " + s + " is ");
     System.out.println(findLongestAnagramInString(s));
   }
   

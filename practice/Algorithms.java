@@ -8,6 +8,55 @@ import java.util.Stack;
 public class Algorithms {
 
   /**
+   * Given a positive int "N". and an array of numbers ranging from 0-9 (say array name is arr). 
+   * print all numbers from 0 to N which include any number from "arr".
+   * 
+   * for example, given
+   * i/p: N=33
+   * arr= {3,6,8}
+   * 
+   * return 3,6,8,13,16,18,23,26,28,30,31,32,33
+   * 
+   * @param n
+   * @param arr
+   * @return
+   */
+  public static String givenNReturnAllNumbersInRange(int n, int[] arr) {
+    StringBuffer output = new StringBuffer();
+    for (int i = arr[0]; i <= n; i++) {
+      if (iContainsDigitFromList(i, arr))
+        output.append(i + ",");
+    }
+    return output.toString();
+  }
+  
+  private static boolean iContainsDigitFromList(int i, int[] arr) {
+    for (int j = 0; j < arr.length; j++) {
+      if (iContainDigitInJ(i, arr[j]))
+        return true;
+    }
+    return false;
+  }
+  
+  private static boolean iContainDigitInJ(int j, int singleDigit) {
+    while (j != 0) {
+      if ((j-singleDigit)%10 == 0)
+        return true;
+      j /= 10;            
+    }
+    return false;
+  }
+  
+  public static String printIntArray(int[] arr) {
+    StringBuffer output = new StringBuffer();
+    output.append("{");
+    for (int i : arr)
+      output.append(i + ",");
+    output.append("}");
+    return output.toString();
+  }
+  
+  /**
    * You are given two string named str1 and str2.
    * Your task is to find the minimum window in str1 which contains all characters from string str2.
    * this is O(n) in time and space
