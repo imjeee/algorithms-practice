@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Stack;
 import java.lang.StringBuffer;
 
@@ -30,6 +31,20 @@ class ProgramInterviewQuestions {
     printWhatYouSeeInNumbers();
     findLongestAnagramInString();
     searchNumberInSortedButRotatedArray();
+    encodeStringByCharAndNumber();
+    findMinimumWindowInStringOneWhichContainsAllCharsInStringTwo();
+  }
+  
+  private static void findMinimumWindowInStringOneWhichContainsAllCharsInStringTwo() {
+    String one = "ADOBECODEBANC";
+    String two = "ABC";
+    System.out.print("given string: " + one + ", and target string: " + two + ", the minimum window: ");
+    System.out.print(Algorithms.findMinimumWindowInStringOneWhichContainsAllCharsInStringTwo(one, two));
+  }
+
+  private static void encodeStringByCharAndNumber() {
+    String s = "aabbaadddc";
+    System.out.println("encode string: " + s + " to " + Algorithms.encodeString(s));
   }
   
   private static void searchNumberInSortedButRotatedArray() {

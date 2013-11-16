@@ -1,11 +1,110 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 
 public class Algorithms {
 
+  /**
+   * You are given two string named str1 and str2.
+   * Your task is to find the minimum window in str1 which contains all characters from string str2.
+   * this is O(n) in time and space
+   * 
+   * for example, given: ADOBECODEBANC, ABC
+   * return: 
+   * 
+   * 
+   * @param one
+   * @param two
+   * @return
+   */
+  public static String findMinimumWindowInStringOneWhichContainsAllCharsInStringTwo(String one, String two) {
+    HashMap<String, Integer> wordsAndNumTheyAppear = new HashMap<String, Integer>();
+    ArrayList<int[]> pairs = new ArrayList<int[]>();
+    for (int i = 0; i < two.length(); i++) {
+      wordsAndNumTheyAppear.put(two.charAt(i) + "", 0);
+    }
+    int frontRunner = 0;
+    int backRunner = 0;
+    
+    while (frontRunner + 1 < one.length()) {
+      while(missingAtLeastOneKey(wordsAndNumTheyAppear) && frontRunner + 1 < one.length()) {
+        frontRunner++;
+        String key = one.charAt(frontRunner) + "";
+        if (wordsAndNumTheyAppear.containsKey(key)) {
+          int occurance = wordsAndNumTheyAppear.get(key) + 1;
+          wordsAndNumTheyAppear.put(key, occurance);
+        }
+      }
+      int[] pair = {backRunner, frontRunner};
+      pairs.add(pair);
+      while(!missingAtLeastOneKey(wordsAndNumTheyAppear) && backRunner + 1 < one.length()) {
+        backRunner++;
+        String key = one.charAt(backRunner) + "";
+        if (wordsAndNumTheyAppear.containsKey(key)) {
+          int occurance = wordsAndNumTheyAppear.get(key) - 1;
+          wordsAndNumTheyAppear.put(key, occurance);
+        }
+      }
+      int[] pair2 = {backRunner, frontRunner};
+      pairs.add(pair2);
+    }
+    int shortest = Integer.MAX_VALUE;
+    int[] resultPair = new int[2];
+    for (int[] pair : pairs) {
+      //System.out.println("pairs: " + pair[0] + " " + pair[1] + ", ");
+      if (pair[1] - pair[0] < shortest) {
+        shortest = pair[1] - pair[0];
+        resultPair[0] = pair[0];
+        resultPair[1] = pair[1];
+      }
+    }
+    
+    return one.substring(0,resultPair[0]) + "|" + one.substring(resultPair[0],resultPair[1]+1) + "|" + one.substring(resultPair[1]+1,one.length());
+  }  
+
+  private static boolean missingAtLeastOneKey(HashMap<String, Integer> wordsAndNumTheyAppear) {
+    Set<String> set = wordsAndNumTheyAppear.keySet();
+    for (String key : set) {
+      if (wordsAndNumTheyAppear.get(key) == 0)
+        return true;
+    }
+    return false;
+  }
+  
+  
+  /**
+   * Write a method that takes a string, in this format "aabbaadddc".
+   * Encode the string by counting the consecutive letters. Ex: "a2b2a2d3c1"
+   * O(n) time and space;
+   * 
+   * 
+   * @param s
+   * @return
+   */
+  public static String encodeString(String s) {
+    if (s == null || s.length() == 0)
+      return "";
+    StringBuffer output = new StringBuffer();
+    char currentChar = s.charAt(0);
+    int currentCount = 1;
+    
+    for (int i = 1; i < s.length(); i++) {
+      if (currentChar == s.charAt(i)) {
+        currentCount++;
+      } else {
+        output.append(currentChar + "" + currentCount);
+        currentChar = s.charAt(i);
+        currentCount = 1;
+      }
+    }
+    
+    output.append(currentChar + "" + currentCount);
+    return output.toString();
+  }
+  
   /**
    * given an rotated int array, find the position which the target occurs, O(log(n)) time, O(1) space
    * 
