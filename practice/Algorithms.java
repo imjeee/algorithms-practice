@@ -8,6 +8,43 @@ import java.util.Stack;
 public class Algorithms {
 
   /**
+   * You visited a list of places recently, but you do not remember the 
+   * order in which you visited them. You have with you the airplane 
+   * tickets that you used for travelling. Each ticket contains just the 
+   * start location and the end location. Can you reconstruct your journey?
+   * 
+   * this algorithm is O(n) space and time
+   * 
+   * @param tickets
+   * @return
+   */
+  public static String traceBackRouteUsingPlaneTickets(String[][] tickets) {
+    HashMap<String, String> route = new HashMap<String, String>();
+    HashMap<String, String> reverseRoute = new HashMap<String, String>();
+    for (int i = 0; i < tickets.length; i++) {
+      reverseRoute.put(tickets[i][1], tickets[i][0]);
+      route.put(tickets[i][0], tickets[i][1]);
+    }
+    // find starting point
+    String startingPoint = "";
+    for (String key : reverseRoute.keySet()) {
+      if (!reverseRoute.containsKey(reverseRoute.get(key))) {
+        startingPoint = reverseRoute.get(key);
+        break;
+      }
+    }
+    StringBuffer output = new StringBuffer();
+    String city = startingPoint;
+    String delimiter = " > ";
+    while(city != null) {
+      output.append(city + delimiter);
+      city = route.get(city);      
+    }
+    String sOutput = output.toString();
+    return sOutput.substring(0, sOutput.length() - delimiter.length());
+  }
+  
+  /**
    * Given a positive int "N". and an array of numbers ranging from 0-9 (say array name is arr). 
    * print all numbers from 0 to N which include any number from "arr".
    * 

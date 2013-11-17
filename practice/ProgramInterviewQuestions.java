@@ -34,6 +34,21 @@ class ProgramInterviewQuestions {
     encodeStringByCharAndNumber();
     findMinimumWindowInStringOneWhichContainsAllCharsInStringTwo();
     givenNReturnAllNumbersInRange();
+    traceBackRouteUsingPlaneTickets();
+  }
+  
+  private static void traceBackRouteUsingPlaneTickets() {
+    String[] one = {"beijing", "tokyo"};
+    String[] two = {"paris", "berlin"};
+    String[] three = {"london", "beijing"};
+    String[] four = {"istanbul", "dubai"};
+    String[] five = {"tokyo", "istanbul"};
+    String[] six = {"dubai", "paris"};
+    String[] seven = {"berlin", "washington"};
+    String[] eight = {"washington", "austin"};
+    String[][] tickets = {one, two, three, four, five, six, seven, eight};
+    String route = Algorithms.traceBackRouteUsingPlaneTickets(tickets);
+    System.out.println("given a bunch of tickets, trace back the route: " + route);
   }
   
   private static void givenNReturnAllNumbersInRange() {
