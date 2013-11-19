@@ -8,6 +8,31 @@ import java.util.Stack;
 public class Algorithms {
 
   /**
+   * given a list and an integer k, find how many pairs of numbers in list
+   * can add up to smaller than or equals to k value, ie. given {1,2,5,7,8,12} and k = 15,
+   * the combinations are {1,2},{1,5},{1,7} ... {7,8}, total of 12 of them, so the method should return 12
+   * 
+   * 
+   * @param list
+   * @param k
+   * @return
+   */
+  public static int findNumPairsEqualOrderUnderK(int[] list, int k) {
+    int frontPointer = 0;
+    int backPointer = list.length - 1;
+    int output = 0;
+    while (frontPointer < backPointer) {
+      if (list[frontPointer] + list[backPointer] <= k) {
+        output += backPointer - frontPointer;
+        frontPointer++;
+      } else {
+        backPointer--;
+      }
+    }
+    return output;
+  }
+  
+  /**
    * You visited a list of places recently, but you do not remember the 
    * order in which you visited them. You have with you the airplane 
    * tickets that you used for travelling. Each ticket contains just the 

@@ -35,7 +35,39 @@ class ProgramInterviewQuestions {
     findMinimumWindowInStringOneWhichContainsAllCharsInStringTwo();
     givenNReturnAllNumbersInRange();
     traceBackRouteUsingPlaneTickets();
+    playWithChar();
+    playWithHash();
+    findNumPairsEqualOrderUnderK();
   }
+  
+  private static void findNumPairsEqualOrderUnderK() {
+    int[] list = {1,2,5,7,8,12};
+    int k = 15;
+    System.out.print("given list {1,2,5,7,8,12} and k = 15. the number of pairs thats equal to or less than k: ");
+    System.out.println(Algorithms.findNumPairsEqualOrderUnderK(list, k));
+  }
+  
+  private static void playWithHash() {
+    int h = 10;
+    h ^= h;// >>> 2;
+    System.out.println(h);
+    int e = 8;
+    System.out.println(e >> 1);
+  }
+  
+  private static void playWithChar() {
+    char a = 'a';
+    char b = 'b';
+    char c = 'c';
+    char dd = 'D';
+    char aa = 'A';
+    System.out.println(a + " is " + Integer.valueOf(a));
+    System.out.println(b + " is " + Integer.valueOf(b));
+    System.out.println(c + " is " + Integer.valueOf(c));
+    System.out.println(dd + " is " + Integer.valueOf(dd));
+    System.out.println(aa + " is " + Integer.valueOf(aa));
+  }
+  
   
   private static void traceBackRouteUsingPlaneTickets() {
     String[] one = {"beijing", "tokyo"};
