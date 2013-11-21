@@ -38,6 +38,17 @@ class ProgramInterviewQuestions {
     playWithChar();
     playWithHash();
     findNumPairsEqualOrderUnderK();
+    browserHistorySimulation();
+  }
+  
+  private static void browserHistorySimulation() {
+    String[] list = {"a", "g", "g", "g", "g", "w", "a", "t", "e", "v"};
+    BrowserHistory history = new BrowserHistory();
+    for (String s : list)
+      history.visit(s);
+    String[] returnedHistory = history.getHistory(10);
+    for (String s : returnedHistory)
+      System.out.print(s + ", ");
   }
   
   private static void findNumPairsEqualOrderUnderK() {
