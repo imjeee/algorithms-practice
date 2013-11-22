@@ -8,6 +8,58 @@ import java.util.Stack;
 public class Algorithms {
 
   /**
+   * Given a number N, write a program that returns all possible combinations of numbers 
+   * that add up to N, as lists. (Exclude the N+0=N) 
+   * For example, if N=4 return {{1,1,1,1},{1,1,2},{2,2},{1,3}}
+   * 
+   * 
+   * @param target
+   * @return
+   */
+  public static ArrayList<String> findAllCombinationsOfNumbersAddUpToN(int target) {
+    ArrayList<String> result = new ArrayList<String>();
+
+    result.add(target + "");
+    for (int i = 1; i < target; i++) {
+      ArrayList<String> tmpResult = findAllCombinationsOfNumbersAddUpToN(target - i);
+      result.addAll(addNumToListOfString(i, tmpResult));
+    }
+
+    return result;
+  }
+  
+  private static ArrayList<String> addNumToListOfString(int n, ArrayList<String> input) {
+    ArrayList<String> output = new ArrayList<String>();
+    for (String s : input)
+      output.add(n + s);
+    return output;
+  }
+  
+  /**
+   * Given an array of pairs of the form <a, b>. We have to find a sub-array such that 
+   * the 1st element in the pairs are in increasing order and the sum of 2nd element of 
+   * the pairs in the sub-array is maximum possible
+   * 
+   * @param input
+   * @return
+   */
+  public static int findMaxSubArrayWithMaximumSum(int[][] input) {
+    if (input.length == 0)
+      return 0;
+    int lastSeenNum = input[0][0];
+    int maxSumInCurrentArray = input[0][1];
+    int maxSoFar = maxSumInCurrentArray;
+    for (int i = 1; i < input.length; i++) {
+      int currentNum = input[i][0];
+      int currentNumValue = input[i][1];
+      maxSumInCurrentArray = currentNum >= lastSeenNum ? maxSumInCurrentArray + currentNumValue : currentNumValue;
+      maxSoFar = maxSumInCurrentArray > maxSoFar ? maxSumInCurrentArray : maxSoFar;
+      lastSeenNum = currentNum;
+    }
+    return maxSoFar;
+  }
+  
+  /**
    * given a list and an integer k, find how many pairs of numbers in list
    * can add up to smaller than or equals to k value, ie. given {1,2,5,7,8,12} and k = 15,
    * the combinations are {1,2},{1,5},{1,7} ... {7,8}, total of 12 of them, so the method should return 12

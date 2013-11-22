@@ -39,8 +39,35 @@ class ProgramInterviewQuestions {
     playWithHash();
     findNumPairsEqualOrderUnderK();
     browserHistorySimulation();
+    findMaxSubArrayWithMaximumSums();
+    findAllCombinationsOfNumbersAddUpToN();
   }
   
+  private static void findAllCombinationsOfNumbersAddUpToN() {
+    int n = 4;
+    ArrayList<String> result = Algorithms.findAllCombinationsOfNumbersAddUpToN(n);
+    System.out.print("find all combinations of numbers add up to " + n + ": ");
+    for (String s : result) {
+      System.out.print(s + ", ");
+    }
+  }
+  
+  private static void findMaxSubArrayWithMaximumSums() {
+    int[] one = {1,4};
+    int[] two = {2,2};
+    int[] three = {9,3};
+    int[] four = {5,2};
+    int[] five = {9,6};
+    int[] six = {10,1};
+    int[] seven = {7,4};
+    int[] eight = {8,1};
+    int[] nine = {10,10};
+    
+    int[][] input = {one, two, three, four, five, six, seven, eight, nine};
+    int result = Algorithms.findMaxSubArrayWithMaximumSum(input);
+    System.out.println("find max sub array with max sum: " + result);
+  }
+
   private static void browserHistorySimulation() {
     String[] list = {"a", "g", "g", "g", "g", "w", "a", "t", "e", "v"};
     BrowserHistory history = new BrowserHistory();
@@ -49,6 +76,7 @@ class ProgramInterviewQuestions {
     String[] returnedHistory = history.getHistory(10);
     for (String s : returnedHistory)
       System.out.print(s + ", ");
+    System.out.println();
   }
   
   private static void findNumPairsEqualOrderUnderK() {
