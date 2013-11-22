@@ -20,7 +20,7 @@ public class Algorithms {
     ArrayList<String> result = new ArrayList<String>();
 
     result.add(target + "");
-    for (int i = 1; i < target; i++) {
+    for (int i = 1; i < target/2+1; i++) {
       ArrayList<String> tmpResult = findAllCombinationsOfNumbersAddUpToN(target - i);
       result.addAll(addNumToListOfString(i, tmpResult));
     }

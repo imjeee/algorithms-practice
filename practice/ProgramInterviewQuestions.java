@@ -44,7 +44,7 @@ class ProgramInterviewQuestions {
   }
   
   private static void findAllCombinationsOfNumbersAddUpToN() {
-    int n = 4;
+    int n = 5;
     ArrayList<String> result = Algorithms.findAllCombinationsOfNumbersAddUpToN(n);
     System.out.print("find all combinations of numbers add up to " + n + ": ");
     for (String s : result) {
