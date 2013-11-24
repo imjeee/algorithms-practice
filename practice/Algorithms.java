@@ -1,12 +1,42 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Stack;
 
 
 public class Algorithms {
 
+  /**
+   * find largest n number in int array
+   * 
+   * @param n
+   * @param list
+   * @return
+   */
+  public static int[] findNLargestNumbersInArray(int n, int[] list) {
+    if (list == null || list.length == 0)
+      return null;
+    int[] result = new int[n];
+    PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+    for (int i = 0; i < n; i++) {
+      result[i] = list[0];
+      pq.add(i);
+    }
+    
+    for (int i = 1; i < list.length; i++) {
+      if (pq.peek() < list[i]) {
+        pq.remove();
+        pq.add(list[i]);
+      }
+    }
+    Object[] objArray = pq.toArray();
+    for (int i = 0; i < objArray.length; i++)
+      result[i] = (Integer) objArray[i];
+    return result;
+  }
+  
   /**
    * Given a number N, write a program that returns all possible combinations of numbers 
    * that add up to N, as lists. (Exclude the N+0=N) 

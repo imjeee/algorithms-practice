@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
@@ -41,6 +42,17 @@ class ProgramInterviewQuestions {
     browserHistorySimulation();
     findMaxSubArrayWithMaximumSums();
     findAllCombinationsOfNumbersAddUpToN();
+    findNLargestNumbersInArray();
+  }
+  
+  private static void findNLargestNumbersInArray() {
+    int n = 5;
+    int[] list = {3,6,4,2,6,12,4,8,9,34,4,7,23,9,20,10};
+    int[] result = Algorithms.findNLargestNumbersInArray(n, list);
+    System.out.print("the largest " + n + " integers in the list: ");
+    for (int i : result)
+      System.out.print(i + ", ");
+    System.out.println();
   }
   
   private static void findAllCombinationsOfNumbersAddUpToN() {
@@ -50,6 +62,7 @@ class ProgramInterviewQuestions {
     for (String s : result) {
       System.out.print(s + ", ");
     }
+    System.out.println();
   }
   
   private static void findMaxSubArrayWithMaximumSums() {
