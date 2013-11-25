@@ -191,13 +191,44 @@ public class Algorithms {
     return false;
   }
   
-  public static String printIntArray(int[] arr) {
+  /**
+   * convert int[] to string, ie. {1,2,3} becomes "{1,2,3}"
+   * O(n) time and space
+   * @param <E>
+   * 
+   * @param input
+   * @return
+   */
+  public static String printIntArray(int[] input) {
     StringBuffer output = new StringBuffer();
     output.append("{");
-    for (int i : arr)
+    for (int i : input)
       output.append(i + ",");
-    output.append("}");
-    return output.toString();
+    String sOutput = output.substring(0, output.length() - 2) + "}";
+    return sOutput;
+  }
+  
+  /**
+   * 
+   * @param input
+   * @return
+   */
+  public static String printStringArray(List<String> input) {
+    StringBuffer output = new StringBuffer();
+    output.append("{");
+    for (String i : input)
+      output.append(i + ",");
+    String sOutput = output.substring(0, output.length() - 2) + "}";
+    return sOutput;
+  }
+  
+  public static String printStringArray(String[] input) {
+    StringBuffer output = new StringBuffer();
+    output.append("{");
+    for (String i : input)
+      output.append(i + ",");
+    String sOutput = output.substring(0, output.length() - 2) + "}";
+    return sOutput;
   }
   
   /**
@@ -257,6 +288,29 @@ public class Algorithms {
     
     return one.substring(0,resultPair[0]) + "|" + one.substring(resultPair[0],resultPair[1]+1) + "|" + one.substring(resultPair[1]+1,one.length());
   }  
+
+  /**
+   * given an array of strings, and a begining string, and a end string, return all
+   * strings in array that belongs in between them. like in a dictionary. for example, given
+   * {aa,b,c,dd,ff}, aa, d, the result should be {aa,b,c}, dd comes later than d
+   * 
+   * 
+   * @param source
+   * @param beginning
+   * @param end
+   * @return
+   */
+  public static List<String> getStringsInBetweenTwoWordsLikeInDictionary(
+      String[] source, String beginning, String end) {
+    List<String> result = new ArrayList<String>();
+    for (int i = 0; i < source.length; i++) {
+      if (isBiggerThanOrEqualTo(source[i], beginning) && isSmallerThanOrEqualTo(source[i], end)) {
+        result.add(source[i]);
+        System.out.println(source[i]);
+      }
+    }
+    return result;
+  }
 
   private static boolean missingAtLeastOneKey(HashMap<String, Integer> wordsAndNumTheyAppear) {
     Set<String> set = wordsAndNumTheyAppear.keySet();
@@ -781,17 +835,6 @@ public class Algorithms {
     return false;
   }
 
-    
-  public static String unscramble(String s){
-    char[] alphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};    
-    StringBuffer result = new StringBuffer();
-    s = s.toLowerCase();
-    for (int i = 0; i < s.length(); i++){
-      
-    }
-    return result.toString();
-  }
-
   public static int[] switchem(int[] input){
     
     int front = 0;
@@ -955,6 +998,13 @@ public class Algorithms {
     return sb.toString();
   }
   
+  /**
+   * reverse string, given "abcd", return "dcba"
+   * O(n) in time and space
+   * 
+   * @param s
+   * @return
+   */
   public static String reverseString(String s) {
     StringBuffer sb = new StringBuffer();
     for (int i = s.length() - 1; i >= 0; i--)
@@ -984,24 +1034,5 @@ public class Algorithms {
       }
     }
     return source.length() <= end.length();
-  }
-
-  public static List<String> getStringsInBetweenTwoWordsLikeInDictionary(
-      String[] source, String beginning, String end) {
-    List<String> result = new ArrayList<String>();
-    for (int i = 0; i < source.length; i++) {
-      if (isBiggerThanOrEqualTo(source[i], beginning) && isSmallerThanOrEqualTo(source[i], end)) {
-        result.add(source[i]);
-        System.out.println(source[i]);
-      }
-    }
-    return result;
-  }
-
-  public static String convertArrayToString(int[] rotatedArray) {
-    StringBuffer output = new StringBuffer();
-    for (int i : rotatedArray)
-      output.append(i + ", ");
-    return output.toString();
   }
 }

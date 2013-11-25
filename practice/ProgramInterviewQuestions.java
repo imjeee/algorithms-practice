@@ -49,20 +49,13 @@ class ProgramInterviewQuestions {
     int n = 5;
     int[] list = {3,6,4,2,6,12,4,8,9,34,4,7,23,9,20,10};
     int[] result = Algorithms.findNLargestNumbersInArray(n, list);
-    System.out.print("the largest " + n + " integers in the list: ");
-    for (int i : result)
-      System.out.print(i + ", ");
-    System.out.println();
+    System.out.print("the largest " + n + " integers in the list: " + Algorithms.printIntArray(result));
   }
   
   private static void findAllCombinationsOfNumbersAddUpToN() {
     int n = 5;
     ArrayList<String> result = Algorithms.findAllCombinationsOfNumbersAddUpToN(n);
-    System.out.print("find all combinations of numbers add up to " + n + ": ");
-    for (String s : result) {
-      System.out.print(s + ", ");
-    }
-    System.out.println();
+    System.out.println("find all combinations of numbers add up to " + n + ": " + Algorithms.printStringArray(result));
   }
   
   private static void findMaxSubArrayWithMaximumSums() {
@@ -87,9 +80,7 @@ class ProgramInterviewQuestions {
     for (String s : list)
       history.visit(s);
     String[] returnedHistory = history.getHistory(10);
-    for (String s : returnedHistory)
-      System.out.print(s + ", ");
-    System.out.println();
+    System.out.println("browserHistorySimulation: " + Algorithms.printStringArray(returnedHistory));
   }
   
   private static void findNumPairsEqualOrderUnderK() {
@@ -157,7 +148,7 @@ class ProgramInterviewQuestions {
   private static void searchNumberInSortedButRotatedArray() {
     int[] rotatedArray = {8,9,1,2,3,4,5,6,7};
     int target = 10;
-    System.out.println("find " + target + " in rotated array: " + Algorithms.convertArrayToString(rotatedArray));
+    System.out.println("find " + target + " in rotated array: " + Algorithms.printIntArray(rotatedArray));
     System.out.println("target position: " + Algorithms.searchNumberPosInSortedButRotatedArray(rotatedArray, target));
   }
   
@@ -189,12 +180,11 @@ class ProgramInterviewQuestions {
     String beginning = "ac";
     String end = "afd";
     List<String> result = Algorithms.getStringsInBetweenTwoWordsLikeInDictionary(source, beginning, end);
-    for (String s : result)
-      System.out.print(s + ", ");
+    System.out.println("getStringsInBetweenTwoWordsLikeInDictionary: " + Algorithms.printStringArray(result));
   }
   
   private static void findHowMuchWaterCanAccumulate() {
-    int[] pond = {4,3,5,2,1,4,5,7,3,5,8};
+    //int[] pond = {4,3,5,2,1,4,5,7,3,5,8};
     int[] pond2 = {4,2,3,1,2,0,1,2};
     System.out.println("water accumulated total is: " + Algorithms.findHowMuchWaterCanAccumulate(pond2));
   }
@@ -210,21 +200,10 @@ class ProgramInterviewQuestions {
     System.out.println("first bit position of " + num + " is " + Algorithms.findBitPosition(num));
   }
 
-  private static void misc() {
-    int[] i = { Integer.MAX_VALUE };
-    System.out.println(i[0]);
-    i[0]++;
-    System.out.println(i[0]);
-  }
-
   private static void switchem() {
     int[] input = {-1, 5, -2, 3, 9, -10, -5, 3, -10, 9, 8, 7, -30, -100};
     int[] output = Algorithms.switchem(input);
-    
-    for (int i : output) {
-      System.out.print(i+" ");
-    }
-    System.out.println();
+    System.out.println(Algorithms.printIntArray(output));
   }
 
   private static void anagram() {
@@ -288,10 +267,7 @@ class ProgramInterviewQuestions {
     int[] a = {1,4,6,8,9};
     int[] b = {4,7,8, 10,12};
     int[] result = Algorithms.mergeSortedIntArrays(a, b);
-    System.out.print("Merged int array: ");
-    for (int i = 0; i < result.length; i++)
-      System.out.print(result[i] + ", ");
-    System.out.println();
+    System.out.print("Merged int array: " + Algorithms.printIntArray(result));
   }
 
   private static void playWithQueue() {
