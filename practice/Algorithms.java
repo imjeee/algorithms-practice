@@ -8,6 +8,64 @@ import java.util.Stack;
 
 public class Algorithms {
 
+
+    /**
+     * Given the array of digits (0 is also allowed), what is the minimal sum of two integers 
+     * that are made of the digits contained in the array. 
+     * For example, array: 1 2 7 8 9. The min sum (129 + 78) should be 207
+     *
+     *
+     *
+     **/
+    public static int findMinSumOfTwoIntegerMadeFromDigitsOfArray(ArrayList<Integer> arr) {
+        ArrayList<Integer> sortedArr = sortArray(arr);
+        String firstNum = "";
+        String secondNum = "";
+        int startingPoint = 0;
+        if (sortedArr.size() % 2 == 1) {
+            firstNum += sortedArr.get(0);
+            startingPoint = 1;
+        }
+        for (int i = 1; i < sortedArr.size(); i++) {
+            if (i % 2 == 0)
+                firstNum += sortedArr.get(i);
+            else
+                secondNum += sortedArr.get(i);
+        }
+
+        return Integer.parseInt(firstNum) + Integer.parseInt(secondNum);
+    }
+
+    /**
+     *
+     * quicksort implementation
+     *
+     **/
+    public static ArrayList<Integer> sortArray(ArrayList<Integer> arr) {
+        if (arr.size() <= 1)
+            return arr;
+
+        ArrayList<Integer> smallerThanOrEqual = new ArrayList<Integer>();
+        ArrayList<Integer> biggerThan = new ArrayList<Integer>();
+        int mid = arr.get(0);
+        for (int i = 1; i < arr.size(); i++) {
+            if (arr.get(i) <= mid)
+                smallerThanOrEqual.add(arr.get(i));
+                else
+                    biggerThan.add(arr.get(i));
+        }
+        smallerThanOrEqual = sortArray(smallerThanOrEqual);
+        biggerThan = sortArray(biggerThan);
+        
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        result.addAll(smallerThanOrEqual);
+        result.add(mid);
+        result.addAll(biggerThan);
+        return result;                
+            
+    }
+    
+
   /**
    * find largest n number in int array
    * 
@@ -208,6 +266,15 @@ public class Algorithms {
     return sOutput;
   }
   
+    public static String printIntArray(ArrayList<Integer> input) {
+        StringBuffer output = new StringBuffer();
+        output.append("{");
+        for (Integer i : input)
+            output.append(i + ",");
+        String sOutput = output.substring(0, output.length() - 2) + "}";
+        return sOutput;
+    }
+
   /**
    * 
    * @param input

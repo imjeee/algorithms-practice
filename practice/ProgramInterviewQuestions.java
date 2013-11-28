@@ -43,13 +43,24 @@ class ProgramInterviewQuestions {
     findMaxSubArrayWithMaximumSums();
     findAllCombinationsOfNumbersAddUpToN();
     findNLargestNumbersInArray();
+    findMinSumOfTwoIntegerMadeFromDigitsOfArray();
   }
   
+    private static void findMinSumOfTwoIntegerMadeFromDigitsOfArray() {
+        ArrayList<Integer> arr = new ArrayList<Integer>();
+        arr.add(1);
+        arr.add(2);
+        arr.add(8);
+        arr.add(7);
+        arr.add(9);
+        System.out.println("Given arr: " + Algorithms.printIntArray(arr) + ", the mind sum of two integers made from the digits of the array: " + Algorithms.findMinSumOfTwoIntegerMadeFromDigitsOfArray(arr));
+    }
+
   private static void findNLargestNumbersInArray() {
     int n = 5;
     int[] list = {3,6,4,2,6,12,4,8,9,34,4,7,23,9,20,10};
     int[] result = Algorithms.findNLargestNumbersInArray(n, list);
-    System.out.print("the largest " + n + " integers in the list: " + Algorithms.printIntArray(result));
+    System.out.println("the largest " + n + " integers in the list: " + Algorithms.printIntArray(result));
   }
   
   private static void findAllCombinationsOfNumbersAddUpToN() {
