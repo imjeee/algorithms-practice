@@ -44,17 +44,43 @@ class ProgramInterviewQuestions {
     findAllCombinationsOfNumbersAddUpToN();
     findNLargestNumbersInArray();
     findMinSumOfTwoIntegerMadeFromDigitsOfArray();
+    findLongestContinuingPairs();
   }
   
-    private static void findMinSumOfTwoIntegerMadeFromDigitsOfArray() {
-        ArrayList<Integer> arr = new ArrayList<Integer>();
-        arr.add(1);
-        arr.add(2);
-        arr.add(8);
-        arr.add(7);
-        arr.add(9);
-        System.out.println("Given arr: " + Algorithms.printIntArray(arr) + ", the mind sum of two integers made from the digits of the array: " + Algorithms.findMinSumOfTwoIntegerMadeFromDigitsOfArray(arr));
-    }
+  private static void findLongestContinuingPairs() {
+	int[] pair1 = {1,3};
+	int[] pair2 = {2,6};
+	int[] pair3 = {3,8}; 
+	int[] pair4 = {4,5};
+	int[] pair5 = {7,9};
+	int[] pair6 = {4,6};
+	int[] pair7 = {6,7};
+	int[] pair8 = {8,3};
+	int[] pair9 = {5,4};
+	int[][] pairs = {pair1, pair2, pair3, pair4, pair5, pair6, pair7, pair8, pair9};
+	ArrayList<int[]> continuousPairs = Algorithms.findLongestContinuingPairs(pairs);
+	System.out.println("find longest continuing pairs: " + printPairs(continuousPairs));
+  }
+  
+  public static String printPairs(ArrayList<int[]> pairs) {
+	  if (pairs == null || pairs.size() == 0)
+		  return "";
+	  StringBuffer output = new StringBuffer();
+	  for (int i = 0; i < pairs.size(); i++) {
+		  output.append("{" + pairs.get(i)[0] + "," + pairs.get(i)[1] + "} ");
+	  }
+	  return output.toString();
+  }
+  
+  private static void findMinSumOfTwoIntegerMadeFromDigitsOfArray() {
+    ArrayList<Integer> arr = new ArrayList<Integer>();
+    arr.add(1);
+    arr.add(2);
+    arr.add(8);
+    arr.add(7);
+    arr.add(9);
+    System.out.println("Given arr: " + Algorithms.printIntArray(arr) + ", the mind sum of two integers made from the digits of the array: " + Algorithms.findMinSumOfTwoIntegerMadeFromDigitsOfArray(arr));
+  }
 
   private static void findNLargestNumbersInArray() {
     int n = 5;
