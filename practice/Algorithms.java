@@ -8,7 +8,94 @@ import java.util.Stack;
 
 public class Algorithms {
 
-
+	/**
+	 * 9 queens problem
+	 * 
+	 * @param queensLeftToPlace
+	 * @param board
+	 * @return
+	 */
+	public static ArrayList<int[]> queensOnChessBoardProblem(int queensLeftToPlace, boolean[][] board) {
+  	board = queensOnChessBoardProblemHelper(0, queensLeftToPlace, board);
+  	ArrayList<int[]> queensPositions = new ArrayList<int[]>();
+  	if (board != null) {
+  		for (int i = 0; i < board.length; i++) {
+  			for (int j = 0; j < board[i].length; j++) {
+  				if (board[i][j]) {
+  					int[] queenPos = {i,j};
+  					queensPositions.add(queenPos);
+  				}
+  			}
+  		}
+  		return queensPositions;
+  	}
+  	return null;	
+  }
+  
+  private static boolean[][] queensOnChessBoardProblemHelper(int currentRowPos, int queensLeftToPlace, boolean[][] board) {
+  	if (queensLeftToPlace == 0) {
+  		return board;
+  	} else if (currentRowPos >= board.length) {
+  		return null;
+  	} else {
+  		for (int i = 0; i < board[currentRowPos].length; i++) {
+  			if (queenCanBePlaced(currentRowPos, i, board)) {
+  				board[currentRowPos][i] = true;
+  				boolean[][] newBoard = queensOnChessBoardProblemHelper(currentRowPos + 1, queensLeftToPlace - 1, board);
+  				if (newBoard != null)
+  					return newBoard;
+  				else
+  					board[currentRowPos][i] = false;
+  			}
+  		}
+  	}
+  	return null;
+  }
+  
+  private static boolean queenCanBePlaced(int row, int col, boolean[][] board) {
+  	boolean result = noQueenInSameRow(row, col, board);
+  	result &= noQueenInSameCol(row, col, board);
+  	result &= noQueenInDiagnalTopLeftToBottomRight(row, col, board);
+  	result &= noQueenInDiagnalBottomLeftToTopRight(row, col, board);
+  	return result;
+  }
+  
+  private static boolean noQueenInSameRow(int row, int col, boolean[][] board) {
+  	for (int i = 0; i < board[row].length; i++) {
+  		if (board[row][i] && i != col)
+  			return false;
+  	}
+  	return true;
+  }
+  
+  private static boolean noQueenInSameCol(int row, int col, boolean[][] board) {
+  	for (int i = 0; i < board.length; i++) {
+  		if (board[i][col] && i != row)
+  			return false;
+  	}
+  	return true;
+  }
+  
+  private static boolean noQueenInDiagnalTopLeftToBottomRight(int row, int col, boolean[][] board) {
+  	for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--)
+  		if (board[i][j])
+  			return false;
+  	for (int i = row + 1, j = col + 1; i < board.length && j < board[row].length; i++, j++)
+  		if (board[i][j])
+  			return false;
+  	return true;
+  }
+  
+  private static boolean noQueenInDiagnalBottomLeftToTopRight(int row, int col, boolean[][] board) {
+  	for (int i = row - 1, j = col + 1; i >= 0 && j < board[row].length; i--, j++)
+  		if (board[i][j])
+  			return false;
+  	for (int i = row + 1, j = col - 1; i < board.length && j >= 0; i++, j--)
+  		if (board[i][j])
+  			return false;
+  	return true;
+  }
+	
 	/**
 	 * You are given pairs of numbers. In a pair the first number is smaller with respect to the second number.
 	 * Suppose you have two sets (a, b) and (c, d), the second set can follow the first set if b<c.

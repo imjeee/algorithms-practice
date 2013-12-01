@@ -45,21 +45,62 @@ class ProgramInterviewQuestions {
     findNLargestNumbersInArray();
     findMinSumOfTwoIntegerMadeFromDigitsOfArray();
     findLongestContinuingPairs();
+    voilateConsecutiveABCCharRequirement();
+    queensOnChessBoardProblem();
+  }
+  
+  private static void queensOnChessBoardProblem() {
+  	int boardSize = 8;
+  	int numQueensToPlace = 8;
+  	boolean[][] board = new boolean[boardSize][boardSize];
+  	ArrayList<int[]> queensPositions = Algorithms.queensOnChessBoardProblem(numQueensToPlace, board);
+  	if (queensPositions != null) {
+    	System.out.print("on a board size: " + boardSize + "x" + boardSize + ", we can place all " + numQueensToPlace + " queens on board by placing them at positions: ");
+  		for (int[] pos : queensPositions)
+  			System.out.print("{" + pos[0] + pos[1] + "} ");
+  	} else {
+  		System.out.print("cannot print " + numQueensToPlace + " in board size of " + boardSize + "x" + boardSize);
+  	}
+  	System.out.println();
+  }
+  
+  
+  
+  private static void voilateConsecutiveABCCharRequirement() {
+  	char[] chars = {'a','b','c'};
+  	String testString = "abc";
+  	testString = "bbaaaaaaaacb";
+  	System.out.println("String: " + testString + " voilate consecutive abc characters requirement: " + voilateConsecutiveABCCharRequirement(chars, testString));
+  }
+  
+  public static boolean voilateConsecutiveABCCharRequirement(char[] chars, String s) {
+  	int[] checker = new int[256];
+  	for (int i = 0; i < s.length(); i++) {
+  		if (i > chars.length - 1)
+  			checker[s.charAt(i - chars.length)] -= 1;
+  		checker[s.charAt(i)] += 1;
+  		boolean containEachAndEveryCharInLastSequence = true;
+  		for (int j = 0; j < chars.length; j++)
+  			containEachAndEveryCharInLastSequence &= checker[chars[j]] > 0;  		
+  		if (containEachAndEveryCharInLastSequence)
+  			return true;
+  	}
+  	return false;
   }
   
   private static void findLongestContinuingPairs() {
-	int[] pair1 = {1,3};
-	int[] pair2 = {2,6};
-	int[] pair3 = {3,8}; 
-	int[] pair4 = {4,5};
-	int[] pair5 = {7,9};
-	int[] pair6 = {4,6};
-	int[] pair7 = {6,7};
-	int[] pair8 = {8,3};
-	int[] pair9 = {5,4};
-	int[][] pairs = {pair1, pair2, pair3, pair4, pair5, pair6, pair7, pair8, pair9};
-	ArrayList<int[]> continuousPairs = Algorithms.findLongestContinuingPairs(pairs);
-	System.out.println("find longest continuing pairs: " + printPairs(continuousPairs));
+		int[] pair1 = {1,3};
+		int[] pair2 = {2,6};
+		int[] pair3 = {3,8}; 
+		int[] pair4 = {4,5};
+		int[] pair5 = {7,9};
+		int[] pair6 = {4,6};
+		int[] pair7 = {6,7};
+		int[] pair8 = {8,3};
+		int[] pair9 = {5,4};
+		int[][] pairs = {pair1, pair2, pair3, pair4, pair5, pair6, pair7, pair8, pair9};
+		ArrayList<int[]> continuousPairs = Algorithms.findLongestContinuingPairs(pairs);
+		System.out.println("find longest continuing pairs: " + printPairs(continuousPairs));
   }
   
   public static String printPairs(ArrayList<int[]> pairs) {
@@ -128,9 +169,10 @@ class ProgramInterviewQuestions {
   }
   
   private static void playWithHash() {
+  	System.out.print("playing with hash values: ");
     int h = 10;
     h ^= h;// >>> 2;
-    System.out.println(h);
+    System.out.print(h);
     int e = 8;
     System.out.println(e >> 1);
   }
@@ -141,11 +183,12 @@ class ProgramInterviewQuestions {
     char c = 'c';
     char dd = 'D';
     char aa = 'A';
-    System.out.println(a + " is " + Integer.valueOf(a));
-    System.out.println(b + " is " + Integer.valueOf(b));
-    System.out.println(c + " is " + Integer.valueOf(c));
-    System.out.println(dd + " is " + Integer.valueOf(dd));
-    System.out.println(aa + " is " + Integer.valueOf(aa));
+    System.out.print("play with chars, ");
+    System.out.print(a + " is " + Integer.valueOf(a) + ", ");
+    System.out.print(b + " is " + Integer.valueOf(b) + ", ");
+    System.out.print(c + " is " + Integer.valueOf(c) + ", ");
+    System.out.print(dd + " is " + Integer.valueOf(dd) + ", ");
+    System.out.println(aa + " is " + Integer.valueOf(aa) + ", ");
   }
   
   
@@ -204,7 +247,7 @@ class ProgramInterviewQuestions {
   
   private static void printWhatYouSeeInNumbers() {
     System.out.println("print what you see:");
-    System.out.println(Algorithms.printWhatYouSeeGivenNumOfLevels(10));
+    System.out.print(Algorithms.printWhatYouSeeGivenNumOfLevels(10));
   }
   
   private static void printPascalPyramid() {
