@@ -7,6 +7,42 @@ import java.util.Stack;
 
 public class Algorithms {
 
+
+  public static boolean voilateConsecutiveABCCharRequirement(char[] chars,
+      String s) {
+    int[] checker = new int[256];
+    for (int i = 0; i < s.length(); i++) {
+      if (i > chars.length - 1)
+        checker[s.charAt(i - chars.length)] -= 1;
+      checker[s.charAt(i)] += 1;
+      boolean containEachAndEveryCharInLastSequence = true;
+      for (int j = 0; j < chars.length; j++)
+        containEachAndEveryCharInLastSequence &= checker[chars[j]] > 0;
+      if (containEachAndEveryCharInLastSequence)
+        return true;
+    }
+    return false;
+  }
+  
+  public static String printPairs(ArrayList<int[]> pairs) {
+    if (pairs == null || pairs.size() == 0)
+      return "";
+    StringBuffer output = new StringBuffer();
+    for (int i = 0; i < pairs.size(); i++) {
+      output.append("{" + pairs.get(i)[0] + "," + pairs.get(i)[1] + "} ");
+    }
+    return output.toString();
+  }
+  
+  public static int findNumOnesInBinaryRepresentationOfInt(int num) {
+    int result = 1;
+    while (num >> 1 != 0) {
+      result += num & 1;
+      num = num >> 1;
+    }
+    return result;
+  }
+  
   public static int convertBinaryStringToInt(String binary) {
     int result = 0;
     int binaryPos = 1;

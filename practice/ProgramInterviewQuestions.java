@@ -49,7 +49,20 @@ class ProgramInterviewQuestions {
     queensOnChessBoardProblem();
     convertIntToBinary();
     convertBinaryStringToInt();
+    findNumOnesInBinaryRepresentationOfInt();
   }
+  
+  private static void findNumOnesInBinaryRepresentationOfInt() {
+    int num = 6;
+    System.out.println("The number of 1s in the binary representation of " + num + " is " + Algorithms.findNumOnesInBinaryRepresentationOfInt(num));
+    num = 44;
+    System.out.println("The number of 1s in the binary representation of " + num + " is " + Algorithms.findNumOnesInBinaryRepresentationOfInt(num));
+    num = 72;
+    System.out.println("The number of 1s in the binary representation of " + num + " is " + Algorithms.findNumOnesInBinaryRepresentationOfInt(num));
+    num = 131;
+    System.out.println("The number of 1s in the binary representation of " + num + " is " + Algorithms.findNumOnesInBinaryRepresentationOfInt(num));
+  }
+
   
   private static void convertBinaryStringToInt() {
     String binary = "100";
@@ -100,23 +113,7 @@ class ProgramInterviewQuestions {
     testString = "bbaaaaaaaacb";
     System.out.println("String: " + testString
         + " voilate consecutive abc characters requirement: "
-        + voilateConsecutiveABCCharRequirement(chars, testString));
-  }
-
-  public static boolean voilateConsecutiveABCCharRequirement(char[] chars,
-      String s) {
-    int[] checker = new int[256];
-    for (int i = 0; i < s.length(); i++) {
-      if (i > chars.length - 1)
-        checker[s.charAt(i - chars.length)] -= 1;
-      checker[s.charAt(i)] += 1;
-      boolean containEachAndEveryCharInLastSequence = true;
-      for (int j = 0; j < chars.length; j++)
-        containEachAndEveryCharInLastSequence &= checker[chars[j]] > 0;
-      if (containEachAndEveryCharInLastSequence)
-        return true;
-    }
-    return false;
+        + Algorithms.voilateConsecutiveABCCharRequirement(chars, testString));
   }
 
   private static void findLongestContinuingPairs() {
@@ -134,17 +131,7 @@ class ProgramInterviewQuestions {
     ArrayList<int[]> continuousPairs = Algorithms
         .findLongestContinuingPairs(pairs);
     System.out.println("find longest continuing pairs: "
-        + printPairs(continuousPairs));
-  }
-
-  public static String printPairs(ArrayList<int[]> pairs) {
-    if (pairs == null || pairs.size() == 0)
-      return "";
-    StringBuffer output = new StringBuffer();
-    for (int i = 0; i < pairs.size(); i++) {
-      output.append("{" + pairs.get(i)[0] + "," + pairs.get(i)[1] + "} ");
-    }
-    return output.toString();
+        + Algorithms.printPairs(continuousPairs));
   }
 
   private static void findMinSumOfTwoIntegerMadeFromDigitsOfArray() {
