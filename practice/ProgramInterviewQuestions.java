@@ -1,11 +1,18 @@
 import java.io.*;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 import java.lang.StringBuffer;
@@ -50,10 +57,68 @@ class ProgramInterviewQuestions {
     convertIntToBinary();
     convertBinaryStringToInt();
     findNumOnesInBinaryRepresentationOfInt();
+    coupleMatchingProblem();
   }
-  
+
+  private static void coupleMatchingProblem() {
+    Set<Person> guys = new HashSet<Person>();
+    Set<Person> girls = new HashSet<Person>();
+
+    String JIMMY = "Jimmy";
+    String ERIC = "Eric";
+    String NIKHIl = "Nikhil";
+    String JIE = "Jie";
+    String JARED = "Jared";
+
+    String JENNIFER = "Jennifer";
+    String KATE = "Kate";
+    String KELLY = "Kelly";
+    String JHARNA = "Jharna";
+    String MONIQUE = "Monique";
+
+    String[] guysNames = { JIMMY, ERIC, NIKHIl, JIE, JARED };
+    String[] girlsNames = { JENNIFER, KATE, KELLY, JHARNA, MONIQUE };
+    
+    List<String> guysNamesAsList = Arrays.asList(guysNames);
+    List<String> girlsNamesAsList = Arrays.asList(girlsNames);
+
+    for (int i = 0; i < guysNames.length; i++) {
+      Collections.shuffle(girlsNamesAsList);    
+      List<String> guyPreferences = new ArrayList<String>(girlsNamesAsList);
+      guys.add(new Person(guysNames[i], true, guyPreferences));
+    }
+    
+    for (int i = 0; i < girlsNames.length; i++) {
+      Collections.shuffle(guysNamesAsList);    
+      List<String> girlPreferences = new ArrayList<String>(guysNamesAsList);
+      girls.add(new Person(girlsNames[i], true, girlPreferences));
+    }
+
+    ArrayList<String[]> couples = Algorithms.coupleMatchingProblem(guys, girls);
+    System.out.println("finding couples for everyone in this group: ");
+    System.out.println("guys preferences: ");
+    for (Person guy : guys) {
+      System.out.print(guy.getName() + "\t: ");
+      for (int i = 0; i < guy.getPreferences().size(); i++)
+        System.out.print(guy.getPreferences().get(i) + " ");
+      System.out.println();
+    }
+    System.out.println("girls preferences: ");
+    for (Person girl : girls) {
+      System.out.print(girl.getName() + "\t: ");
+      for (int i = 0; i < girl.getPreferences().size(); i++)
+        System.out.print(girl.getPreferences().get(i) + " ");
+      System.out.println();
+    }
+    for (String[] couple : couples)
+      System.out.print("{" + couple[0] + "," + couple[1] + "} ");
+    System.out.println();
+  }
+
   private static void findNumOnesInBinaryRepresentationOfInt() {
     int num = 6;
+    System.out.println("The number of 1s in the binary representation of " + num + " is " + Algorithms.findNumOnesInBinaryRepresentationOfInt(num));
+    num = 0;
     System.out.println("The number of 1s in the binary representation of " + num + " is " + Algorithms.findNumOnesInBinaryRepresentationOfInt(num));
     num = 44;
     System.out.println("The number of 1s in the binary representation of " + num + " is " + Algorithms.findNumOnesInBinaryRepresentationOfInt(num));
@@ -63,7 +128,6 @@ class ProgramInterviewQuestions {
     System.out.println("The number of 1s in the binary representation of " + num + " is " + Algorithms.findNumOnesInBinaryRepresentationOfInt(num));
   }
 
-  
   private static void convertBinaryStringToInt() {
     String binary = "100";
     System.out.println(binary + " converted to int: " + Algorithms.convertBinaryStringToInt(binary));
@@ -78,6 +142,8 @@ class ProgramInterviewQuestions {
   private static void convertIntToBinary() {
     int num = 6;
     System.out.println(num + " converted to binary: " + Algorithms.convertIntToBinary(num));
+    num = 0;
+    System.out.println(num + " converted to binary: " + Algorithms.convertIntToBinary(num));
     num = 44;
     System.out.println(num + " converted to binary: " + Algorithms.convertIntToBinary(num));
     num = 72;
@@ -85,24 +151,19 @@ class ProgramInterviewQuestions {
     num = 131;
     System.out.println(num + " converted to binary: " + Algorithms.convertIntToBinary(num));
   }
-  
 
-  
   private static void queensOnChessBoardProblem() {
     int boardSize = 8;
     int numQueensToPlace = 8;
     boolean[][] board = new boolean[boardSize][boardSize];
-    ArrayList<int[]> queensPositions = Algorithms.queensOnChessBoardProblem(
-        numQueensToPlace, board);
+    ArrayList<int[]> queensPositions = Algorithms.queensOnChessBoardProblem(numQueensToPlace, board);
     if (queensPositions != null) {
-      System.out.print("on a board size: " + boardSize + "x" + boardSize
-          + ", we can place all " + numQueensToPlace
+      System.out.print("on a board size: " + boardSize + "x" + boardSize + ", we can place all " + numQueensToPlace
           + " queens on board by placing them at positions: ");
       for (int[] pos : queensPositions)
         System.out.print("{" + pos[0] + pos[1] + "} ");
     } else {
-      System.out.print("cannot print " + numQueensToPlace
-          + " in board size of " + boardSize + "x" + boardSize);
+      System.out.print("cannot print " + numQueensToPlace + " in board size of " + boardSize + "x" + boardSize);
     }
     System.out.println();
   }
@@ -111,8 +172,7 @@ class ProgramInterviewQuestions {
     char[] chars = { 'a', 'b', 'c' };
     String testString = "abc";
     testString = "bbaaaaaaaacb";
-    System.out.println("String: " + testString
-        + " voilate consecutive abc characters requirement: "
+    System.out.println("String: " + testString + " voilate consecutive abc characters requirement: "
         + Algorithms.voilateConsecutiveABCCharRequirement(chars, testString));
   }
 
@@ -126,12 +186,9 @@ class ProgramInterviewQuestions {
     int[] pair7 = { 6, 7 };
     int[] pair8 = { 8, 3 };
     int[] pair9 = { 5, 4 };
-    int[][] pairs = { pair1, pair2, pair3, pair4, pair5, pair6, pair7, pair8,
-        pair9 };
-    ArrayList<int[]> continuousPairs = Algorithms
-        .findLongestContinuingPairs(pairs);
-    System.out.println("find longest continuing pairs: "
-        + Algorithms.printPairs(continuousPairs));
+    int[][] pairs = { pair1, pair2, pair3, pair4, pair5, pair6, pair7, pair8, pair9 };
+    ArrayList<int[]> continuousPairs = Algorithms.findLongestContinuingPairs(pairs);
+    System.out.println("find longest continuing pairs: " + Algorithms.printPairs(continuousPairs));
   }
 
   private static void findMinSumOfTwoIntegerMadeFromDigitsOfArray() {
@@ -141,8 +198,7 @@ class ProgramInterviewQuestions {
     arr.add(8);
     arr.add(7);
     arr.add(9);
-    System.out.println("Given arr: " + Algorithms.printIntArray(arr)
-        + ", the mind sum of two integers made from the digits of the array: "
+    System.out.println("Given arr: " + Algorithms.printIntArray(arr) + ", the mind sum of two integers made from the digits of the array: "
         + Algorithms.findMinSumOfTwoIntegerMadeFromDigitsOfArray(arr));
   }
 
@@ -150,16 +206,13 @@ class ProgramInterviewQuestions {
     int n = 5;
     int[] list = { 3, 6, 4, 2, 6, 12, 4, 8, 9, 34, 4, 7, 23, 9, 20, 10 };
     int[] result = Algorithms.findNLargestNumbersInArray(n, list);
-    System.out.println("the largest " + n + " integers in the list: "
-        + Algorithms.printIntArray(result));
+    System.out.println("the largest " + n + " integers in the list: " + Algorithms.printIntArray(result));
   }
 
   private static void findAllCombinationsOfNumbersAddUpToN() {
     int n = 5;
-    ArrayList<String> result = Algorithms
-        .findAllCombinationsOfNumbersAddUpToN(n);
-    System.out.println("find all combinations of numbers add up to " + n + ": "
-        + Algorithms.printStringArray(result));
+    ArrayList<String> result = Algorithms.findAllCombinationsOfNumbersAddUpToN(n);
+    System.out.println("find all combinations of numbers add up to " + n + ": " + Algorithms.printStringArray(result));
   }
 
   private static void findMaxSubArrayWithMaximumSums() {
@@ -184,15 +237,13 @@ class ProgramInterviewQuestions {
     for (String s : list)
       history.visit(s);
     String[] returnedHistory = history.getHistory(10);
-    System.out.println("browserHistorySimulation: "
-        + Algorithms.printStringArray(returnedHistory));
+    System.out.println("browserHistorySimulation: " + Algorithms.printStringArray(returnedHistory));
   }
 
   private static void findNumPairsEqualOrderUnderK() {
     int[] list = { 1, 2, 5, 7, 8, 12 };
     int k = 15;
-    System.out
-        .print("given list {1,2,5,7,8,12} and k = 15. the number of pairs thats equal to or less than k: ");
+    System.out.print("given list {1,2,5,7,8,12} and k = 15. the number of pairs thats equal to or less than k: ");
     System.out.println(Algorithms.findNumPairsEqualOrderUnderK(list, k));
   }
 
@@ -230,43 +281,33 @@ class ProgramInterviewQuestions {
     String[] eight = { "washington", "austin" };
     String[][] tickets = { one, two, three, four, five, six, seven, eight };
     String route = Algorithms.traceBackRouteUsingPlaneTickets(tickets);
-    System.out.println("given a bunch of tickets, trace back the route: "
-        + route);
+    System.out.println("given a bunch of tickets, trace back the route: " + route);
   }
 
   private static void givenNReturnAllNumbersInRange() {
     int n = 33;
     int[] arr = { 3, 6, 8 };
     String output = Algorithms.givenNReturnAllNumbersInRange(n, arr);
-    System.out.println("print all numbers in range: " + n + ", "
-        + Algorithms.printIntArray(arr) + ": " + output);
+    System.out.println("print all numbers in range: " + n + ", " + Algorithms.printIntArray(arr) + ": " + output);
   }
 
   private static void findMinimumWindowInStringOneWhichContainsAllCharsInStringTwo() {
     String one = "ADOBECODEBANC";
     String two = "ABC";
-    System.out.print("given string: " + one + ", and target string: " + two
-        + ", the minimum window: ");
-    System.out
-        .println(Algorithms
-            .findMinimumWindowInStringOneWhichContainsAllCharsInStringTwo(one,
-                two));
+    System.out.print("given string: " + one + ", and target string: " + two + ", the minimum window: ");
+    System.out.println(Algorithms.findMinimumWindowInStringOneWhichContainsAllCharsInStringTwo(one, two));
   }
 
   private static void encodeStringByCharAndNumber() {
     String s = "aabbaadddc";
-    System.out.println("encode string: " + s + " to "
-        + Algorithms.encodeString(s));
+    System.out.println("encode string: " + s + " to " + Algorithms.encodeString(s));
   }
 
   private static void searchNumberInSortedButRotatedArray() {
     int[] rotatedArray = { 8, 9, 1, 2, 3, 4, 5, 6, 7 };
     int target = 10;
-    System.out.println("find " + target + " in rotated array: "
-        + Algorithms.printIntArray(rotatedArray));
-    System.out.println("target position: "
-        + Algorithms.searchNumberPosInSortedButRotatedArray(rotatedArray,
-            target));
+    System.out.println("find " + target + " in rotated array: " + Algorithms.printIntArray(rotatedArray));
+    System.out.println("target position: " + Algorithms.searchNumberPosInSortedButRotatedArray(rotatedArray, target));
   }
 
   private static void findLongestAnagramInString() {
@@ -277,10 +318,8 @@ class ProgramInterviewQuestions {
 
   private static String findLongestAnagramInString(String s) {
     String preprocessedString = Algorithms.insertStarsInString(s);
-    String longestAnagramWithStars = Algorithms
-        .findLongestAnagramInStringBruteForceWay(preprocessedString);
-    String longestAnagram = Algorithms
-        .stripStarsFromString(longestAnagramWithStars);
+    String longestAnagramWithStars = Algorithms.findLongestAnagramInStringBruteForceWay(preprocessedString);
+    String longestAnagram = Algorithms.stripStarsFromString(longestAnagramWithStars);
     return longestAnagram;
   }
 
@@ -298,31 +337,25 @@ class ProgramInterviewQuestions {
     String[] source = { "a", "ab", "fadeer", "asdwer", "awerd", "acfgdsfgser" };
     String beginning = "ac";
     String end = "afd";
-    List<String> result = Algorithms
-        .getStringsInBetweenTwoWordsLikeInDictionary(source, beginning, end);
-    System.out.println("getStringsInBetweenTwoWordsLikeInDictionary: "
-        + Algorithms.printStringArray(result));
+    List<String> result = Algorithms.getStringsInBetweenTwoWordsLikeInDictionary(source, beginning, end);
+    System.out.println("getStringsInBetweenTwoWordsLikeInDictionary: " + Algorithms.printStringArray(result));
   }
 
   private static void findHowMuchWaterCanAccumulate() {
     // int[] pond = {4,3,5,2,1,4,5,7,3,5,8};
     int[] pond2 = { 4, 2, 3, 1, 2, 0, 1, 2 };
-    System.out.println("water accumulated total is: "
-        + Algorithms.findHowMuchWaterCanAccumulate(pond2));
+    System.out.println("water accumulated total is: " + Algorithms.findHowMuchWaterCanAccumulate(pond2));
   }
 
   private static void reverseString() {
     String s = "hello how are you doing?";
-    System.out.println("reverse \"" + s + "\": \"" + Algorithms.reverseWords(s)
-        + "\"");
-    System.out.println("reverse \"" + s + "\": \""
-        + Algorithms.reverseWordsByLetter(s) + "\"");
+    System.out.println("reverse \"" + s + "\": \"" + Algorithms.reverseWords(s) + "\"");
+    System.out.println("reverse \"" + s + "\": \"" + Algorithms.reverseWordsByLetter(s) + "\"");
   }
 
   private static void findBitPosition() {
     int num = 33;
-    System.out.println("first bit position of " + num + " is "
-        + Algorithms.findBitPosition(num));
+    System.out.println("first bit position of " + num + " is " + Algorithms.findBitPosition(num));
   }
 
   private static void switchem() {
@@ -334,14 +367,12 @@ class ProgramInterviewQuestions {
   private static void anagram() {
     String one = "banana";
     String two = "anaban";
-    System.out.println(one + " and " + two + " are anagram of eachother: "
-        + Algorithms.areAnagram(one, two));
+    System.out.println(one + " and " + two + " are anagram of eachother: " + Algorithms.areAnagram(one, two));
   }
 
   private static void allUniqueCharacters() {
     String source = "what is up my friend";
-    System.out.println(source + " - contain all unique characters: "
-        + Algorithms.containsAllUniqueChars(source));
+    System.out.println(source + " - contain all unique characters: " + Algorithms.containsAllUniqueChars(source));
   }
 
   private static void maxSubArray() {
@@ -353,8 +384,7 @@ class ProgramInterviewQuestions {
     String source = "why hello there";
     String target = "hello2";
 
-    System.out.println(target + " is substring of " + source + ": "
-        + Algorithms.isSubString(source, target));
+    System.out.println(target + " is substring of " + source + ": " + Algorithms.isSubString(source, target));
   }
 
   private static void playWithLinkedList() {
@@ -382,8 +412,7 @@ class ProgramInterviewQuestions {
     one.insert(one, 2);
     one.insert(one, 13);
     Algorithms.printLinkedList(one);
-    System.out.println("middle node is: "
-        + Algorithms.returnMiddleNode(one).value());
+    System.out.println("middle node is: " + Algorithms.returnMiddleNode(one).value());
 
     Algorithms.insertToEnd(one, two);
     Algorithms.insertToEnd(two, one);
@@ -391,8 +420,7 @@ class ProgramInterviewQuestions {
      * this linked list now has a cycle, so don't print it like a singly linked
      * list with no cycle
      */
-    System.out.println("does this linked list have cycle: "
-        + Algorithms.ifLinkedListHasCycle(one));
+    System.out.println("does this linked list have cycle: " + Algorithms.ifLinkedListHasCycle(one));
   }
 
   private static void mergeSortedIntArrays() {
@@ -417,18 +445,12 @@ class ProgramInterviewQuestions {
 
   private static void playWithBinarySearchTree() {
     BinaryTreeNode node = new BinarySearchTreeNode(25);
-    System.out.println("insert binary tree node 20 successfull: "
-        + node.insert(20));
-    System.out.println("insert binary tree node 25 successfull: "
-        + node.insert(26));
-    System.out.println("insert binary tree node 30 successfull: "
-        + node.insert(30));
-    System.out.println("insert binary tree node -30 successfull: "
-        + node.insert(-30));
-    System.out.println("insert binary tree node 21 successfull: "
-        + node.insert(21));
-    System.out.println("insert binary tree node 2 successfull: "
-        + node.insert(2));
+    System.out.println("insert binary tree node 20 successfull: " + node.insert(20));
+    System.out.println("insert binary tree node 25 successfull: " + node.insert(26));
+    System.out.println("insert binary tree node 30 successfull: " + node.insert(30));
+    System.out.println("insert binary tree node -30 successfull: " + node.insert(-30));
+    System.out.println("insert binary tree node 21 successfull: " + node.insert(21));
+    System.out.println("insert binary tree node 2 successfull: " + node.insert(2));
 
     Algorithms.printBinaryTreeByLayer(node);
     Algorithms.printTreeInOrderUsingStack(node);

@@ -1,12 +1,95 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Stack;
+import java.util.Map.Entry;
 
 public class Algorithms {
 
+  /**
+   * match making algorithms
+   * 
+   * @param guysSet
+   * @param girlsSet
+   * @return
+   */
+  public static ArrayList<String[]> coupleMatchingProblem(Set<Person> guysSet, Set<Person> girlsSet) {
+    HashMap<String, Person> guys = new HashMap<String, Person>();
+    HashMap<String, Person> girls = new HashMap<String, Person>();
+
+    for (Person p : guysSet)
+      guys.put(p.getName(), p);
+    for (Person p : girlsSet)
+      girls.put(p.getName(), p);
+
+    HashMap<String, String> matchesUsingGuyAsKey = new HashMap<String, String>();
+    ArrayList<String[]> matchesResult = new ArrayList<String[]>();
+
+    while (matchesUsingGuyAsKey.size() != guys.size()) {
+      Set<String> guysInArray = guys.keySet();
+      for (String guyName : guysInArray) {
+        if (guys.get(guyName).isAvailable()) {
+          findTheGuyAGirl(guyName, guys, girls, matchesUsingGuyAsKey);
+        }
+      }
+    }
+    for (Entry<String, String> entry : matchesUsingGuyAsKey.entrySet()) {
+      String[] pair = { entry.getKey(), entry.getValue() };
+      matchesResult.add(pair);
+    }
+    return matchesResult;
+  }
+
+  public static void findTheGuyAGirl(String newGuyName, HashMap<String, Person> guys, HashMap<String, Person> girls,
+      HashMap<String, String> matchesUsingGuyAsKey) {
+    HashMap<String, String> matchesUsingGirlAsKey = new HashMap<String, String>();
+    Iterator it = matchesUsingGuyAsKey.entrySet().iterator();
+    while (it.hasNext()) {
+      Map.Entry pairs = (Map.Entry) it.next();
+      matchesUsingGirlAsKey.put((String) pairs.getValue(), (String) pairs.getKey());
+    }
+    boolean matchFound = false;
+    for (int i = 0; i < guys.get(newGuyName).getPreferences().size() && !matchFound; i++) {
+      String nextGirlName = (String) guys.get(newGuyName).getPreferences().get(i);
+      Person nextGirl = girls.get(nextGirlName);
+      boolean nextGirlIsAvailable = nextGirl.isAvailable();
+      boolean nextGirlPreferNewGuyOverOld = !nextGirlIsAvailable
+          && nextGirlPreferNewGuyOverOldGuy(newGuyName, matchesUsingGirlAsKey.get(nextGirlName), nextGirl);
+      if (nextGirlIsAvailable || nextGirlPreferNewGuyOverOld) {
+        if (nextGirlPreferNewGuyOverOld) {
+          String oldGuyName = matchesUsingGirlAsKey.get(nextGirlName);
+          matchesUsingGuyAsKey.remove(oldGuyName);
+          matchesUsingGirlAsKey.remove(nextGirlName);
+          Person oldGuy = guys.get(oldGuyName);
+          oldGuy.setAvailable(true);
+        }
+        matchesUsingGuyAsKey.put(newGuyName, nextGirlName);
+        matchesUsingGirlAsKey.put(nextGirlName, newGuyName);
+        guys.get(newGuyName).setAvailable(false);
+        girls.get(nextGirlName).setAvailable(false);
+        matchFound = true;
+      } else {
+        // nextGirlName prefers the current guy he's with over guy, keep
+        // searching :(
+      }
+    }
+
+  }
+
+  private static boolean nextGirlPreferNewGuyOverOldGuy(String newGuyName, String oldGuyName, Person girl) {
+    for (Object guyName : girl.getPreferences().toArray()) {
+      if (guyName.equals(newGuyName))
+        return true;
+      else if (guyName.equals(oldGuyName))
+        return false;
+    }
+    System.out.println("This guy isn't found in this girl's preference!!! This means bad input!");
+    return false;
+  }
 
   public static boolean voilateConsecutiveABCCharRequirement(char[] chars,
       String s) {
@@ -35,6 +118,8 @@ public class Algorithms {
   }
   
   public static int findNumOnesInBinaryRepresentationOfInt(int num) {
+    if (num == 0)
+      return 0;
     int result = 1;
     while (num >> 1 != 0) {
       result += num & 1;
