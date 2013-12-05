@@ -58,6 +58,15 @@ class ProgramInterviewQuestions {
     convertBinaryStringToInt();
     findNumOnesInBinaryRepresentationOfInt();
     coupleMatchingProblem();
+    composeAllPossibleParenthasis();
+  }
+  
+  private static void composeAllPossibleParenthasis() {
+    int n = 3;
+    System.out.println("print all possible paranthasis size " + n + " ");
+    ArrayList<String> results = Algorithms.composeAllPossibleParenthasis(n);
+    for (String s : results)
+      System.out.println(s);
   }
 
   private static void coupleMatchingProblem() {

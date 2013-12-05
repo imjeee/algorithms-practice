@@ -11,6 +11,37 @@ import java.util.Map.Entry;
 public class Algorithms {
 
   /**
+   * Given "n", generate all valid parenthesis strings of length "2n". 
+   * Example:
+   * Given n=2
+   * Output:
+   * (())
+   * ()()
+   * 
+   * @param n
+   * @return
+   */
+  public static ArrayList<String> composeAllPossibleParenthasis(int n) {
+    ArrayList<String> results = new ArrayList<String>();
+    if (n == 0) {
+      results.add("");
+    } else if (n == 1) {
+      results.add("()");
+    } else {
+      ArrayList<String> tmpResults = composeAllPossibleParenthasis(n - 1);
+      for (String s : tmpResults) {
+        String firstVariation = s + "()";
+        String secondVariation = "()" + s;
+        String thirdVariation = "(" + s + ")";
+        results.add(firstVariation);
+        if (!firstVariation.equals(secondVariation)) { results.add(secondVariation); }
+        results.add(thirdVariation);
+      }
+    }
+    return results;
+  }
+  
+  /**
    * match making algorithms
    * 
    * @param guysSet
