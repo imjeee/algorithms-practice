@@ -62,6 +62,12 @@ class ProgramInterviewQuestions {
     SortIntNegativesToLeftOfPositiveOrderDoesntMatter();
     findContinuousSubsetInUnsortedArray();
     givenArrayFindAllElementsAppearMoreThanNOverMTimes();
+    findBiggestNumDifferencesInList();
+  }
+  
+  private static void findBiggestNumDifferencesInList() {
+    int[] list = {3,6,23,6,7,3,7,34,56,12,-4,55};
+    System.out.println("biggest difference in list " + Algorithms.printIntArray(list) + " : " + Algorithms.findBiggestNumDifferencesInList(list));
   }
   
   private static void givenArrayFindAllElementsAppearMoreThanNOverMTimes() {

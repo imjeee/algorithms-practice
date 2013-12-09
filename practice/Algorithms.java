@@ -13,6 +13,25 @@ import java.util.Map.Entry;
 public class Algorithms {
 
   /**
+   * one unsorted array is given.Find out the index i and j,
+   * j> i for which a[j] - a[i] is maximum.perform in linear time complexity
+   * 
+   * @param list
+   * @return
+   */
+  public static int findBiggestNumDifferencesInList(int[] list) {
+    int smallestSoFar = list[0];
+    int result  = 0;
+    for (int i = 0; i < list.length; i++) {
+      if (list[i] < smallestSoFar)
+        smallestSoFar = list[i];
+      else if (list[i] - smallestSoFar > result)
+        result = list[i] - smallestSoFar;
+    }
+    return result;
+  }
+  
+  /**
    * 
    * Design an algorithm that, given a list of n elements in an array, finds all 
    * the elements that appear more than n/3 times in the list. The algorithm should run in linear time ( n >=0 ) 
