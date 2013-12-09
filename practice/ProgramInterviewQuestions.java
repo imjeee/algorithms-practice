@@ -59,6 +59,33 @@ class ProgramInterviewQuestions {
     findNumOnesInBinaryRepresentationOfInt();
     coupleMatchingProblem();
     composeAllPossibleParenthasis();
+    SortIntNegativesToLeftOfPositiveOrderDoesntMatter();
+    findContinuousSubsetInUnsortedArray();
+    givenArrayFindAllElementsAppearMoreThanNOverMTimes();
+  }
+  
+  private static void givenArrayFindAllElementsAppearMoreThanNOverMTimes() {
+    int[] list = {4, 3, 3, 2, 1, 2, 3, 4, 4, 7};
+    int m = 5;
+    int[] result = Algorithms.givenArrayFindAllElementsAppearMoreThanNOverMTimes(list, m);
+    System.out.print("all elements appear more than n/m or " + list.length + "/" + m + " or " + list.length/m + " times in list ");
+    System.out.println(Algorithms.printIntArray(list) + " : " + Algorithms.printIntArray(result));
+  }
+
+  private static void findContinuousSubsetInUnsortedArray() {
+    int[] list = {1,6,10,4,7,9,5,5};
+    System.out.println("given list: " + Algorithms.printIntArray(list));
+    list = Algorithms.findContinuousSubsetInUnsortedArray(list);
+    System.out.println("longest continous subset: " + Algorithms.printIntArray(list));
+  }
+  
+  private static void SortIntNegativesToLeftOfPositiveOrderDoesntMatter() {
+    int[] list = {4,5,-3,-6,6,-2,9,-3,6,7,9,34,76,-33,75,-34,65};
+    //int[] list = {5,-3};
+    System.out.println("Unsorted list: " + Algorithms.printIntArray(list));
+    
+    Algorithms.SortIntNegativesToLeftOfPositiveOrderDoesntMatter(list);
+    System.out.println("Sorted list: " + Algorithms.printIntArray(list));
   }
   
   private static void composeAllPossibleParenthasis() {

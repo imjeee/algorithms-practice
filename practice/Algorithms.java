@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +12,161 @@ import java.util.Map.Entry;
 
 public class Algorithms {
 
+  /**
+   * 
+   * Design an algorithm that, given a list of n elements in an array, finds all 
+   * the elements that appear more than n/3 times in the list. The algorithm should run in linear time ( n >=0 ) 
+   * 
+   * You are expected to use comparisons and achieve linear time. No hashing/excessive space/ and don't use 
+   * standard linear time deterministic selection algo
+   * 
+   * http://www.careercup.com/question?id=14099679
+   * 
+   * @param list
+   * @param m
+   * @return
+   */
+  public static int[] givenArrayFindAllElementsAppearMoreThanNOverMTimes(int[] list, int m) {
+    Map<Integer, Integer> bucket = new HashMap<Integer, Integer>();
+    for (int i = 0; i < list.length; i++) {
+      if (!bucket.containsKey(list[i])) {
+        bucket.put(list[i], 1);
+        if (bucket.size() == m) {
+          reduceAllNumberInBucketByOne(bucket);
+        }
+      } else  {
+        int total = bucket.get(list[i]);
+        total++;
+        bucket.put(list[i], total);
+      }
+    }
+    
+    setAllKeyTotalsToZero(bucket);
+    countTotalForNumInBuckets(bucket, list);
+    ArrayList<Integer> result = new ArrayList<Integer>();
+    Set<Integer> keys = bucket.keySet();
+    for (Integer key : keys) {
+      if (bucket.get(key) > list.length / m)
+        result.add(key);
+    }
+    int[] arrayResult = new int[result.size()];
+    for (int i = 0; i < result.size(); i++)
+      arrayResult[i] = result.get(i);
+    return arrayResult;
+  }
+  
+  private static void countTotalForNumInBuckets(Map<Integer, Integer> bucket, int[] list) {
+    for (int i : list) {
+      if (bucket.containsKey(i)) {
+        int total = bucket.get(i) + 1;
+        bucket.put(i, total);
+      }
+    }
+  }
+  
+  private static void setAllKeyTotalsToZero(Map<Integer, Integer> bucket) {
+    Set<Integer> keys = bucket.keySet();
+    for (Integer key : keys) {
+      bucket.put(key, 0);
+    }
+  }
+  
+  private static void reduceAllNumberInBucketByOne(Map<Integer, Integer> bucket) {
+    Set<Integer> keys = bucket.keySet();
+    Set<Integer> dupKeySet = deepCopyKeySet(keys);
+    if (dupKeySet != null && dupKeySet.size() != 0) {
+      for (Integer key : dupKeySet) {
+        int totalNumThisKeyHas = bucket.get(key);
+        totalNumThisKeyHas--;
+        bucket.put(key, totalNumThisKeyHas);
+        if (totalNumThisKeyHas == 0)
+          bucket.remove(key);
+      }
+    }
+  }
+  
+  private static Set<Integer> deepCopyKeySet(Set<Integer> keys) {
+    Set<Integer> newKeys = new HashSet<Integer>();
+    for (Integer key : keys) {
+      newKeys.add(key);
+    }
+    return newKeys;
+  }
+  
+  
+  /**
+   * Given an int array which might contain duplicates, find the largest subset of it which form a sequence. 
+   * Eg. {1,6,10,4,7,9,5} 
+   * then ans is 4,5,6,7 
+   * 
+   * Sorting is an obvious solution. Can this be done in O(n) time
+   * 
+   * @param unsortedList
+   * @return
+   */
+  public static int[] findContinuousSubsetInUnsortedArray(int[] unsortedList) {
+    ArrayList<Integer> arrayList = new ArrayList<Integer>();
+    for (int i : unsortedList)
+      arrayList.add(i);
+    Collections.sort(arrayList);
+    int[] sortedList = new int[arrayList.size()];
+    for (int i = 0; i < arrayList.size(); i++) {
+      sortedList[i] = arrayList.get(i);
+    }
+    return findContinuousSubsetInSortedArray(sortedList);
+  }
+  
+  /**
+   * 
+   * @param sortedList
+   * @return
+   */
+  public static int[] findContinuousSubsetInSortedArray(int[] sortedList) {
+    ArrayList<Integer> finalResult = new ArrayList<Integer>();
+    ArrayList<Integer> tmpResult = new ArrayList<Integer>();
+    tmpResult.add(sortedList[0]);
+    for (int i = 1; i < sortedList.length; i++) {
+      if (sortedList[i] - 1 == tmpResult.get(tmpResult.size() - 1))
+        tmpResult.add(sortedList[i]);
+      else if (sortedList[i] != tmpResult.get(tmpResult.size() - 1)) {
+        if (tmpResult.size() > finalResult.size()) {
+          finalResult = tmpResult;
+          tmpResult = new ArrayList<Integer>();
+          tmpResult.add(sortedList[i]);
+        }
+      }
+    }
+    int[] result = new int[finalResult.size()];
+    for (int i = 0; i < result.length; i++)
+      result[i] = finalResult.get(i);
+    return result;
+  }
+  
+  /**
+   * Give you an array which has n integers,it has both positive and negative integers.
+   * Now you need sort this array in a special way.After that,the negative integers should 
+   * in the front,and the positive integers should in the back.Also the relative position should not be changed. 
+   * eg. -1 1 3 -2 2 ans: -1 -2 1 3 2. 
+   * o(n)time complexity and o(1) space complexity is perfect.
+   * 
+   * @param list
+   */
+  public static void SortIntNegativesToLeftOfPositiveOrderDoesntMatter(int[] list) {
+    int negPointer = 0;
+    int posPointer = 0;
+    while (posPointer < list.length && negPointer < list.length) {
+      while (posPointer < list.length && list[posPointer] > 0 )
+        posPointer++;
+      if (posPointer < list.length && list[negPointer] > 0 && list[posPointer] < 0 && negPointer < posPointer) {
+        int tmp = list[negPointer];
+        list[negPointer] = list[posPointer];
+        list[posPointer] = tmp;
+        posPointer++;
+      }
+      negPointer++;
+    }
+  }
+  
   /**
    * Given "n", generate all valid parenthesis strings of length "2n". 
    * Example:
@@ -582,7 +739,7 @@ public class Algorithms {
     output.append("{");
     for (int i : input)
       output.append(i + ",");
-    String sOutput = output.substring(0, output.length() - 2) + "}";
+    String sOutput = output.substring(0, output.length() - 1) + "}";
     return sOutput;
   }
 
@@ -591,7 +748,7 @@ public class Algorithms {
     output.append("{");
     for (Integer i : input)
       output.append(i + ",");
-    String sOutput = output.substring(0, output.length() - 2) + "}";
+    String sOutput = output.substring(0, output.length() - 1) + "}";
     return sOutput;
   }
 
