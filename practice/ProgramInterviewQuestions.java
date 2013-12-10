@@ -63,7 +63,16 @@ class ProgramInterviewQuestions {
     findContinuousSubsetInUnsortedArray();
     givenArrayFindAllElementsAppearMoreThanNOverMTimes();
     findBiggestNumDifferencesInList();
+    generateAllValidAlphabetForArray();
   }
+  
+  private static void generateAllValidAlphabetForArray() {
+    // a = 97
+    String input = "1123";
+    ArrayList<String> result = Algorithms.generateAllValidAlphabetForArray(input);
+    System.out.println(Algorithms.printStringArray(result));
+  }
+ 
   
   private static void findBiggestNumDifferencesInList() {
     int[] list = {3,6,23,6,7,3,7,34,56,12,-4,55};

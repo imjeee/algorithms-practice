@@ -13,6 +13,56 @@ import java.util.Map.Entry;
 public class Algorithms {
 
   /**
+   * 
+   * If a=1, b=2, c=3,....z=26. Given a string, find all possible codes that string can generate.
+   * Give a count as well as print the strings. 
+   * 
+   * For example: 
+   * Input: "1123". You need to general all valid alphabet codes from this string. 
+   * 
+   * Output List
+   * aabc //a = 1, a = 1, b = 2, c = 3
+   * kbc // since k is 11, b = 2, c= 3 
+   * alc // a = 1, l = 12, c = 3 
+   * aaw // a= 1, a =1, w= 23 
+   * kw // k = 11, w = 23
+   * 
+   * @param input
+   * @return
+   */
+  public static ArrayList<String> generateAllValidAlphabetForArray(String input) {
+
+    ArrayList<String> results = new ArrayList<String>();
+    if (input.length() == 0) {
+      results.add("");
+    } else if (input.length() == 1) {
+       results.add(getConvertedString(input));;
+    } else {
+      for (int i = 1; i <= input.length(); i++) {
+        String tmpSubString = input.substring(0, i);
+        if (isValidSubString(tmpSubString)) {
+          ArrayList<String> tmpResults = generateAllValidAlphabetForArray(input.substring(i));
+          for (String s : tmpResults)
+            results.add(getConvertedString(tmpSubString) + s);
+        }
+      }
+    }
+    return results;
+  }
+  
+  private static String getConvertedString(String tmpSubString) {
+    char[] chars = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+
+    int charPosition = Integer.parseInt(tmpSubString) - 1;
+    String character = chars[charPosition] + "";
+    return character;
+  }
+  
+  private static boolean isValidSubString(String s) {
+    return Integer.parseInt(s) <= 26;
+  }
+  
+  /**
    * one unsorted array is given.Find out the index i and j,
    * j> i for which a[j] - a[i] is maximum.perform in linear time complexity
    * 
@@ -777,12 +827,13 @@ public class Algorithms {
    * @return
    */
   public static String printStringArray(List<String> input) {
+    if (input == null || input.size() == 0)
+      return "";
     StringBuffer output = new StringBuffer();
     output.append("{");
     for (String i : input)
       output.append(i + ",");
-    String sOutput = output.substring(0, output.length() - 2) + "}";
-    return sOutput;
+    return output.substring(0, output.length() - 1) + "}";
   }
 
   public static String printStringArray(String[] input) {
@@ -790,8 +841,7 @@ public class Algorithms {
     output.append("{");
     for (String i : input)
       output.append(i + ",");
-    String sOutput = output.substring(0, output.length() - 2) + "}";
-    return sOutput;
+    return output.substring(0, output.length() - 1) + "}";
   }
 
   /**
