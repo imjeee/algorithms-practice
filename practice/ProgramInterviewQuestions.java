@@ -64,6 +64,60 @@ class ProgramInterviewQuestions {
     givenArrayFindAllElementsAppearMoreThanNOverMTimes();
     findBiggestNumDifferencesInList();
     generateAllValidAlphabetForArray();
+    findIfTwoStringsAreInterleaved();
+    concatenateListForLargestNumber();
+    plusPlusOperatorForIntArray();
+    findMaxSplitInArray();
+    removeEveryKthNodeInCircularLinkedListUntilOnlyOneNodeIsLeft();
+  }
+  
+  private static void removeEveryKthNodeInCircularLinkedListUntilOnlyOneNodeIsLeft() {
+    LinkedListNode<Integer> one = new LinkedListNode<Integer>(1);
+    LinkedListNode<Integer> two = new LinkedListNode<Integer>(2);
+    LinkedListNode<Integer> three = new LinkedListNode<Integer>(3);
+    LinkedListNode<Integer> four = new LinkedListNode<Integer>(4);
+    LinkedListNode<Integer> five = new LinkedListNode<Integer>(5);
+    LinkedListNode<Integer> six = new LinkedListNode<Integer>(6);
+    LinkedListNode<Integer> seven = new LinkedListNode<Integer>(7);
+    LinkedListNode<Integer> eight = new LinkedListNode<Integer>(8);
+    one.next(two);
+    two.next(three);
+    three.next(four);
+    four.next(five);
+    five.next(one);
+    //six.next(seven);
+    //seven.next(eight);
+    //eight.next(one);
+    
+    int k = 3;
+
+    int lastNodeValue = removeEveryKthNodeInCircularLinkedListUntilOnlyOneNodeIsLeft(one, k);
+    System.out.println("in list {1,2,3,4,5}, remove every 3rd element in the linkedlist get you " + lastNodeValue);
+  }  
+  
+  private static void findMaxSplitInArray() {
+    int[] list = {2,-1,-2,1,-4,2,8};
+    int maxDiff = Algorithms.findMaxSplitInArray(list);
+    System.out.println(Algorithms.printIntArray(list) + "'s max diff array: " + maxDiff);
+  }
+  
+  private static void plusPlusOperatorForIntArray() {
+    int[] list = {9,9,9,9};
+    int[] output = Algorithms.plusPlusOperatorForIntArray(list);
+    System.out.println(Algorithms.printIntArray(list) + "++ is " + Algorithms.printIntArray(output));
+  }
+
+  private static void concatenateListForLargestNumber() {
+    int[] list = {9009, 664, 64, 19, 7, 9, 24, 964, 99 };
+    int[] newList = Algorithms.sortListSuchThatConcatenateListForLargestNumber(list);
+    System.out.println("Given list: " + Algorithms.printIntArray(list) + ", the largest number can be produced is made in this order: " + Algorithms.printIntArray(newList));
+  }
+  
+  private static void findIfTwoStringsAreInterleaved() {
+    String a = "abcd";
+    String b = "xyz";
+    String c = "axybczd";
+    System.out.println("String " + a + " and string " + b + " are interleaved in String " + c + " : " + Algorithms.findIfTwoStringsAreInterleaved(a,b,c));
   }
   
   private static void generateAllValidAlphabetForArray() {
@@ -72,7 +126,6 @@ class ProgramInterviewQuestions {
     ArrayList<String> result = Algorithms.generateAllValidAlphabetForArray(input);
     System.out.println(Algorithms.printStringArray(result));
   }
- 
   
   private static void findBiggestNumDifferencesInList() {
     int[] list = {3,6,23,6,7,3,7,34,56,12,-4,55};

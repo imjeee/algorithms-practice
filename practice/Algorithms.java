@@ -3,6 +3,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -12,6 +13,238 @@ import java.util.Map.Entry;
 
 public class Algorithms {
 
+  /**
+   * 
+   * Given a circular single linked list.Write a program that deletes every kth node until only one node is left. 
+   * After kth node is deleted, start the procedure from (k+1)th node. 
+   * e.g.list is 1->2->3->4->5->1 
+   * k=3 
+   * 1. You are at 1, delete 3. 
+   * List is: 1->2->4->5->1 
+   * 2. You are at 4, delete 1 
+   * List is: 2->4->5->2 
+   * 3. You are at 2,delete 5 
+   * List is: 2->4->2 
+   * 4. You are at 2, delete 2 
+   * List is: 4 
+   * Return 4. 
+   * 
+   * How efficient you can do it?
+   * http://www.careercup.com/question?id=14467673
+   * 
+   * look up Josephus problem
+   * 
+   * @param currentNode
+   * @param k
+   * @return
+   */
+  public static int removeEveryKthNodeInCircularLinkedListUntilOnlyOneNodeIsLeft(LinkedListNode<Integer> currentNode, int k) {  
+    
+    while (currentNode.value() != currentNode.next().value()) {
+      for (int i = 0; i < k-2; i++) {
+        currentNode = currentNode.next();
+      }
+      currentNode.next(currentNode.next().next());
+      currentNode = currentNode.next();
+    }
+    return currentNode.value();
+  }
+  
+  /**
+   * 
+   * Given an array of integers. Find two disjoint contiguous sub-arrays such that 
+   * the absolute difference between the sum of two sub-array is maximum. 
+   * The sub-arrays should not overlap. 
+   * 
+   * eg- [2 -1 -2 1 -4 2 8] ans - (-1 -2 1 -4) (2 8), diff = 16 
+   * http://www.careercup.com/question?id=19286747
+   * 
+   * 
+   * @param list
+   * @return
+   */
+  public static int findMaxSplitInArray(int[] list) {
+    int[] maxFromLeft = new int[list.length];
+    int[] minFromLeft = new int[list.length];
+    
+    maxFromLeft[0] = list[0];
+    minFromLeft[0] = list[0];
+    
+    int[] maxFromRight = new int[list.length];
+    int[] minFromRight = new int[list.length];
+    
+    maxFromRight[list.length - 1] = list[list.length - 1];
+    minFromRight[list.length - 1] = list[list.length - 1];
+
+    for (int i = 1; i < list.length; i++) {
+      maxFromLeft[i] = maxFromLeft[i-1] + list[i] > list[i] ? maxFromLeft[i-1] + list[i] : list[i];
+      minFromLeft[i] = minFromLeft[i-1] + list[i] < list[i] ? minFromLeft[i-1] + list[i] : list[i];
+    }
+    
+    for (int i = list.length - 2; i >= 0; i--) {
+      maxFromRight[i] = maxFromRight[i+1] + list[i] > list[i] ? maxFromRight[i+1] + list[i] : list[i];
+      minFromRight[i] = minFromRight[i+1] + list[i] < list[i] ? minFromRight[i+1] + list[i] : list[i];
+    }
+    
+    //System.out.println(Algorithms.printIntArray(maxFromLeft));
+    //System.out.println(Algorithms.printIntArray(minFromLeft));
+    //System.out.println(Algorithms.printIntArray(maxFromRight));
+    //System.out.println(Algorithms.printIntArray(minFromRight));
+    
+    int maxDiff = 0;
+    
+    for (int i = 0; i < list.length - 1; i++) {
+      int tmpDiff = absDiff(maxFromRight[i+1], minFromLeft[i]);
+      maxDiff = tmpDiff > maxDiff ? tmpDiff : maxDiff;
+      tmpDiff = absDiff(maxFromLeft[i], minFromRight[i+1]);
+      maxDiff = tmpDiff > maxDiff ? tmpDiff : maxDiff;
+    }
+    return maxDiff;
+  }
+  
+  public static int absDiff(int a, int b) {
+    if (a > b)
+      return a - b;
+    else
+      return b - a;
+  }
+  
+  /**
+   * 
+   * Implement the plusplus operator when we are getting the input as integer 
+   * array = { 9,9,9,9 }.output will be {1,0,0,0,0}
+   * 
+   * http://www.careercup.com/question?id=14370695
+   * 
+   * @param list
+   * @return
+   */
+  public static int[] plusPlusOperatorForIntArray(int[] list) {
+    int carry = 1;
+    LinkedList<Integer> answer = new LinkedList<Integer>();
+    for (int i = list.length - 1; i >= 0; i--) {
+      if (list[i] + carry == 10)
+        answer.addFirst(0);
+      else {
+        answer.addFirst(list[i] + carry);
+        carry = 0;
+      }
+    }
+    if (carry == 1)
+      answer.addFirst(carry);
+    
+    int[] result = new int[answer.size()];
+    Iterator<Integer> llIterator = answer.iterator();
+    for (int i = 0; i < result.length; i++) {
+      result[i] = llIterator.next();
+    }
+    return result;
+  }
+  
+  
+  /**
+   * 
+   * Given an integer array, sort the integer array such that the concatenated integer of 
+   * the result array is max. e.g. [4, 94, 9, 14, 1] will be sorted to [9,94,4,14,1] where the result integer is 9944141
+   * 
+   * http://www.careercup.com/question?id=7781671
+   * 
+   * @param list
+   * @return
+   */
+  public static int[] sortListSuchThatConcatenateListForLargestNumber(int[] list) {
+    ArrayList<Integer> arrayList = new ArrayList<Integer>();
+    for (int i = 0; i < list.length; i++)
+      arrayList.add(list[i]);
+    arrayList = mergeSort(arrayList);
+    int[] result = new int[arrayList.size()];
+    for (int i = 0; i < arrayList.size(); i++) {
+      result[i] = arrayList.get(i);
+    }
+    return result;
+  }
+  
+  public static ArrayList<Integer> mergeSort(ArrayList<Integer> list) {
+    ArrayList<Integer> result = new ArrayList<Integer>();
+    if (list != null) {
+      if (list.size() <= 1) {
+        result = list;
+      } else {
+        Integer mid = list.get(0);
+        ArrayList<Integer> subList = new ArrayList<Integer>();
+        for (int i = 1; i < list.size(); i++) { subList.add(list.get(i)); }
+        ArrayList<Integer> front = mergeSort(getListOfIntegersBiggerThanInteger(subList, mid));
+        ArrayList<Integer> back = mergeSort(getListOfIntegersSmallerThanOrEqualsToInteger(subList, mid));
+        
+        result.addAll(front);
+        result.add(mid);
+        result.addAll(back);
+      }
+    }
+    return result;
+  }
+  
+  private static ArrayList<Integer> getListOfIntegersSmallerThanOrEqualsToInteger(ArrayList<Integer> list, int mid) {
+    ArrayList<Integer> result = new ArrayList<Integer>();
+    for (Integer i : list) {
+      if (customIntegerCompare(i, mid) <= 0)
+        result.add(i);
+    }
+    return result;
+  }
+  
+  private static ArrayList<Integer> getListOfIntegersBiggerThanInteger(ArrayList<Integer> list, int mid) {
+    ArrayList<Integer> result = new ArrayList<Integer>();
+    for (Integer i : list) {
+      if (customIntegerCompare(i, mid) > 0) {
+        result.add(i);
+      }
+    }
+    return result;
+  }
+  
+  private static int customIntegerCompare(int x, int y) {
+    if (Integer.parseInt(x + "" + y) > Integer.parseInt(y + "" + x)) {
+      return 1;
+    } else if (Integer.parseInt(x + "" + y) < Integer.parseInt(y + "" + x)) {
+      return -1;
+    } else {
+      return 0;
+    }
+  }
+  
+  /**
+   * 
+   * Three strings say A,B,C are given to you. Check weather 3rd string is interleaved from string A and B. 
+   * Ex: A="abcd" B="xyz" C="axybczd". answer is yes. o(n)
+   * 
+   * @param a
+   * @param b
+   * @param c
+   * @return
+   */
+  public static boolean findIfTwoStringsAreInterleaved(String a, String b, String c) {
+    if (a == null || a.length() == 0)
+      return c.equals(b);
+    else if (b == null || b.length() == 0)
+      return c.equals(a);
+    else if (c == null)
+      return false;
+    else {
+      int aPointer = 0;
+      int bPointer = 0;
+      for (int cPointer = 0; cPointer < c.length(); cPointer++) {
+        if (aPointer < a.length() && c.charAt(cPointer) == a.charAt(aPointer))
+          aPointer++;
+        else if (bPointer < b.length() && c.charAt(cPointer) == b.charAt(bPointer))
+          bPointer++;
+        else
+          return false;
+      }
+      return aPointer == a.length() && bPointer == b.length();
+    }
+  }
+  
   /**
    * 
    * If a=1, b=2, c=3,....z=26. Given a string, find all possible codes that string can generate.
