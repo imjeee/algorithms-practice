@@ -15,6 +15,7 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TreeMap;
 import java.lang.StringBuffer;
 
 class ProgramInterviewQuestions {
@@ -69,17 +70,53 @@ class ProgramInterviewQuestions {
     plusPlusOperatorForIntArray();
     findMaxSplitInArray();
     removeEveryKthNodeInCircularLinkedListUntilOnlyOneNodeIsLeft();
+    pushAllZerosToEndOfArray();
+    findTheImmediateBiggerNumUsingSameDigit();
+    swapPosNumWithSmallestNumBiggerThanPos();
+    findLargestTripleProductInIncreasingOrderInArray();
   }
   
+  private static void findLargestTripleProductInIncreasingOrderInArray() {
+    //int[] array = {6,7,8,1,2,3,9,10};
+    //int[] array = {1, 11, 12, 7, 8, 9};
+    int[] array = {1,11,8,9 ,10,14};
+    int[] answer = Algorithms.findLargestTripleProductInIncreasingOrderInArray(array);
+    System.out.print("largest triple product in of num in increasign order in array " + Algorithms.printIntArray(array));
+    System.out.println(" is " + Algorithms.printIntArray(answer));
+  }
+
+  private static void swapPosNumWithSmallestNumBiggerThanPos() {
+    int pos = 0;
+    int[] list = {1,4,3,4};
+    System.out.print("Given " + Algorithms.printIntArray(list) + ", swap position " + pos);
+    int newPos = pos + 1;
+    System.out.print(" with the next biggest number at " + newPos + " or more, you get ");
+    Algorithms.swapPosNumWithSmallestNumBiggerThanPos(0, list);
+    System.out.println(Algorithms.printIntArray(list));
+  }
+  
+  private static void findTheImmediateBiggerNumUsingSameDigit() {
+    int num = 776549;
+    int result = Algorithms.findTheImmediateBiggerNumUsingSameDigit(num);
+    System.out.println("Given " + num + ", the next biggest number using the same digits is " + result);
+  }
+
+  private static void pushAllZerosToEndOfArray() {
+    int[] list = {1,2,0,4,0,0,8};
+    System.out.print("push all 0s in list " + Algorithms.printIntArray(list) + " to ");
+    Algorithms.pushAllZerosToEndOfArray(list);
+    System.out.println(Algorithms.printIntArray(list));
+  }
+
   private static void removeEveryKthNodeInCircularLinkedListUntilOnlyOneNodeIsLeft() {
     LinkedListNode<Integer> one = new LinkedListNode<Integer>(1);
     LinkedListNode<Integer> two = new LinkedListNode<Integer>(2);
     LinkedListNode<Integer> three = new LinkedListNode<Integer>(3);
     LinkedListNode<Integer> four = new LinkedListNode<Integer>(4);
     LinkedListNode<Integer> five = new LinkedListNode<Integer>(5);
-    LinkedListNode<Integer> six = new LinkedListNode<Integer>(6);
-    LinkedListNode<Integer> seven = new LinkedListNode<Integer>(7);
-    LinkedListNode<Integer> eight = new LinkedListNode<Integer>(8);
+    //LinkedListNode<Integer> six = new LinkedListNode<Integer>(6);
+    //LinkedListNode<Integer> seven = new LinkedListNode<Integer>(7);
+    //LinkedListNode<Integer> eight = new LinkedListNode<Integer>(8);
     one.next(two);
     two.next(three);
     three.next(four);
@@ -91,7 +128,7 @@ class ProgramInterviewQuestions {
     
     int k = 3;
 
-    int lastNodeValue = removeEveryKthNodeInCircularLinkedListUntilOnlyOneNodeIsLeft(one, k);
+    int lastNodeValue = Algorithms.removeEveryKthNodeInCircularLinkedListUntilOnlyOneNodeIsLeft(one, k);
     System.out.println("in list {1,2,3,4,5}, remove every 3rd element in the linkedlist get you " + lastNodeValue);
   }  
   

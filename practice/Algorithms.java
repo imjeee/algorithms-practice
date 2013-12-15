@@ -15,6 +15,172 @@ public class Algorithms {
 
   /**
    * 
+   * Given a sequence of non-negative integers find a subsequence of length 3 having maximum product with the numbers of the subsequence being in ascending order. 
+   * Example: 
+   * Input: 6 7 8 1 2 3 9 10 
+   * Ouput: 8 9 10
+   * 
+   * http://www.careercup.com/question?id=16813665
+   * 
+   * @param array
+   * @return
+   */
+  public static int[] findLargestTripleProductInIncreasingOrderInArray(int[] array) {
+    ArrayList<ArrayList<Integer>> answerTable = new ArrayList<ArrayList<Integer>>();
+    for (int i = 0; i < array.length; i++) {
+      for (int j = 0; j < answerTable.size(); j++) {
+        ArrayList<Integer> answerTableArrayJ = answerTable.get(j);
+        int lastElementPos = answerTableArrayJ.size() - 1;
+        if (answerTableArrayJ.get(lastElementPos) < array[i])
+          answerTableArrayJ.add(array[i]);
+      }
+      ArrayList<Integer> newPossibility = new ArrayList<Integer>();
+      newPossibility.add(array[i]);
+      answerTable.add(newPossibility);
+    }
+    int[] output = new int[3];
+    int result = 0;
+    for (int i = 0; i < answerTable.size(); i++) {
+      ArrayList<Integer> answerTableArrayJ = answerTable.get(i);
+      if (answerTableArrayJ.size() >= 3) {
+        int lastElementPos = answerTableArrayJ.size() - 1;
+        int tmpResult = answerTableArrayJ.get(lastElementPos);
+        tmpResult *= answerTableArrayJ.get(lastElementPos - 1);
+        tmpResult *= answerTableArrayJ.get(lastElementPos - 2);
+        if (tmpResult > result) {
+          result = tmpResult;
+          output[0] = answerTableArrayJ.get(lastElementPos - 2);
+          output[1] = answerTableArrayJ.get(lastElementPos - 1);
+          output[2] = answerTableArrayJ.get(lastElementPos);
+        }
+      }
+    }
+    return output;
+  }
+  
+  
+  /**
+   * 
+   * You have given a positive number you have to find a number which is bigger 
+   * than that by using same digits available in the number  
+   * 
+   * Example :- 
+   * You have given a number 7585 , your output should be 7855.
+   * 
+   * http://www.careercup.com/question?id=10676884
+   * 
+   * @param num
+   * @return
+   */
+  public static int findTheImmediateBiggerNumUsingSameDigit(int num) {
+    int[] numInArrayForm = convertIntToIntArray(num);
+    int pos = numInArrayForm.length - 2;
+    while(pos >= 0 && numInArrayForm[pos] > numInArrayForm[pos + 1])
+      pos--;
+    swapPosNumWithSmallestNumBiggerThanPos(pos, numInArrayForm);
+    int[] newNumInArrayForm = sortArrayBetweenPositions(numInArrayForm, pos+1, numInArrayForm.length);
+    int result = convertIntArrayToInt(newNumInArrayForm);
+    return result;
+  }
+  
+  public static void swapPosNumWithSmallestNumBiggerThanPos(int targetNumPos, int[] numInArrayForm) {
+    if (targetNumPos < numInArrayForm.length - 1) {
+      int targetNum = numInArrayForm[targetNumPos];
+      int smallestNumSoFar = numInArrayForm[targetNumPos + 1];
+      int smallestNumSoFarPos = targetNumPos + 1;
+      for (int i = numInArrayForm[targetNumPos] + 1; i < numInArrayForm.length - 1; i++) {
+        if (numInArrayForm[i] < smallestNumSoFar) {
+          smallestNumSoFar = numInArrayForm[i];
+          smallestNumSoFarPos = i;
+        }
+      }
+      int tmp = targetNum;
+      numInArrayForm[targetNumPos] = numInArrayForm[smallestNumSoFarPos];
+      numInArrayForm[smallestNumSoFarPos] = tmp;
+    }
+    
+  }
+  
+  private static int findNumDigits(int num) {
+    int result = 1;
+    while (num > 9) {
+      num /= 10;
+      result++;
+    }
+    return result;
+  }
+  
+
+  private static ArrayList<Integer> getArrayList(int[] numInArrayForm, int front, int back) {
+    ArrayList<Integer> result = new ArrayList<Integer>();
+    for (int i = front; i < back; i++)
+      result.add(numInArrayForm[i]);
+    return result;
+  }
+  
+  private static int[] convertIntToIntArray(int num) {
+    int numDigits = findNumDigits(num);
+    int[] result = new int[numDigits];
+    for (int i = numDigits - 1; i >= 0; i--) {
+      result[i] = num % 10;
+      num /= 10;
+    }
+    return result;
+  }
+  
+  public static int[] sortArrayBetweenPositions(int[] numInArrayForm, int front, int back) {
+    ArrayList<Integer> frontOfList = getArrayList(numInArrayForm, 0, front);
+    ArrayList<Integer> middleOfList = getArrayList(numInArrayForm, front, back);
+    Collections.sort(middleOfList);
+    ArrayList<Integer> backOfList = getArrayList(numInArrayForm, back, numInArrayForm.length);
+    ArrayList<Integer> result = frontOfList;
+    result.addAll(middleOfList);
+    result.addAll(backOfList);
+    int[] resultArray = new int[result.size()];
+    for (int i = 0; i < resultArray.length; i++)
+      resultArray[i] = result.get(i);
+    return resultArray;
+  }
+  
+  public static int convertIntArrayToInt(int[] intArray) {
+    int result = 0;
+    int multiplier = 1;
+    for (int i = intArray.length - 1; i >= 0; i--) {
+      result += intArray[i] * multiplier;
+      multiplier *= 10;
+    }
+    return result;
+  }
+  
+  
+  /**
+   * 
+   * Push all the zero's of a given array to the end of the array. In place only.
+   * Ex 1,2,0,4,0,0,8 becomes 1,2,4,8,0,0,0
+   * 
+   * http://www.careercup.com/question?id=12986664
+   * 
+   * @param list
+   */
+  public static void pushAllZerosToEndOfArray(int[] list) {
+    int zeroPointer = 0;
+    int numFinder = 0;
+    while (numFinder < list.length) {
+      while (list[zeroPointer] != 0)
+        zeroPointer++;
+      numFinder = zeroPointer + 1;
+      while(numFinder < list.length && list[numFinder] == 0)
+        numFinder++;
+      if (numFinder != list.length) {
+        list[zeroPointer] = list[numFinder];
+        list[numFinder] = 0;
+      }
+    }
+  }
+  
+  
+  /**
+   * 
    * Given a circular single linked list.Write a program that deletes every kth node until only one node is left. 
    * After kth node is deleted, start the procedure from (k+1)th node. 
    * e.g.list is 1->2->3->4->5->1 
