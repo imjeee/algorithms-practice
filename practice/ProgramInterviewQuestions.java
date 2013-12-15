@@ -70,11 +70,39 @@ class ProgramInterviewQuestions {
     plusPlusOperatorForIntArray();
     findMaxSplitInArray();
     removeEveryKthNodeInCircularLinkedListUntilOnlyOneNodeIsLeft();
-    pushAllZerosToEndOfArray();
+    pushAllZerosToEndOfArray(); 
     findTheImmediateBiggerNumUsingSameDigit();
     swapPosNumWithSmallestNumBiggerThanPos();
     findLargestTripleProductInIncreasingOrderInArray();
+    removeDupsFromSortedSingleyListedNode();
   }
+  
+  private static void removeDupsFromSortedSingleyListedNode() {
+    LinkedListNode<Integer> one = new LinkedListNode<Integer>(1);
+    LinkedListNode<Integer> two = new LinkedListNode<Integer>(2);
+    LinkedListNode<Integer> three = new LinkedListNode<Integer>(2);
+    LinkedListNode<Integer> four = new LinkedListNode<Integer>(2);
+    LinkedListNode<Integer> five = new LinkedListNode<Integer>(3);
+    LinkedListNode<Integer> six = new LinkedListNode<Integer>(3);
+    LinkedListNode<Integer> seven = new LinkedListNode<Integer>(4);
+    LinkedListNode<Integer> eight = new LinkedListNode<Integer>(4);
+    one.next(two);
+    two.next(three);
+    three.next(four);
+    four.next(five);
+    five.next(six);
+    six.next(seven);
+    seven.next(eight);
+    
+    LinkedListNode<Integer> start = Algorithms.removeDupsFromSortedSingleyListedNode(one);
+    System.out.print("given sorted singley linked list, remove all duplicates: ");
+    while (start != null) {
+      System.out.print(start.value() + ", ");
+      start = start.next();
+    }
+
+  }
+ 
   
   private static void findLargestTripleProductInIncreasingOrderInArray() {
     //int[] array = {6,7,8,1,2,3,9,10};

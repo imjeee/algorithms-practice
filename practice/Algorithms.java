@@ -14,6 +14,53 @@ import java.util.Map.Entry;
 public class Algorithms {
 
   /**
+   * Given a sorted linked list, delete all duplicate numbers, leave only distinct numbers 
+   * from original list. e.g., given 1->2->3->3->4->4->5, return 1->2->5. Given 1->1->1->2->3, return 2->3.
+   * 
+   * http://www.careercup.com/question?id=165053 
+   * 
+   * @param node
+   */
+  public static LinkedListNode<Integer> removeDupsFromSortedSingleyListedNode(LinkedListNode<Integer> node) {
+    LinkedListNode<Integer> lastNode = null;
+    
+    if (node == null)
+      return null;
+    else if (node.next() == null)
+      return node;
+    else {
+      LinkedListNode<Integer> startNode = null;
+      LinkedListNode<Integer> resultLink = null;
+      LinkedListNode<Integer> lastSeenNode = node;
+      LinkedListNode<Integer> currentNode = node.next();
+      LinkedListNode<Integer> needToRemoveNode = null;
+      while (currentNode != null) {
+        if (currentNode.value() == lastSeenNode.value()) {
+          needToRemoveNode = currentNode;
+        } else {
+          if (needToRemoveNode == null || lastSeenNode.value() != needToRemoveNode.value()) {
+            if (startNode == null) {
+              startNode = new LinkedListNode<Integer>(lastSeenNode.value());
+              resultLink = startNode;
+            } else {
+              LinkedListNode<Integer> dupNode = new LinkedListNode<Integer>(lastSeenNode.value());
+              resultLink.next(dupNode);
+              resultLink = resultLink.next();
+            }
+          }
+        }
+        lastSeenNode = currentNode;
+        currentNode = currentNode.next();        
+      }
+      
+      if (lastSeenNode.value() != needToRemoveNode.value())
+        resultLink.next(new LinkedListNode<Integer>(lastSeenNode.value()));
+      
+      return startNode;
+    }
+  }
+  
+  /**
    * 
    * Given a sequence of non-negative integers find a subsequence of length 3 having maximum product with the numbers of the subsequence being in ascending order. 
    * Example: 
