@@ -14,6 +14,181 @@ import java.util.Map.Entry;
 public class Algorithms {
 
   /**
+   * 
+   * Partition a set of numbers into two such that difference between their sum is minimum, 
+   * and both sets have equal number of elements. 
+   * 
+   * For example: {1, 4, 9, 16} is partitioned as {1,16} and {4,9} with diff = 17-13=4. 
+   * Does greedy work here? First sorting, and then picking smallest and largest to fall in set 1,
+   * and picking 2nd smallest and 2nd largest to fall in set 2. 
+   * 
+   * http://www.careercup.com/question?id=10244832
+   * 
+   * @param list
+   * @return
+   */
+  public static TwoListsAndTheirSumDiff partitionSetInToTwoSuchThatTheDifferenceIsMinimized(ArrayList<Integer> list) {
+    ArrayList<Integer> listOne = new ArrayList<Integer>();
+    ArrayList<Integer> listTwo = new ArrayList<Integer>();
+    return partitionSetInToTwoSuchThatTheDifferenceIsMinimizedHelper(list, listOne, listTwo);
+  }
+  
+  private static TwoListsAndTheirSumDiff partitionSetInToTwoSuchThatTheDifferenceIsMinimizedHelper(ArrayList<Integer> list, ArrayList<Integer> listOne, ArrayList<Integer> listTwo) {
+    TwoListsAndTheirSumDiff resultDiff = null;
+    if (list.size() == 0) {
+      resultDiff = new TwoListsAndTheirSumDiff();
+      resultDiff.setListOne(listOne);
+      resultDiff.setListTwo(listTwo);
+    } else {
+      int takeOut = list.remove(0);
+      listOne.add(takeOut);
+      int takeOutPos = listOne.size() - 1;
+      TwoListsAndTheirSumDiff ifListOneGetsI = partitionSetInToTwoSuchThatTheDifferenceIsMinimizedHelper(list, listOne, listTwo);
+      listOne.remove(takeOutPos);
+      listTwo.add(takeOut);
+      TwoListsAndTheirSumDiff ifListTwoGetsI = partitionSetInToTwoSuchThatTheDifferenceIsMinimizedHelper(list, listOne, listTwo);
+      TwoListsAndTheirSumDiff tmpSumDiff = ifListOneGetsI.getSumDiff() < ifListTwoGetsI.getSumDiff() ? ifListOneGetsI : ifListTwoGetsI;
+      resultDiff = resultDiff == null ? tmpSumDiff : resultDiff;
+      resultDiff = tmpSumDiff.getSumDiff() < resultDiff.getSumDiff() ? tmpSumDiff : resultDiff;
+    }
+    return resultDiff;
+  }
+  
+  
+  /**
+   * THIS IS A WRONG SOLUTION (12/16/2013)
+   * 
+   * 1. A 
+   * 2. Ctrl+A 
+   * 3. Ctrl+C 
+   * 4. Ctrl+V 
+   * 
+   * If you can only press the keyboard for N times (with the above four keys), please write a 
+   * program to produce maximum numbers of A. If possible, please also print out the sequence of keys. 
+   * So the input parameter is N (No. of keys that you can press), the output is M (No. of As that you can produce).
+   * 
+   * http://www.careercup.com/question?id=7184083
+   * 
+   * @param n
+   * @return
+   */
+  public static int findMaxAsCanBeProducedByKeySequence(int n) {
+    int currentOutputLength = 0;
+    int copyClipLength = 0;
+    while (n > 0) {
+      if (n < 3) {
+        if (copyClipLength > 1) {
+          currentOutputLength += copyClipLength;
+          System.out.print("Ctrl-P ");
+        } else {
+          currentOutputLength += 1;
+          System.out.print("A ");
+        }
+        n--;
+      } else {
+        int typeThreeAs = currentOutputLength + 3;
+        int selectAllCopyPaste = 2 * currentOutputLength;
+        int pasteThreeTimes = currentOutputLength + copyClipLength*3;
+        if (pasteThreeTimes > typeThreeAs && pasteThreeTimes > selectAllCopyPaste) {
+          currentOutputLength += copyClipLength*3;
+          System.out.print("Ctrl-P Ctrl-P Ctrl-P ");
+        } else if (typeThreeAs > selectAllCopyPaste) {
+          currentOutputLength += 3;
+          System.out.print("A A A ");
+        } else {
+          copyClipLength = currentOutputLength;
+          currentOutputLength *= 2;
+          System.out.print("Ctrl-A Ctrl-C Ctrl-P ");
+        }
+        n -= 3;
+      }
+    }
+    return currentOutputLength;
+  }
+  
+  /**
+   * 
+   * Eliminate all ÔbÕ and ÔacÕ in an array of characters, you have to replace 
+   * them in-place, and you are only allowed to iterate over the char array once.
+   *  
+   * Examples:
+   * abc -> ac 
+   * ac->''
+   * 
+   * http://www.careercup.com/question?id=18460667
+   * 
+   * @param array
+   */
+  public static void removeAllBsAndACsInCharArray(char[] array) {
+    int pointer = 0;
+    while (pointer < array.length && array[pointer] != '-') {
+      if (array[pointer] == 'b') {
+        array[pointer] = '-';
+      } else if (array[pointer] == 'a') {
+        if (pointer + 1 < array.length && array[pointer + 1] == 'c') {
+          array[pointer] = '-';
+          array[pointer + 1] = '-';
+        }
+      }
+      pointer++;
+    }
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] == '-')
+        removeCharAtPointerAndPushAllElementsForward(array, i);
+    }
+  }
+  
+  private static void removeCharAtPointerAndPushAllElementsForward(char[] array, int pointer) {
+    for (int i = pointer; i < array.length - 1; i++) {
+      array[pointer] = array[pointer + 1];
+    }
+    array[array.length - 1] = '-';
+  }
+  
+  /**
+   * 
+   * Given a binary representation of an integer say 15 as 1111, find the maximum longest 
+   * continous sequence of 0s. The twist is it needs to be done in log N.
+   * 
+   * For example. 10000101 
+   * the answer should be 4, because there are 4 continouos zeroes.
+   * 
+   * http://www.careercup.com/question?id=4860021380743168
+   * 
+   * @param num
+   * @return
+   */
+  public static int findLongestContinuousZerosInBinaryRepresentationOfInt(int num) {
+    int result = 0;
+    int tmpResult = 0;
+    if (num == 0)
+      return 1;
+    while (num != 0) {
+      if ((num & 1) == 0) {
+        tmpResult++;
+        result = tmpResult > result ? tmpResult : result;
+      } else {
+        tmpResult = 0;
+      }
+      num = num >> 1;
+    }
+    return result;
+  }
+  
+  public static String convertIntToBinaryString(int num) {
+    if (num == 0)
+      return "0";
+    else if (num == 1)
+      return "1";
+    else {
+      if (num % 2 == 0)
+        return convertIntToBinaryString(num/2) + "0";
+      else
+        return convertIntToBinaryString(num/2) + "1";
+    }
+  }
+  
+  /**
    * Given a sorted linked list, delete all duplicate numbers, leave only distinct numbers 
    * from original list. e.g., given 1->2->3->3->4->4->5, return 1->2->5. Given 1->1->1->2->3, return 2->3.
    * 
@@ -1241,6 +1416,15 @@ public class Algorithms {
     return false;
   }
 
+  public static String printCharArray(char[] input) {
+    StringBuffer output = new StringBuffer();
+    output.append("{");
+    for (char i : input)
+      output.append(i + ",");
+    String sOutput = output.substring(0, output.length() - 1) + "}";
+    return sOutput;
+  }
+  
   /**
    * convert int[] to string, ie. {1,2,3} becomes "{1,2,3}" O(n) time and space
    * 

@@ -75,6 +75,66 @@ class ProgramInterviewQuestions {
     swapPosNumWithSmallestNumBiggerThanPos();
     findLargestTripleProductInIncreasingOrderInArray();
     removeDupsFromSortedSingleyListedNode();
+    findLongestContinuousZerosInBinaryRepresentationOfInt();
+    removeAllBsAndACsInCharArray();
+    findSequenceToProduceMostAs();
+    CanIOrderExactNumberOfNuggets();
+    partitionSetInToTwoSuchThatTheDifferenceIsMinimized();
+  }
+  
+  private static void partitionSetInToTwoSuchThatTheDifferenceIsMinimized() {
+    ArrayList<Integer> list = new ArrayList<Integer>();
+    list.add(1);
+    list.add(4);
+    list.add(9);
+    list.add(16);
+    
+    TwoListsAndTheirSumDiff result = Algorithms.partitionSetInToTwoSuchThatTheDifferenceIsMinimized(list);
+    System.out.println(result.getSumDiff());
+  }
+
+  private static void CanIOrderExactNumberOfNuggets() {
+    int n = 15;
+    boolean canOrder = CanIOrderExactNumberOfNuggets(n);
+    System.out.println("Can you order exactly " + n + " number of nuggets, if you can only order in quantities of 6, 9, and 20? " + canOrder);
+  }
+  
+  public static boolean CanIOrderExactNumberOfNuggets(int n) {
+    if (n < 6)
+      return false;
+    if (n == 6 || n == 9 || n == 20)
+      return true;
+    boolean result = CanIOrderExactNumberOfNuggets(n - 20);
+    result |= CanIOrderExactNumberOfNuggets(n - 9);
+    result |= CanIOrderExactNumberOfNuggets(n - 6);
+    return result;
+  }
+  
+  private static void findSequenceToProduceMostAs() {
+    int n = 171;
+    System.out.println("If you can only press A or Ctr-A or Ctr-C or Ctr-V " + n + " times, ");
+    System.out.print("you can press in sequence: ");
+    int maxAsLength = Algorithms.findMaxAsCanBeProducedByKeySequence(n);
+    System.out.println();
+    System.out.println("the maximum number of As can be produced is " + maxAsLength + " As.");
+  }
+
+  
+  private static void removeAllBsAndACsInCharArray() {
+    char[] array = {'a','b','c','a','c'};
+    String originalArray = Algorithms.printCharArray(array);
+    System.out.print("Given char array " + originalArray);
+    Algorithms.removeAllBsAndACsInCharArray(array);
+    originalArray = Algorithms.printCharArray(array);
+    System.out.println(" after removing all the Bs and ACs, we get " + originalArray);
+  }
+
+  
+  private static void findLongestContinuousZerosInBinaryRepresentationOfInt() {
+    int num = 133;
+    String numInBinaryString = Algorithms.convertIntToBinaryString(num);
+    System.out.print("Given " + num + ", the binary representation is " + numInBinaryString);
+    System.out.println(" the longest continuous 0s is " + Algorithms.findLongestContinuousZerosInBinaryRepresentationOfInt(num));
   }
   
   private static void removeDupsFromSortedSingleyListedNode() {
@@ -100,7 +160,7 @@ class ProgramInterviewQuestions {
       System.out.print(start.value() + ", ");
       start = start.next();
     }
-
+    System.out.println();
   }
  
   
