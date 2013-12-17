@@ -84,13 +84,15 @@ class ProgramInterviewQuestions {
   
   private static void partitionSetInToTwoSuchThatTheDifferenceIsMinimized() {
     ArrayList<Integer> list = new ArrayList<Integer>();
-    list.add(1);
-    list.add(4);
-    list.add(9);
-    list.add(16);
-    
+    list.add(5);
+    list.add(5);
+    list.add(5);
+    list.add(15);
+
     TwoListsAndTheirSumDiff result = Algorithms.partitionSetInToTwoSuchThatTheDifferenceIsMinimized(list);
-    System.out.println(result.getSumDiff());
+    System.out.print("Given integer array " + Algorithms.printIntArray(list));
+    System.out.print(" the best way to partition the lists is " + Algorithms.printIntArray(result.getListOne()) + " " + Algorithms.printIntArray(result.getListTwo()));
+    System.out.println(" so the difference between the sum of the 2 lists is " + result.getSumDiff());
   }
 
   private static void CanIOrderExactNumberOfNuggets() {

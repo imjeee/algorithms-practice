@@ -28,9 +28,10 @@ public class Algorithms {
    * @return
    */
   public static TwoListsAndTheirSumDiff partitionSetInToTwoSuchThatTheDifferenceIsMinimized(ArrayList<Integer> list) {
+    ArrayList<Integer> listClone = new ArrayList<Integer>(list);
     ArrayList<Integer> listOne = new ArrayList<Integer>();
     ArrayList<Integer> listTwo = new ArrayList<Integer>();
-    return partitionSetInToTwoSuchThatTheDifferenceIsMinimizedHelper(list, listOne, listTwo);
+    return partitionSetInToTwoSuchThatTheDifferenceIsMinimizedHelper(listClone, listOne, listTwo);
   }
   
   private static TwoListsAndTheirSumDiff partitionSetInToTwoSuchThatTheDifferenceIsMinimizedHelper(ArrayList<Integer> list, ArrayList<Integer> listOne, ArrayList<Integer> listTwo) {
