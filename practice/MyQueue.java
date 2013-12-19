@@ -1,3 +1,5 @@
+import sun.misc.Queue;
+
 
 public class MyQueue<E> {
   private LinkedListNode<E> front;
@@ -24,6 +26,7 @@ public class MyQueue<E> {
     return this.size;
   }
   
+  @Override
   public void enqueue(E e) {
     this.size++;
     if (this.front == null) {

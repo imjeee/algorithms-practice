@@ -80,6 +80,42 @@ class ProgramInterviewQuestions {
     findSequenceToProduceMostAs();
     CanIOrderExactNumberOfNuggets();
     partitionSetInToTwoSuchThatTheDifferenceIsMinimized();
+    morphFromOneWordToAnotherOneLetterAtATime();
+  }
+  
+  private static void morphFromOneWordToAnotherOneLetterAtATime() {
+    String startWord = "cat";
+    String endWord = "dog";
+    Set<String> dictionary = getDictonaryWords();
+    ArrayList<String> transition = Algorithms.morphFromOneWordToAnotherOneLetterAtATime(startWord, endWord, dictionary);
+    System.out.print("given start word \"" + startWord + "\" and end word \"" + endWord + " the path between those to words: ");
+    for (int i = 0; i < transition.size(); i++) {
+      System.out.print(transition.get(i));
+      if (i != transition.size() - 1)
+        System.out.print("->");
+    }
+    System.out.println();
+  }
+  
+  private static Set<String> getDictonaryWords() {
+    Set<String> dictionary = new HashSet<String>();
+    dictionary.add("cat");    
+    dictionary.add("dog");
+    dictionary.add("bat");
+    dictionary.add("mat");
+    dictionary.add("cot");
+    dictionary.add("dot");
+    dictionary.add("cog");
+    dictionary.add("map");
+    dictionary.add("rat");
+    dictionary.add("wet");
+    dictionary.add("met");
+    dictionary.add("fed");
+    dictionary.add("sad");
+    dictionary.add("ban");
+    dictionary.add("ham");
+    dictionary.add("jam");
+    return dictionary;
   }
   
   private static void partitionSetInToTwoSuchThatTheDifferenceIsMinimized() {

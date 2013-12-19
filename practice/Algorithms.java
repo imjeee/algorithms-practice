@@ -15,6 +15,98 @@ public class Algorithms {
 
   /**
    * 
+   * BELOW implementation does not give the optimal path, only one path, it DOES NOT return shortest path.
+   * 
+   * Given a source string and a destination string write a program to display sequence of strings 
+   * to travel from source to destination. Rules for traversing: 
+   * 
+   * 1. You can only change one character at a time 
+   * 2. Any resulting word has to be a valid word from dictionary 
+   * 
+   * Example: Given source word CAT and destination word DOG , one of the valid sequence would be 
+   * CAT -> COT -> DOT -> DOG 
+   * Another valid sequence can be 
+   * CAT -> COT - > COG -> DOG 
+   * 
+   * One character can change at one time and every resulting word has be a valid word from dictionary
+   * 
+   * http://www.careercup.com/question?id=14947965
+   * 
+   * @param startWord
+   * @param endWord
+   * @param dictionary
+   * @return
+   */
+  public static ArrayList<String> morphFromOneWordToAnotherOneLetterAtATime(String startWord, String endWord, Set<String> dictionary) {
+    MyQueue<String> wordsStillNeedsToBeSearched = new MyQueue<String>();
+    Map<String, ArrayList<String>> wordMap = new HashMap<String, ArrayList<String>>();
+    
+    wordsStillNeedsToBeSearched.enqueue(startWord);
+    wordsStillNeedsToBeSearched.enqueue(endWord);
+    
+    while (wordsStillNeedsToBeSearched.size() != 0) {
+      String currentWord = wordsStillNeedsToBeSearched.dequeue();
+      ArrayList<String> neighbors = findAllNeighborsToWord(currentWord, dictionary);
+      for (String neighborWord : neighbors) {
+        if (!wordMap.containsKey(neighborWord))
+          wordsStillNeedsToBeSearched.enqueue(neighborWord);
+      }
+      wordMap.put(currentWord, neighbors);
+    }
+    
+    ArrayList<String> shortestPath = findShortestPathFromOneWordToAnother(startWord, endWord, wordMap);
+    return shortestPath;
+  }
+  
+  private static ArrayList<String> findShortestPathFromOneWordToAnother(String startWord, String endWord, Map<String, ArrayList<String>> wordMap) {
+    ArrayList<String> shortestPath = new ArrayList<String>();
+    Set<String> visitedWords = new HashSet<String>();
+    shortestPath.add(startWord);
+    visitedWords.add(startWord);
+    return findShortestPathFromOneWordToAnotherHelper(endWord, shortestPath, visitedWords, wordMap);
+  }
+  
+  private static ArrayList<String> findShortestPathFromOneWordToAnotherHelper(String endWord, ArrayList<String> path, Set<String> visitedWords, Map<String, ArrayList<String>> wordMap) {
+    String lastWord = path.get(path.size() - 1);
+    if (lastWord.equals(endWord))
+      return path;
+    
+    ArrayList<String> neighbors = wordMap.get(lastWord);
+    for (String word : neighbors) {
+      if (!visitedWords.contains(word)) {
+        visitedWords.add(word);
+        path.add(word);
+        findShortestPathFromOneWordToAnotherHelper(endWord, path, visitedWords, wordMap);
+        
+        if (path.get(path.size() - 1).equals(endWord))
+          return path;
+        else {
+          path.remove(path.size() - 1);
+          visitedWords.remove(word);
+        }
+      }
+    }
+    return path;
+  }
+  
+  private static ArrayList<String> findAllNeighborsToWord(String currentWord, Set<String> dictionary) {
+    char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+    ArrayList<String> currenWordsNeighbors = new ArrayList<String>();
+    
+    for (int i = 0; i < currentWord.length(); i++) {
+      char[] currentWordForProcessing = currentWord.toCharArray();
+      for (int j = 0; j < alphabet.length; j++) {        
+        currentWordForProcessing[i] = alphabet[j];
+        String possibleNewWord = String.valueOf(currentWordForProcessing);
+        if (dictionary.contains(possibleNewWord) && !possibleNewWord.equals(currentWord))
+          currenWordsNeighbors.add(possibleNewWord);
+      }
+    }    
+    return currenWordsNeighbors;
+  }
+  
+  /**
+   * 
    * Partition a set of numbers into two such that difference between their sum is minimum, 
    * and both sets have equal number of elements. 
    * 
