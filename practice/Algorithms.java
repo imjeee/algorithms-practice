@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +14,93 @@ import java.util.Map.Entry;
 
 public class Algorithms {
 
+  /**
+   * Given a string, find whether it has any permutation of another string. 
+   * For example, given "abcdefg" and "ba", it shuold return true, because "abcdefg" 
+   * has substring "ab", which is a permutation of "ba".
+   * 
+   * http://www.careercup.com/question?id=15555796
+   * 
+   * @param s1
+   * @param s2
+   * @return
+   */
+  public static boolean findWhetherIthasAnyPermutationOfAnotherString(String s1, String s2) {
+    long s2Value = 1;
+    for (int i = 0; i < s2.length(); i++) {
+      int charValue = s2.charAt(i) - 64;      
+      s2Value *= charValue;
+    }
+    long s1Value = 1;
+    int runner = 0;
+    int trailer = 0;
+    while (trailer < s1.length() && runner < s1.length()) {
+      while (s1Value < s2Value) {
+        int charValue = s1.charAt(runner) - 64;
+        s1Value *= charValue;
+        runner++;
+      }
+      while (s1Value > s2Value) {
+        int charValue = s1.charAt(trailer) - 64;
+        s1Value /= charValue;
+        trailer++;
+      }
+      if (s1Value == s2Value) {
+        String possibleMatch = s1.substring(trailer, runner);
+        if (stringsArePermutations(possibleMatch, s2))
+          return true;
+        else
+          runner++;
+      }
+    }
+    return false;
+  }
+  
+  public static boolean stringsArePermutations(String s1, String s2) {
+    char[] s1Chars = s1.toCharArray();
+    Arrays.sort(s1Chars);
+    String sortedS1 = String.valueOf(s1Chars);
+    
+    char[] s2Chars = s2.toCharArray();
+    Arrays.sort(s2Chars);
+    String sortedS2 = String.valueOf(s2Chars);
+    
+    boolean result = sortedS1.equals(sortedS2);
+    if (result)
+      System.out.println("found match: " + s1 + " : " + s2);
+    return result;
+  }
+  
+  /**
+   * 
+   * Use SIMPLE LOGIC for Converting this string str="aaabbccc" into str="3a2b3c".
+   * 
+   * http://www.careercup.com/question?id=6074182194429952
+   * 
+   * @param s
+   * @return
+   */
+  public static String printWhatYouSee(String s) {
+    String whatYouSee = "";
+    if (s.length() > 0) {
+      char lastChar = s.charAt(0);
+      String sChar = lastChar + "";
+      int charCount = 1;
+      for (int i = 1; i < s.length(); i++) {
+        if (s.charAt(i) != lastChar) {
+          whatYouSee += charCount + sChar;
+          charCount = 1;
+        } else {
+          charCount++;
+        }
+        lastChar = s.charAt(i);
+      }
+      sChar = lastChar + "";
+      whatYouSee += charCount + sChar; 
+    }
+    return whatYouSee;
+  }
+  
   /**
    * 
    * Given a source string and a destination string write a program to display sequence of strings 

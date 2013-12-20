@@ -81,7 +81,24 @@ class ProgramInterviewQuestions {
     CanIOrderExactNumberOfNuggets();
     partitionSetInToTwoSuchThatTheDifferenceIsMinimized();
     morphFromOneWordToAnotherOneLetterAtATime();
+    printWhatYouSee();
+    findWhetherIthasAnyPermutationOfAnotherString();
   }
+  
+  private static void printWhatYouSee() {
+    String s = "aaabbccc";
+    String output = Algorithms.printWhatYouSee(s);
+    System.out.println("Given " + s + ", what you see is " + output);
+  }
+  
+  private static void findWhetherIthasAnyPermutationOfAnotherString() {
+    String s1 = "abcdefg";
+    String s2 = "bac";
+    boolean ifHasPerm = Algorithms.findWhetherIthasAnyPermutationOfAnotherString(s1, s2);
+    System.out.println("Given string \"" + s1 + "\" and \"" + s2 + "\", does s1 contain a substring that's a permutation of s2: " + ifHasPerm);
+  }
+  
+
   
   private static void morphFromOneWordToAnotherOneLetterAtATime() {
     String startWord = "cat";
