@@ -15,8 +15,6 @@ public class Algorithms {
 
   /**
    * 
-   * BELOW implementation does not give the optimal path, only one path, it DOES NOT return shortest path.
-   * 
    * Given a source string and a destination string write a program to display sequence of strings 
    * to travel from source to destination. Rules for traversing: 
    * 
@@ -59,34 +57,31 @@ public class Algorithms {
   }
   
   private static ArrayList<String> findShortestPathFromOneWordToAnother(String startWord, String endWord, Map<String, ArrayList<String>> wordMap) {
-    ArrayList<String> shortestPath = new ArrayList<String>();
+    ArrayList<String> path = new ArrayList<String>();
     Set<String> visitedWords = new HashSet<String>();
-    shortestPath.add(startWord);
+    MyQueue<ArrayList<String>> visitQueues = new MyQueue<ArrayList<String>>();
+
+    path.add(startWord);
     visitedWords.add(startWord);
-    return findShortestPathFromOneWordToAnotherHelper(endWord, shortestPath, visitedWords, wordMap);
-  }
-  
-  private static ArrayList<String> findShortestPathFromOneWordToAnotherHelper(String endWord, ArrayList<String> path, Set<String> visitedWords, Map<String, ArrayList<String>> wordMap) {
-    String lastWord = path.get(path.size() - 1);
-    if (lastWord.equals(endWord))
-      return path;
+    visitQueues.enqueue(path);
     
-    ArrayList<String> neighbors = wordMap.get(lastWord);
-    for (String word : neighbors) {
-      if (!visitedWords.contains(word)) {
-        visitedWords.add(word);
-        path.add(word);
-        findShortestPathFromOneWordToAnotherHelper(endWord, path, visitedWords, wordMap);
-        
-        if (path.get(path.size() - 1).equals(endWord))
-          return path;
-        else {
-          path.remove(path.size() - 1);
-          visitedWords.remove(word);
+    while (!visitQueues.isEmpty()) {
+      ArrayList<String> tmpPath = visitQueues.dequeue();
+      String lastWord = tmpPath.get(tmpPath.size() - 1);
+      ArrayList<String> neighbors = wordMap.get(lastWord);
+      for (String word : neighbors) {
+        if (!visitedWords.contains(word)) {
+          visitedWords.add(word);
+          ArrayList<String> newPath = new ArrayList<String>(tmpPath);
+          newPath.add(word);
+          if (word.equals(endWord))
+            return newPath;
+          else
+            visitQueues.enqueue(newPath);
         }
       }
     }
-    return path;
+    return null;
   }
   
   private static ArrayList<String> findAllNeighborsToWord(String currentWord, Set<String> dictionary) {
