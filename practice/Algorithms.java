@@ -12,6 +12,12 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Stack;
 
+import NewDataStructures.BinaryTreeNode;
+import NewDataStructures.LinkedListNode;
+import NewDataStructures.MyQueue;
+import NewDataStructures.Person;
+import NewDataStructures.TwoListsAndTheirSumDiff;
+
 public class Algorithms {
     
     /**

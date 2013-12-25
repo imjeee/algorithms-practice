@@ -5,6 +5,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import NewDataStructures.BinarySearchTreeNode;
+import NewDataStructures.BinaryTreeNode;
+import NewDataStructures.CircularQueue;
+import NewDataStructures.LinkedListNode;
+import NewDataStructures.MyQueue;
+import NewDataStructures.Person;
+import NewDataStructures.TwoListsAndTheirSumDiff;
+
 class ProgramInterviewQuestions {
     public static void main(String[] args) {
         System.out.println("programming interview questions practice!\n");
@@ -70,6 +78,23 @@ class ProgramInterviewQuestions {
         morphFromOneWordToAnotherOneLetterAtATime();
         printWhatYouSee();
         findWhetherIthasAnyPermutationOfAnotherString();
+        playWithCircularQueue();
+    }
+    
+    private static void playWithCircularQueue() {
+        CircularQueue cq = new CircularQueue(10);
+        for (int i = 0; i < 15; i++) {
+            cq.enqueue(i);
+        }
+        
+        for (int i = 0; i < 10; i++) {
+            try {
+                System.out.print(cq.dequeue() + ", ");
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
     
     private static void printWhatYouSee() {

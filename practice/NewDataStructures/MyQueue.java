@@ -1,3 +1,4 @@
+package NewDataStructures;
 
 public class MyQueue<E> {
     private LinkedListNode<E> front;
