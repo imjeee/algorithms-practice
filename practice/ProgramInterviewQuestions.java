@@ -86,15 +86,8 @@ class ProgramInterviewQuestions {
         for (int i = 0; i < 15; i++) {
             cq.enqueue(i);
         }
-        
-        for (int i = 0; i < 10; i++) {
-            try {
-                System.out.print(cq.dequeue() + ", ");
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
+        String queue = Algorithms.printIntArray(cq.getContentQueueCopy());
+        System.out.println("print underlying queue: " + queue);
     }
     
     private static void printWhatYouSee() {
