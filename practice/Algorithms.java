@@ -21,6 +21,38 @@ import NewDataStructures.TwoListsAndTheirSumDiff;
 public class Algorithms {
     
     /**
+     * Given n. Generate all numbers with number of digits equal to n, such that the digit to the right is greater than
+     * the left digit (ai+1 > ai). E.g. if n=3 (123,124,125,...129,234,...789)
+     * 
+     * http://www.careercup.com/question?id=6715403111759872
+     * 
+     * @param n
+     * @return
+     */
+    public static ArrayList<Integer> generateNumbersForNDigitsInIncreasingOrder(int n) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        if (n == 0)
+            return result;
+        for (int i = 1; i <= 9; i++)
+            result.add(i);
+        return generateNumbersForNDigitsInIncreasingOrderHelper(result, n - 1);
+    }
+    
+    private static ArrayList<Integer> generateNumbersForNDigitsInIncreasingOrderHelper(ArrayList<Integer> result, int numLeft) {
+        ArrayList<Integer> newResult = new ArrayList<Integer>();
+        if (numLeft == 0)
+            return result;
+        for (int i = 0; i < result.size(); i++) {
+            int lastDigit = result.get(i) % 10;
+            int tmp = result.get(i) * 10;
+            for (int j = lastDigit + 1; j <= 9; j++) {
+                newResult.add(tmp + j);
+            }
+        }
+        return generateNumbersForNDigitsInIncreasingOrderHelper(newResult, numLeft - 1);
+    }
+    
+    /**
      * Given a string, find whether it has any permutation of another string. For example, given "abcdefg" and "ba", it
      * shuold return true, because "abcdefg" has substring "ab", which is a permutation of "ba".
      * 

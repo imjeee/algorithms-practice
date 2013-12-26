@@ -7,6 +7,7 @@ import java.util.Set;
 
 import NewDataStructures.BinarySearchTreeNode;
 import NewDataStructures.BinaryTreeNode;
+import NewDataStructures.BrowserHistory;
 import NewDataStructures.CircularQueue;
 import NewDataStructures.LinkedListNode;
 import NewDataStructures.MyQueue;
@@ -79,6 +80,14 @@ class ProgramInterviewQuestions {
         printWhatYouSee();
         findWhetherIthasAnyPermutationOfAnotherString();
         playWithCircularQueue();
+        generateNumbersForNDigitsInIncreasingOrder();
+    }
+    
+    private static void generateNumbersForNDigitsInIncreasingOrder() {
+        int n = 3;
+        ArrayList<Integer> generatedNumbers = Algorithms.generateNumbersForNDigitsInIncreasingOrder(n);
+        System.out.println("given " + n + ", generate all numbers with 3 digits, where the digits are in increasing order:");
+        System.out.println(Algorithms.printIntArray(generatedNumbers));
     }
     
     private static void playWithCircularQueue() {
