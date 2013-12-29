@@ -21,6 +21,38 @@ import NewDataStructures.TwoListsAndTheirSumDiff;
 public class Algorithms {
     
     /**
+     * 
+     * http://www.careercup.com/question?id=22191662
+     * 
+     * @param amount
+     * @param row
+     * @param col
+     * @return
+     */
+    public static double pourWaterIntoGlassPyramid(double amount, int row, int col) {
+        double[] thisRow = { amount };
+        return pourWaterIntoGlassPyramidHelper(thisRow, row, col);
+    }
+    
+    private static double pourWaterIntoGlassPyramidHelper(double[] thisRow, int row, int col) {
+        if (thisRow.length - 1 == row && col < thisRow.length) {
+            if (thisRow[col] > 1)
+                return 1;
+            else
+                return thisRow[col];
+        }
+        double[] newRow = new double[thisRow.length + 1];
+        for (int i = 0; i < thisRow.length; i++) {
+            if (thisRow[i] - 1 > 1) {
+                double split = (thisRow[i] - 1) / 2;
+                newRow[i] += split;
+                newRow[i + 1] += split;
+            }
+        }
+        return pourWaterIntoGlassPyramidHelper(newRow, row, col);
+    }
+    
+    /**
      * Given n. Generate all numbers with number of digits equal to n, such that the digit to the right is greater than
      * the left digit (ai+1 > ai). E.g. if n=3 (123,124,125,...129,234,...789)
      * 

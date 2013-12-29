@@ -81,6 +81,98 @@ class ProgramInterviewQuestions {
         findWhetherIthasAnyPermutationOfAnotherString();
         playWithCircularQueue();
         generateNumbersForNDigitsInIncreasingOrder();
+        findSmallestRangeOfNumbersIfYouHaveToPickOneNumberFromEveryList();
+        pourWaterIntoGlassPyramid();
+    }
+    
+    private static void pourWaterIntoGlassPyramid() {
+        double water = 35;
+        int row = 5;
+        int col = 3;
+        double waterAccumulated = Algorithms.pourWaterIntoGlassPyramid(35, 5, 3);
+        System.out.print("Pour " + water + " water into a water pyramid, the ");
+        System.out.print(row + " row and " + col + " column glass will have ");
+        System.out.println(waterAccumulated + " amount of water");
+    }
+    
+    private static void findSmallestRangeOfNumbersIfYouHaveToPickOneNumberFromEveryList() {
+        int[] list1 = { 4, 10, 15, 24, 26 };
+        int[] list2 = { 0, 9, 12, 20 };
+        int[] list3 = { 5, 18, 22, 30 };
+        
+        int[][] masterList = { list1, list2, list3 };
+        
+        String s1 = Algorithms.printIntArray(list1);
+        String s2 = Algorithms.printIntArray(list2);
+        String s3 = Algorithms.printIntArray(list3);
+        
+        int[] result = findSmallestRangeOfNumbersIfYouHaveToPickOneNumberFromEveryList(masterList);
+        String resultString = Algorithms.printIntArray(result);
+        System.out.print("given lists " + s1 + " " + s2 + " " + s3);
+        System.out.println(" the smallest range can be found by picking 1 number from each list " + resultString);
+    }
+    
+    public static int[] findSmallestRangeOfNumbersIfYouHaveToPickOneNumberFromEveryList(int[][] source) {
+        // arbitraury number for sake of simplification
+        int[] spread = { 0, Integer.MAX_VALUE };
+        //
+        int[] arrayOfPointersAsOfNow = new int[source.length];
+        int[] arrayAsOfNow = new int[source.length];
+        for (int i = 0; i < source.length; i++)
+            arrayAsOfNow[i] = source[i][0];
+        
+        while (!allPointersAtEnd(arrayOfPointersAsOfNow, source)) {
+            int pos = findNextSmallestElementsWhoHasntReachedTheEndPos(arrayAsOfNow, arrayOfPointersAsOfNow, source);
+            arrayOfPointersAsOfNow[pos]++;
+            arrayAsOfNow[pos] = source[pos][arrayOfPointersAsOfNow[pos]];
+            int[] newSpread = calculateSpread(arrayAsOfNow);
+            if (newSpreadSmallerThanOldSpread(newSpread, spread))
+                spread = newSpread;
+        }
+        return spread;
+    }
+    
+    private static int findNextSmallestElementsWhoHasntReachedTheEndPos(int[] arrayAsOfNow, int[] arrayOfPointersAsOfNow, int[][] source) {
+        boolean[] pointersHasntReachedTheEnd = new boolean[arrayOfPointersAsOfNow.length];
+        for (int i = 0; i < arrayOfPointersAsOfNow.length; i++)
+            pointersHasntReachedTheEnd[i] = arrayOfPointersAsOfNow[i] < source[i].length - 1;
+        // arbitraury number for sake of simplification
+        int smallestElement = Integer.MAX_VALUE;
+        //
+        int resultPos = -1;
+        for (int i = 0; i < arrayOfPointersAsOfNow.length; i++) {
+            if (pointersHasntReachedTheEnd[i] && source[i][arrayOfPointersAsOfNow[i] + 1] < smallestElement) {
+                smallestElement = source[i][arrayOfPointersAsOfNow[i] + 1];
+                resultPos = i;
+            }
+        }
+        return resultPos;
+    }
+    
+    private static boolean newSpreadSmallerThanOldSpread(int[] newSpread, int[] oldSpread) {
+        return newSpread[1] - newSpread[0] < oldSpread[1] - oldSpread[0];
+    }
+    
+    private static int[] calculateSpread(int[] array) {
+        int smallestElement = array[0];
+        int biggestElement = array[0];
+        for (int i = 1; i < array.length; i++) {
+            if (smallestElement > array[i])
+                smallestElement = array[i];
+            else if (biggestElement < array[i])
+                biggestElement = array[i];
+        }
+        int[] result = { smallestElement, biggestElement };
+        return result;
+    }
+    
+    private static boolean allPointersAtEnd(int[] pointers, int[][] arrays) {
+        for (int i = 0; i < pointers.length; i++) {
+            if (pointers[i] < arrays[i].length - 1) {
+                return false;
+            }
+        }
+        return true;
     }
     
     private static void generateNumbersForNDigitsInIncreasingOrder() {
