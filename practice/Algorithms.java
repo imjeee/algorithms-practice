@@ -1,5 +1,4 @@
-public class Algorithms {
-  import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,11 +11,13 @@ import java.util.Map.Entry;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Stack;
-  import NewDataStructures.BinaryTreeNode;
-  import NewDataStructures.LinkedListNode;
-  import NewDataStructures.MyQueue;
-  import NewDataStructures.Person;
-  import NewDataStructures.TwoListsAndTheirSumDiff;
+import NewDataStructures.BinaryTreeNode;
+import NewDataStructures.LinkedListNode;
+import NewDataStructures.MyQueue;
+import NewDataStructures.Person;
+import NewDataStructures.TwoListsAndTheirSumDiff;
+  
+public class Algorithms {
 
   /**
    * 
