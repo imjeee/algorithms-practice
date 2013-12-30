@@ -15,6 +15,36 @@ import java.util.Map.Entry;
 public class Algorithms {
 
   /**
+   * 
+   * Let's say you have a phrase without any spaces - eg. "thisisawesome".
+   * Given a dictionary, how would you add spaces in this string?
+   * 
+   * http://www.careercup.com/question?id=10060840
+   * 
+   * @param s
+   * @param dict
+   * @return
+   */
+  public static String addSpaceToSentence(String s, Set<String> dict) {
+    if (s == null || s.length() == 0) {
+      return "";
+    } else if (dict.contains(s)) {
+      return s;
+    } else {
+      for (int i = 0; i < s.length(); i++) {
+        String possibleWord = s.substring(0, i);
+        if (dict.contains(possibleWord)) {
+          String restOfString = addSpaceToSentence(s.substring(i), dict);
+          if (restOfString != null)
+            return possibleWord + " " + restOfString; 
+        }
+      }
+      return null;
+    }
+  }
+  
+  
+  /**
    * Given a string, find whether it has any permutation of another string. 
    * For example, given "abcdefg" and "ba", it shuold return true, because "abcdefg" 
    * has substring "ab", which is a permutation of "ba".

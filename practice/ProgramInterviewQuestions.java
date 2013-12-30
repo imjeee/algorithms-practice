@@ -83,8 +83,21 @@ class ProgramInterviewQuestions {
     morphFromOneWordToAnotherOneLetterAtATime();
     printWhatYouSee();
     findWhetherIthasAnyPermutationOfAnotherString();
+    addSpaceToSentence();
   }
   
+  private static void addSpaceToSentence() {
+    String s = "thisisawesome";
+    Set<String> dictionary = new HashSet<String>();
+    dictionary.add("this");
+    dictionary.add("is");
+    dictionary.add("awe");
+    dictionary.add("some");
+    dictionary.add("awesome");
+    String result = Algorithms.addSpaceToSentence(s, dictionary);
+    System.out.println("given string: " + s + ", add space to valid words and you get: " + result);
+  }
+
   private static void printWhatYouSee() {
     String s = "aaabbccc";
     String output = Algorithms.printWhatYouSee(s);
@@ -97,8 +110,6 @@ class ProgramInterviewQuestions {
     boolean ifHasPerm = Algorithms.findWhetherIthasAnyPermutationOfAnotherString(s1, s2);
     System.out.println("Given string \"" + s1 + "\" and \"" + s2 + "\", does s1 contain a substring that's a permutation of s2: " + ifHasPerm);
   }
-  
-
   
   private static void morphFromOneWordToAnotherOneLetterAtATime() {
     String startWord = "cat";
