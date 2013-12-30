@@ -1,3 +1,4 @@
+package NewDataStructures;
 
 public class LinkedListNode<E> {
   private E value;
