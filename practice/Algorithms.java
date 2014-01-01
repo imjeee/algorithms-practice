@@ -37,27 +37,32 @@ public class Algorithms {
     Stack<BinaryTreeNode> rightStack = new Stack<BinaryTreeNode>();
     leftStack.add(node);
     rightStack.add(node);
-    addEverythingToTheLeft(leftStack);
-    addEverythingToTheRight(rightStack);
-    
-    while (rightStack.peek().right() != null)
-      rightStack.push(rightStack.peek().right());
+    boolean reachedLeftMostNode = false;
+    boolean reachedRightMostNode = false;
     
     while (!leftStack.isEmpty() && !rightStack.isEmpty()) {
+      while (!reachedLeftMostNode && leftStack.peek().left() != null)
+        leftStack.push(leftStack.peek().left());
+      while (!reachedRightMostNode && rightStack.peek().right() != null)
+        rightStack.push(rightStack.peek().right());
+      
+      reachedLeftMostNode = true;
+      reachedRightMostNode = true;
+      
       int leftNum = leftStack.peek().value();
       int rightNum = rightStack.peek().value();
       
-      if (leftNum + rightNum > x) {
-        BinaryTreeNode tmpNode = rightStack.pop();
-        if (tmpNode.left() != null) {
-          rightStack.push(tmpNode.left());
-          addEverythingToTheRight(rightStack);            
-        }
-      } else if (leftNum + rightNum < x) {
+      if (leftNum + rightNum < x) {
         BinaryTreeNode tmpNode = leftStack.pop();
         if (tmpNode.right() != null) {
           leftStack.push(tmpNode.right());
-          addEverythingToTheLeft(leftStack);
+          reachedLeftMostNode = false;
+        }
+      } else if (leftNum + rightNum > x) {
+        BinaryTreeNode tmpNode = rightStack.pop();
+        if (tmpNode.left() != null) {
+          rightStack.push(tmpNode.left());
+          reachedRightMostNode = false;
         }
       } else {
         return true;
@@ -65,17 +70,7 @@ public class Algorithms {
     }
     return false;
   }
-  
-  private static void addEverythingToTheRight(Stack<BinaryTreeNode> rightStack) {
-    while (rightStack.peek().right() != null)
-      rightStack.push(rightStack.peek().right());
-  }
-  
-  private static void addEverythingToTheLeft(Stack<BinaryTreeNode> leftStack) {
-    while (leftStack.peek().left() != null)
-      leftStack.push(leftStack.peek().left());
-  }
-  
+
   /**
    * 
    * Let's say you have a phrase without any spaces - eg. "thisisawesome".

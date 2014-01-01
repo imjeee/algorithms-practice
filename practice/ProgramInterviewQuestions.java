@@ -114,7 +114,7 @@ public class ProgramInterviewQuestions {
       
       boolean xCanBeAddedByTwoNumsInTree = Algorithms.findIfTwoNumInBSTAddsUpToX(x, treeNode);
       System.out.print("Given integer BST, find if 2 integers add up to " + x);
-      System.out.println("you are not allowed to use O(n) space, and keep it at O(n) time: " + xCanBeAddedByTwoNumsInTree);
+      System.out.println(", you are not allowed to use O(n) space, and keep it at O(n) time: " + xCanBeAddedByTwoNumsInTree);
     }
     
 
