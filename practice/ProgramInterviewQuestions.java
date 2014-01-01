@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
+
 import NewDataStructures.BinarySearchTreeNode;
 import NewDataStructures.BinaryTreeNode;
 import NewDataStructures.BrowserHistory;
@@ -13,10 +15,10 @@ import NewDataStructures.MyQueue;
 import NewDataStructures.Person;
 import NewDataStructures.TwoListsAndTheirSumDiff;
 
-class ProgramInterviewQuestions {
+public class ProgramInterviewQuestions {
+  
     public static void main(String[] args) {
-        System.out.println("programming interview questions practice!\n");
-        
+        System.out.println("programming interview questions practice!\n");        
         groupStrings();
         isSubString();
         maxSubArray();
@@ -83,7 +85,39 @@ class ProgramInterviewQuestions {
         findSmallestRangeOfNumbersIfYouHaveToPickOneNumberFromEveryList();
         pourWaterIntoGlassPyramid();
         addSpaceToSentence();
+        findIfTwoNumInBSTAddsUpToX();
     }
+    
+    private static void findIfTwoNumInBSTAddsUpToX() {
+      /*
+       *
+           34
+          /  \
+        20   65
+       /  \    \
+      12  23   76
+              /  \
+             70  625
+      *
+      */
+      BinarySearchTreeNode treeNode= new BinarySearchTreeNode(34);      
+      treeNode.insert(20);
+      treeNode.insert(65);
+      treeNode.insert(76);
+      treeNode.insert(70);
+      treeNode.insert(675);
+      treeNode.insert(20);
+      treeNode.insert(12);
+      treeNode.insert(23);
+      treeNode.insert(71);
+      int x = 94;
+      
+      boolean xCanBeAddedByTwoNumsInTree = Algorithms.findIfTwoNumInBSTAddsUpToX(x, treeNode);
+      System.out.print("Given integer BST, find if 2 integers add up to " + x);
+      System.out.println("you are not allowed to use O(n) space, and keep it at O(n) time: " + xCanBeAddedByTwoNumsInTree);
+    }
+    
+
     
     private static void addSpaceToSentence() {
       String s = "thisisawesome";

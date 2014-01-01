@@ -11,6 +11,8 @@ import java.util.Map.Entry;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Stack;
+
+import NewDataStructures.BinarySearchTreeNode;
 import NewDataStructures.BinaryTreeNode;
 import NewDataStructures.LinkedListNode;
 import NewDataStructures.MyQueue;
@@ -19,6 +21,61 @@ import NewDataStructures.TwoListsAndTheirSumDiff;
   
 public class Algorithms {
 
+  /**
+   * 
+   * Given a BST and a value x. Find two nodes in the tree whose sum is equal x.
+   * Additional space: O(height of the tree). It is not allowed to modify the tree
+   * 
+   * http://www.careercup.com/question?id=15320677
+   * 
+   * @param x
+   * @param node
+   * @return
+   */
+  public static boolean findIfTwoNumInBSTAddsUpToX(int x, BinarySearchTreeNode node) {
+    Stack<BinaryTreeNode> leftStack = new Stack<BinaryTreeNode>();
+    Stack<BinaryTreeNode> rightStack = new Stack<BinaryTreeNode>();
+    leftStack.add(node);
+    rightStack.add(node);
+    addEverythingToTheLeft(leftStack);
+    addEverythingToTheRight(rightStack);
+    
+    while (rightStack.peek().right() != null)
+      rightStack.push(rightStack.peek().right());
+    
+    while (!leftStack.isEmpty() && !rightStack.isEmpty()) {
+      int leftNum = leftStack.peek().value();
+      int rightNum = rightStack.peek().value();
+      
+      if (leftNum + rightNum > x) {
+        BinaryTreeNode tmpNode = rightStack.pop();
+        if (tmpNode.left() != null) {
+          rightStack.push(tmpNode.left());
+          addEverythingToTheRight(rightStack);            
+        }
+      } else if (leftNum + rightNum < x) {
+        BinaryTreeNode tmpNode = leftStack.pop();
+        if (tmpNode.right() != null) {
+          leftStack.push(tmpNode.right());
+          addEverythingToTheLeft(leftStack);
+        }
+      } else {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  private static void addEverythingToTheRight(Stack<BinaryTreeNode> rightStack) {
+    while (rightStack.peek().right() != null)
+      rightStack.push(rightStack.peek().right());
+  }
+  
+  private static void addEverythingToTheLeft(Stack<BinaryTreeNode> leftStack) {
+    while (leftStack.peek().left() != null)
+      leftStack.push(leftStack.peek().left());
+  }
+  
   /**
    * 
    * Let's say you have a phrase without any spaces - eg. "thisisawesome".
