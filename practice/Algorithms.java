@@ -22,6 +22,74 @@ import NewDataStructures.TwoListsAndTheirSumDiff;
 public class Algorithms {
 
   /**
+   * Given an equation in the form 2^i * 3^j * 5^k * 7^l where i,j,k,l >=0 are integers.
+   * write a program to generate numbers from that equation in sorted order efficiently. 
+   * for example numbers from that equation will be in the order 2,3,5,6,7,8,9.....and so on..
+   * 
+   * http://www.careercup.com/question?id=23823662
+   * 
+   * @param x
+   * @return
+   */
+  public static int[] generateNumbersInOrder(int x) {
+    int[] result = new int[x];
+    PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+    pq.add(1);
+    for (int i = 0; i < x;) {
+      int min = pq.poll();
+      if (i == 0 || min != result[i-1]) {
+        result[i] = min;
+        i++;
+      }
+      pq.add(min*2);
+      pq.add(min*3);
+      pq.add(min*5);
+      pq.add(min*7);
+    }
+    return result;
+  }
+  
+  /**
+   * we will name a number "aggregated number" if this number has the following attribute: 
+   * just like the Fibonacci numbers 
+   * 1,1,2,3,5,8,13..... 
+   * 
+   * the digits in the number can divided into several parts, and the later part is the sum of the former parts. 
+   * like 112358, because 1+1=2, 1+2=3, 2+3=5, 3+5=8 
+   * 122436, because 12+24=36 
+   * 1299111210, because 12+99=111, 99+111=210 
+   * 112112224, because 112+112=224 
+   * 
+   * http://www.careercup.com/question?id=14948278
+   * 
+   * @param x
+   * @return
+   */
+  public static boolean findIfNumIsAggregateOfNumbers(int x) {
+    String tmp = Integer.toString(x);
+    for (int i = 1; i < tmp.length(); i++) {
+      int lastNum = Integer.parseInt(tmp.substring(0, i));
+      for (int j = i + 1; j < tmp.length(); j++) {
+        int thisNum = Integer.parseInt(tmp.substring(i, j));
+        if (findIfNumIsAggregateOfNumbersHelper(lastNum, thisNum, tmp.substring(j, tmp.length())))
+          return true;
+      }
+    }
+    return false;
+  }
+  
+  public static boolean findIfNumIsAggregateOfNumbersHelper(int lastNum, int thisNum, String stringLeft) {
+    if (stringLeft.equals(""))
+      return true;
+    for (int i = 1; i < stringLeft.length() + 1; i++) {
+      int nextNum = Integer.parseInt(stringLeft.substring(0, i));
+      if (lastNum + thisNum == nextNum)
+        return findIfNumIsAggregateOfNumbersHelper(thisNum, nextNum, stringLeft.substring(i, stringLeft.length()));
+    }
+    return false;
+  }
+  
+  /**
    * 
    * Given a BST and a value x. Find two nodes in the tree whose sum is equal x.
    * Additional space: O(height of the tree). It is not allowed to modify the tree

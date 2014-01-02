@@ -86,6 +86,24 @@ public class ProgramInterviewQuestions {
         pourWaterIntoGlassPyramid();
         addSpaceToSentence();
         findIfTwoNumInBSTAddsUpToX();
+        findIfNumIsAggregateOfNumbers();
+        generateNumbersInOrder();
+    }
+    
+    private static void generateNumbersInOrder() {
+      int numsToGenerate = 20;
+      int[] generatedNums = Algorithms.generateNumbersInOrder(numsToGenerate);
+      System.out.print("Given an equation in the form 2^i * 3^j * 5^k * 7^l where i,j,k,l >=0,");
+      System.out.println(" generate " + numsToGenerate + " numbers: " + Algorithms.printIntArray(generatedNums));
+    }
+    
+    private static void findIfNumIsAggregateOfNumbers() {
+      System.out.println(3/2);
+      int[] aggregates = {157, 15722, 111122, 134, 111, 336, 112358, 122436, 1299111210, 112112224};
+      for (int i = 0; i < aggregates.length; i++) {
+        boolean isAggregate = Algorithms.findIfNumIsAggregateOfNumbers(aggregates[i]);
+        System.out.println("given num " + aggregates[i] + " is it an aggregate of numbers: " + isAggregate);
+      }
     }
     
     private static void findIfTwoNumInBSTAddsUpToX() {
