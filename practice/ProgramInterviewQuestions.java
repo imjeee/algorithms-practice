@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -89,6 +90,19 @@ public class ProgramInterviewQuestions {
         findIfNumIsAggregateOfNumbers();
         generateNumbersInOrder();
         printAllDuplicatesAndFindCountInIntArray();
+        seeIfTwoIntArrayCanConstructSameTree();
+    }
+    
+    private static void seeIfTwoIntArrayCanConstructSameTree() {
+      //Integer[] one = {2,1,6,4,7};
+      //Integer[] two = {2,6,7,4,1};
+      //Integer[] one = {2,1,3};
+      //Integer[] two = {2,3,1};
+      Integer[] one = {10,11,30,2,6,12,36};
+      Integer[] two = {10,2,6,11,30,36,12};
+      boolean result = Algorithms.seeIfTwoIntArrayCanConstructSameTree(one, two);
+      System.out.print("Given " + Algorithms.printIntArray(one) + " and " + Algorithms.printIntArray(two));
+      System.out.println(" they will make the same BST: " + result);
     }
     
     private static void printAllDuplicatesAndFindCountInIntArray() {
@@ -107,7 +121,6 @@ public class ProgramInterviewQuestions {
     }
     
     private static void findIfNumIsAggregateOfNumbers() {
-      System.out.println(3/2);
       int[] aggregates = {157, 15722, 111122, 134, 111, 336, 112358, 122436, 1299111210, 112112224};
       for (int i = 0; i < aggregates.length; i++) {
         boolean isAggregate = Algorithms.findIfNumIsAggregateOfNumbers(aggregates[i]);

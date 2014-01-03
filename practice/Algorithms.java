@@ -23,6 +23,66 @@ public class Algorithms {
 
   /**
    * 
+   * Given 2 arrays.Imagine you are making bst from each array.
+   * u need to tell whether 2 bsts will be identical or not without actually constructing the tree.
+   * 
+   * Ex: 
+   * 2 3 1 
+   * 2 1 3 
+   * will construct the same tree 
+   * 
+   * http://www.careercup.com/question?id=19016700
+   * 
+   * @param one
+   * @param two
+   * @return
+   */
+  public static boolean seeIfTwoIntArrayCanConstructSameTree(Integer[] one, Integer[] two) {
+    ArrayList<Integer> arrOne = new ArrayList<Integer>(Arrays.asList(one));
+    ArrayList<Integer> arrTwo = new ArrayList<Integer>(Arrays.asList(two));
+    return seeIfTwoIntArrayCanConstructSameTree(arrOne, arrTwo);
+  }
+  
+  private static boolean seeIfTwoIntArrayCanConstructSameTree(ArrayList<Integer> one, ArrayList<Integer> two) {
+    if (one.size() != two.size())
+      return false;
+    if (one.size() == 0)
+      return true;
+    int topOneNum = one.get(0);
+    int topTwoNum = two.get(0);
+    if (topOneNum != topTwoNum)
+      return false;
+    ArrayList<Integer> allIntegerInOneSmallerThanTop = getAllSmallerThan(one, topOneNum);
+    ArrayList<Integer> allIntegerInTwoSmallerThanTop = getAllSmallerThan(two, topTwoNum);
+
+    if (!seeIfTwoIntArrayCanConstructSameTree(allIntegerInOneSmallerThanTop, allIntegerInTwoSmallerThanTop))
+      return false;
+    
+    ArrayList<Integer> allIntegerInOneBiggerThanTop = getAllBiggerThan(one, topOneNum);
+    ArrayList<Integer> allIntegerInTwoBiggerThanTop = getAllBiggerThan(two, topTwoNum);
+    return seeIfTwoIntArrayCanConstructSameTree(allIntegerInOneBiggerThanTop, allIntegerInTwoBiggerThanTop);
+  }
+  
+  private static ArrayList<Integer> getAllSmallerThan(ArrayList<Integer> arr, Integer x) {
+    ArrayList<Integer> result = new ArrayList<Integer>();
+    for (int i = 0; i < arr.size(); i++) {
+      if (arr.get(i) < x)
+        result.add(arr.get(i));
+    }
+    return result;
+  }
+  
+  private static ArrayList<Integer> getAllBiggerThan(ArrayList<Integer> arr, Integer x) {
+    ArrayList<Integer> result = new ArrayList<Integer>();
+    for (int i = 0; i < arr.size(); i++) {
+      if (arr.get(i) > x)
+        result.add(arr.get(i));
+    }
+    return result;
+  }
+  
+  /**
+   * 
    * You are given an array of n integers which can contain integers from 1 to n only.
    * Some elements can be repeated multiple times and some other elements can be absent from the array.
    * Write a running code on paper which takes O(1) space apart from the input array and O(n) time to
@@ -1789,6 +1849,23 @@ public class Algorithms {
         StringBuffer output = new StringBuffer();
         output.append("{");
         for (char i : input)
+            output.append(i + ",");
+        String sOutput = output.substring(0, output.length() - 1) + "}";
+        return sOutput;
+    }
+    
+    /**
+     * convert int[] to string, ie. {1,2,3} becomes "{1,2,3}" O(n) time and space
+     * 
+     * @param <E>
+     * 
+     * @param input
+     * @return
+     */
+    public static String printIntArray(Integer[] input) {
+        StringBuffer output = new StringBuffer();
+        output.append("{");
+        for (int i : input)
             output.append(i + ",");
         String sOutput = output.substring(0, output.length() - 1) + "}";
         return sOutput;
