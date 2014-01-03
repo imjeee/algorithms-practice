@@ -88,6 +88,15 @@ public class ProgramInterviewQuestions {
         findIfTwoNumInBSTAddsUpToX();
         findIfNumIsAggregateOfNumbers();
         generateNumbersInOrder();
+        printAllDuplicatesAndFindCountInIntArray();
+    }
+    
+    private static void printAllDuplicatesAndFindCountInIntArray() {
+      int[] arr = {1,1,2,4,2,3,5,9,8,1};
+      //int[] arr = {1,1,1,1,1,1,1,1,1,1};
+      System.out.print("Given array: " + Algorithms.printIntArray(arr));
+      Algorithms.printAllDuplicatesAndFindCountInIntArray(arr);
+      System.out.println(" count the numbers in array: " + Algorithms.printIntArray(arr));
     }
     
     private static void generateNumbersInOrder() {

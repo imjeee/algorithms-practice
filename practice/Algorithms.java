@@ -22,6 +22,40 @@ import NewDataStructures.TwoListsAndTheirSumDiff;
 public class Algorithms {
 
   /**
+   * 
+   * You are given an array of n integers which can contain integers from 1 to n only.
+   * Some elements can be repeated multiple times and some other elements can be absent from the array.
+   * Write a running code on paper which takes O(1) space apart from the input array and O(n) time to
+   * print which elements are not present in the array and the count of every element which is there in
+   * the array along with the element number. 
+   * NOTE: The array isn't necessarily sorted.
+   * 
+   * http://www.careercup.com/question?id=21263687
+   * 
+   * @param arr
+   */
+  public static void printAllDuplicatesAndFindCountInIntArray(int[] arr) {
+    for (int i = 0; i < arr.length;) {
+      int thisNumPos = i;
+      int thisNum = arr[thisNumPos];
+      if (thisNum > 0) {
+        int nextNumPos = thisNum - 1;
+        int nextNum = arr[nextNumPos];          
+        if (nextNum > 0) {
+          arr[thisNumPos] = arr[nextNumPos];
+          arr[nextNumPos] = -1;
+        } else {
+          arr[i] = 0;
+          arr[nextNumPos]--;
+          i++;
+        }
+      } else {
+        i++;
+      }
+    }
+  }
+  
+  /**
    * Given an equation in the form 2^i * 3^j * 5^k * 7^l where i,j,k,l >=0 are integers.
    * write a program to generate numbers from that equation in sorted order efficiently. 
    * for example numbers from that equation will be in the order 2,3,5,6,7,8,9.....and so on..
