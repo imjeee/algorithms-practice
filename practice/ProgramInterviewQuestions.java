@@ -92,7 +92,15 @@ public class ProgramInterviewQuestions {
         printAllDuplicatesAndFindCountInIntArray();
         seeIfTwoIntArrayCanConstructSameTree();
         findMaxSizeSubArrayWithNoDupCharacters();
+        fibonacciGenerator();
     }
+    
+    private static void fibonacciGenerator() {
+      int x = 20;
+      ArrayList<Integer> result = Algorithms.fibonacciGenerator(x);
+      System.out.println("generate " + x + " fibonacci sequence: " + Algorithms.printIntArray(result));
+    }
+
     
     private static void findMaxSizeSubArrayWithNoDupCharacters() {
       String s = "helloanwe4;rloncew awoeidweewiq asdfgnxcnvrt iri ";

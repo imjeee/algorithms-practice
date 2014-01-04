@@ -22,6 +22,34 @@ import NewDataStructures.TwoListsAndTheirSumDiff;
 public class Algorithms {
 
   /**
+   * generate fibonacci sequence
+   * 
+   * @param x
+   * @return
+   */
+  public static ArrayList<Integer> fibonacciGenerator(int x) {
+    ArrayList<Integer> result = new ArrayList<Integer>();
+    if (x == 0)
+      return result;
+    
+    result.add(0);
+    if (x == 1)
+      return result;
+    
+    result.add(1);
+    if (x == 2)
+      return result;
+    
+    x -= 2;
+    while (x != 0) {
+      int size = result.size();
+      result.add(result.get(size - 1) + result.get(size - 2));
+      x--;
+    }
+    return result;
+  }
+  
+  /**
    * 
    * Given s string, Find max size of a sub-string, in which no duplicate chars present.
    * 
