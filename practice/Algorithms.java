@@ -23,6 +23,40 @@ public class Algorithms {
 
   /**
    * 
+   * Given s string, Find max size of a sub-string, in which no duplicate chars present.
+   * 
+   * http://www.careercup.com/question?id=5684278553739264
+   * 
+   * @param s
+   * @return
+   */
+  public static int findMaxSizeSubArrayWithNoDupCharacters(String s) {
+    HashMap<Character, Integer> charTracker = new HashMap<Character, Integer>();
+    int[] maxSizePos = new int[2];
+    int maxSize = 0;
+    int begin = 0;
+    int end = 0;
+    for (int i = 0; i < s.length(); i++) {
+      Character thisChar = s.charAt(i);
+      if (end - begin > maxSize) {
+        maxSize = end - begin;
+        maxSizePos[0] = begin;
+        maxSizePos[1] = end;
+      }
+      if (charTracker.containsKey(thisChar)) {
+        int lastKnownPos = charTracker.get(thisChar);
+        if (begin < lastKnownPos + 1)
+          begin = lastKnownPos + 1;          
+      }
+      charTracker.put(thisChar, i);        
+      end++;
+    }
+    System.out.println(s.substring(0, maxSizePos[0]) + "**" + s.substring(maxSizePos[0], maxSizePos[1]) + "**" + s.substring(maxSizePos[1], s.length()));;
+    return maxSize;
+  }
+  
+  /**
+   * 
    * Given 2 arrays.Imagine you are making bst from each array.
    * u need to tell whether 2 bsts will be identical or not without actually constructing the tree.
    * 

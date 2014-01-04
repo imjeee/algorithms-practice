@@ -91,6 +91,14 @@ public class ProgramInterviewQuestions {
         generateNumbersInOrder();
         printAllDuplicatesAndFindCountInIntArray();
         seeIfTwoIntArrayCanConstructSameTree();
+        findMaxSizeSubArrayWithNoDupCharacters();
+    }
+    
+    private static void findMaxSizeSubArrayWithNoDupCharacters() {
+      String s = "helloanwe4;rloncew awoeidweewiq asdfgnxcnvrt iri ";
+      int result = Algorithms.findMaxSizeSubArrayWithNoDupCharacters(s);
+      System.out.println("Given string \"" + s + "\" the maximum substring without duplicate characters is " + result);
+      
     }
     
     private static void seeIfTwoIntArrayCanConstructSameTree() {
